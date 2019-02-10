@@ -17,32 +17,32 @@ class ViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(#function)
+        print("ViewController Lifecycle: [\(#function)]")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print(#function)
+        print("ViewController Lifecycle: [\(#function)]")
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        print(#function)
+        print("ViewController Lifecycle: [\(#function)]")
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        print(#function)
+        print("ViewController Lifecycle: [\(#function)]")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print(#function)
+        print("ViewController Lifecycle: [\(#function)]")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        print(#function)
+        print("ViewController Lifecycle: [\(#function)]")
     }
 
 }
