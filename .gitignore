@@ -1,5 +1,5 @@
 
-# .gitignore file
+# .gitignore file for Tigram app
 
 
 
@@ -13,7 +13,7 @@ xcuserdata/
 DerivedData/
 
 # Ignore all files with extension .xccheckout
-.xccheckout
+*.xccheckout
 
 # Ignore all files with extension .xcscmblueprint
-.xcscmblueprint
+*.xcscmblueprint
