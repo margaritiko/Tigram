@@ -1,0 +1,19 @@
+
+# .gitignore file
+
+
+
+# Ignore folder build
+build/
+
+# Ignore folder xcuserdata
+xcuserdata/
+
+# Ignore folder DerivedData
+DerivedData/
+
+# Ignore all files with extension .xccheckout
+.xccheckout
+
+# Ignore all files with extension .xcscmblueprint
+.xcscmblueprint
