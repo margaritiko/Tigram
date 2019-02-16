@@ -18,23 +18,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Tigram! 🐯" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w44-L5-GCM">
-                                <rect key="frame" x="77" y="320.5" width="221" height="26.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VRb-Tw-Uex">
+                                <rect key="frame" x="16" y="36" width="343" height="343"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="VRb-Tw-Uex" secondAttribute="height" multiplier="1:1" id="cRY-1B-jRv"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Коннова Маргарита" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zhq-ez-Peu">
+                                <rect key="frame" x="16" y="387" width="343" height="38.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xXk-89-gTL">
+                                <rect key="frame" x="16" y="593" width="343" height="30"/>
+                                <state key="normal" title="Редактировать">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7hQ-MO-vAZ">
+                                <rect key="frame" x="16" y="433.5" width="343" height="61"/>
+                                <string key="text">👩‍💻Люблю программировать под IOS
+🕵️‍♀️Изучать новые технологии
+👩‍🏫Помогаю развиваться другим</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="w44-L5-GCM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Wg0-l7-j6r"/>
-                            <constraint firstItem="w44-L5-GCM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Ywx-Qf-7UV"/>
+                            <constraint firstItem="7hQ-MO-vAZ" firstAttribute="top" secondItem="zhq-ez-Peu" secondAttribute="bottom" constant="8" id="6GI-n8-F48"/>
+                            <constraint firstItem="xXk-89-gTL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="6tr-sc-QjA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="7hQ-MO-vAZ" secondAttribute="trailing" constant="16" id="AlD-SX-ik5"/>
+                            <constraint firstItem="zhq-ez-Peu" firstAttribute="top" secondItem="VRb-Tw-Uex" secondAttribute="bottom" constant="8" id="DZu-hB-S25"/>
+                            <constraint firstItem="zhq-ez-Peu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="FZ2-M6-nnw"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xXk-89-gTL" secondAttribute="trailing" constant="16" id="K7P-vh-iPb"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="xXk-89-gTL" secondAttribute="bottom" constant="44" id="PCI-xm-O39"/>
+                            <constraint firstItem="VRb-Tw-Uex" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Qi1-Dh-ceA"/>
+                            <constraint firstItem="VRb-Tw-Uex" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="hrM-0p-fdP"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zhq-ez-Peu" secondAttribute="trailing" constant="16" id="i1f-ap-Boh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VRb-Tw-Uex" secondAttribute="trailing" constant="16" id="mcf-vD-pcD"/>
+                            <constraint firstItem="7hQ-MO-vAZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="tsz-MN-xjD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="126.38680659670166"/>
         </scene>
     </scenes>
 </document>
