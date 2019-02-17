@@ -12,9 +12,17 @@ class ViewController: UIViewController {
 
     // MARK: ViewController lifecycle
     
+    @IBOutlet weak var editButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        // Edit button's design details
+        editButton.layer.cornerRadius = 10
+        editButton.layer.borderColor = UIColor.black.cgColor
+        editButton.layer.borderWidth = 1
+        editButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
 
     override func viewWillAppear(_ animated: Bool) {
