@@ -10,9 +10,15 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    // MARK: ViewController lifecycle
+    // MARK: Outlets
     
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var userPhoto: UIImageView!
+    @IBOutlet weak var cameraButton: UIButton!
+    
+    @IBAction func cameraButtonClicked(_ sender: Any) {
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +30,7 @@ class ViewController: UIViewController {
         editButton.layer.borderWidth = 1
         editButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("ViewController Lifecycle: [\(#function)]")
@@ -43,6 +49,12 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         print("ViewController Lifecycle: [\(#function)]")
+        
+        // The right place to work with geometry
+        userPhoto.layer.cornerRadius = cameraButton.bounds.height / 2
+        cameraButton.layer.cornerRadius = cameraButton.bounds.height / 2
+        let paddings = cameraButton.bounds.height * 0.22
+        cameraButton.imageEdgeInsets = UIEdgeInsets(top: paddings, left: paddings, bottom: paddings, right: paddings)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
