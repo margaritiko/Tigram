@@ -9,13 +9,14 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     // MARK: Outlets
     @IBOutlet weak var editButton: UIButton?
     @IBOutlet weak var userPhoto: UIImageView!
     @IBOutlet weak var cameraButton: UIButton!
-    
+
+    @IBOutlet weak var descriptionLabel: UILabel!
     let imagePickerController = UIImagePickerController()
     
     // The alert allows user to choose between photo library and camera
@@ -40,11 +41,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imagePickerController.delegate = self
         settingUpAnAlert()
         
-        // Edit button's design details
-        editButton!.layer.cornerRadius = 10
+        // Edit some button's design details
         editButton!.layer.borderColor = UIColor.black.cgColor
         editButton!.layer.borderWidth = 1
-        editButton!.contentEdgeInsets = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         
         // Обрабатывать значения геометрии в данном методе нельзя, так как они еще некорректны
         // Все constraints не установлены, поэтому текущее значение frame считается без их учета и неверно
@@ -53,7 +52,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidAppear(_ animated: Bool) {
         // На данном этапе все constraints установлены
-        // Значение frame отличается от предыдущего, так как оно уже корректно и рассчитано с учетом всех constraints
+        // Значение frame отличается от предыдущего, так как оно уже корректно и рассчитано с учетом всех constraints уже для той модели iPhone, на которой запускается приложение
         print("editButton.frame in \(#function): \(editButton!.frame)")
     }
     
@@ -61,15 +60,27 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.viewDidLayoutSubviews()
         
         // The right place for work with geometry
+        // userPhoto
         userPhoto.layer.cornerRadius = cameraButton.bounds.height / 2
+        // cameraButton
         cameraButton.layer.cornerRadius = cameraButton.bounds.height / 2
-        let paddings = cameraButton.bounds.height * 0.22
-        cameraButton.imageEdgeInsets = UIEdgeInsets(top: paddings, left: paddings, bottom: paddings, right: paddings)
+        let cameraButtonPaddings = cameraButton.bounds.height * 0.22
+        cameraButton.imageEdgeInsets = UIEdgeInsets(top: cameraButtonPaddings, left: cameraButtonPaddings, bottom: cameraButtonPaddings, right: cameraButtonPaddings)
+        // editButton
+        let editButtonPaddings = cameraButton.bounds.height * 0.15
+        editButton!.layer.cornerRadius = editButtonPaddings
+        editButton!.contentEdgeInsets = UIEdgeInsets(top: editButtonPaddings, left: 0, bottom: editButtonPaddings, right: 0)
+        // setting font size
+        editButton?.titleLabel?.font = editButton?.titleLabel?.font.withSize(cameraButton.bounds.height * 0.17)
+        
+        // descriptionLabel: setting font size
+        descriptionLabel.font = descriptionLabel.font.withSize(cameraButton.bounds.height * 0.2)
     }
     
     // MARK: Actions
     @IBAction func cameraButtonClicked(_ sender: Any) {
-        self.present(alert, animated: true, completion: nil)
+        print("Выбери изображение профиля")
+        self.present(self.alert, animated: true, completion: nil)
     }
     
     // MARK: AlertController
@@ -80,6 +91,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             self.present(self.imagePickerController, animated: true, completion: nil)
         }
         // Second action in list
+        // Please note that you can test the camera only on a real device
         let takePhotoAction = UIAlertAction(title: "Сделать фото", style: .default) { (action:UIAlertAction) in
             // When launched, the device will be asked for permission to use the camera
             
