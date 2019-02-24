@@ -12,10 +12,10 @@ import AVFoundation
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     // MARK: Outlets
-    @IBOutlet weak var editButton: UIButton?
-    @IBOutlet weak var userPhoto: UIImageView!
-    @IBOutlet weak var cameraButton: UIButton!
-
+    @IBOutlet var editButton: UIButton?
+    @IBOutlet var userPhoto: UIImageView!
+    @IBOutlet var cameraButton: UIButton!
+    
     @IBOutlet weak var descriptionLabel: UILabel!
     let imagePickerController = UIImagePickerController()
     
@@ -92,11 +92,21 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
         // Second action in list
         // Please note that you can test the camera only on a real device
-        let takePhotoAction = UIAlertAction(title: "Сделать фото", style: .default) { (action:UIAlertAction) in
+        let takePhotoAction = UIAlertAction(title: "Сделать фото", style: .default) { (action: UIAlertAction) in
             // When launched, the device will be asked for permission to use the camera
-            
-            self.imagePickerController.sourceType = .camera
-            self.present(self.imagePickerController, animated: true, completion: nil)
+            if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
+                self.imagePickerController.sourceType = .camera
+                self.present(self.imagePickerController, animated: true, completion: nil)
+            }
+            else {
+                let alertController = UIAlertController.init(title: nil, message: "Камера не поддерживается на данном устройстве", preferredStyle: .alert)
+                
+                let okAction = UIAlertAction.init(title: "ОК", style: .default, handler: {(alert: UIAlertAction!) in
+                })
+                
+                alertController.addAction(okAction)
+                self.present(alertController, animated: true, completion: nil)
+            }
         }
         alert.addAction(choosePhotoAction)
         alert.addAction(takePhotoAction)
@@ -121,4 +131,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         dismiss(animated: true, completion: nil)
     }
 
+    // Returns user to main screen
+    @IBAction func goBackToChatWindowsButtonClicked(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
 }
