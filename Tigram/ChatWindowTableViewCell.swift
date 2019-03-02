@@ -22,10 +22,31 @@ class ChatWindowTableViewCell: UITableViewCell, ConversationCellConfiguration {
     @IBOutlet var messageLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     
-    var name: String?
+    var name: String? {
+        didSet {
+            self.nameLabel.text = self.name
+        }
+    }
     var message: String?
-    var date: Date? 
-    var online: Bool = true
+    var date: Date? {
+        didSet {
+            // Converts message's date to string
+            dateLabel.text = convertGivenDateToString(self.date!)
+        }
+    }
+    var online: Bool = true {
+        didSet {
+            // Changes background to light yellow if user online
+            if (self.online) {
+                // Light yellow color
+                self.backgroundColor = UIColor(red: 255 / 256.0, green: 243 / 256.0, blue: 188 / 256.0, alpha: 1)
+            }
+            else {
+                self.backgroundColor = UIColor.white
+            }
+        }
+    }
+    
     var hasUnreadMessages: Bool = true
     
     override func awakeFromNib() {
@@ -46,19 +67,6 @@ class ChatWindowTableViewCell: UITableViewCell, ConversationCellConfiguration {
         self.online = online
         self.hasUnreadMessages = hasUnreadMessages
         
-        // Sets name
-        nameLabel.text = self.name!
-        
-        // Changes background to light yellow if user online
-        if (self.online) {
-            // Light yellow color
-            self.backgroundColor = UIColor(red: 255 / 256.0, green: 243 / 256.0, blue: 188 / 256.0, alpha: 1)
-        }
-        else {
-            self.backgroundColor = UIColor.white
-        }
-        
-        
         // Adds user's message
         if let messageDetail = self.message {
             messageLabel.text = messageDetail
@@ -75,9 +83,6 @@ class ChatWindowTableViewCell: UITableViewCell, ConversationCellConfiguration {
             messageLabel.text = "No messages yet."
             messageLabel.font = UIFont(name: "Noteworthy", size: 14.0)
         }
-        
-        // Converts message's date to string
-        dateLabel.text = convertGivenDateToString(self.date!)
     }
     
     func convertGivenDateToString(_ date: Date) -> String {

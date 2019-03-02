@@ -15,9 +15,13 @@ protocol MessageCellConfiguration: class {
 class MessageTableViewCell: UITableViewCell, MessageCellConfiguration {
     
     @IBOutlet weak var messageLabel: UILabel!
-    
     @IBOutlet weak var messageView: UIView!
-    var Text: String?
+    
+    var Text: String? {
+        didSet {
+            self.messageLabel.text = self.Text
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,6 +35,5 @@ class MessageTableViewCell: UITableViewCell, MessageCellConfiguration {
     func configureMessage(withText text: String) {
         self.Text = text
         messageView.layer.cornerRadius = 15
-        messageLabel.text = text
     }
 }

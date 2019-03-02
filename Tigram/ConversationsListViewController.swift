@@ -139,7 +139,7 @@ extension ConversationsListViewController: UITableViewDataSource {
     
     // Creates a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Chat Window", for: indexPath) as! ChatWindowTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Chat Window", for: indexPath) as? ChatWindowTableViewCell ?? ChatWindowTableViewCell()
         
         cell.configureChatWindowCellWithData(userName: usersNames[indexPath.section * 10 + indexPath.row], message: usersMessages[indexPath.section * 10 + indexPath.row],
                                              date: usersMessagesDates[indexPath.section * 10 + indexPath.row],
