@@ -11,6 +11,7 @@ import UIKit
 class ConversationViewController: UIViewController {
     
     @IBOutlet var tableView: UITableView!
+    var lastColorOfNavigationBar: UIColor?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +19,12 @@ class ConversationViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.tableView.dataSource = self
         self.tableView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        lastColorOfNavigationBar = navigationController?.navigationBar.backgroundColor
+        navigationController?.navigationBar.backgroundColor = UIColor.white
     }
     
     let chatMessages: [String] = ["It is a period of civil war.",
@@ -29,16 +36,6 @@ class ConversationViewController: UIViewController {
                                   "Evading the dreaded Imperial Starfleet, a group of freedom fighters led by Luke Skywalker has established a new secret base on the remote ice world of Hoth.",
                                    "The evil lord Darth Vader.",
                                    "Obsessed with finding young Skywalker, has dispatched thousands of remote probes into the far reaches of space."]
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
@@ -60,7 +57,22 @@ extension ConversationViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! MessageTableViewCell
         
         cell.configureMessage(withText: chatMessages[indexPath.row])
+        updateCellWithCurrentTheme(cell)
         return cell
     }
     
+    func updateCellWithCurrentTheme(_ cell: MessageTableViewCell) {
+        let themeName = UserDefaults.standard.string(forKey: "Theme")
+        switch themeName {
+        case "light":
+            cell.backgroundColor = UIColor.white
+        case "dark":
+            cell.backgroundColor = UIColor.init(red: 83 / 256.0, green: 103 / 256.0, blue: 120 / 256.0, alpha: 1.0)
+            
+        case "champagne":
+            cell.backgroundColor = UIColor.init(red: 244 / 256.0, green: 217 / 256.0, blue: 73 / 256.0, alpha: 1.0)
+        default:
+            NSLog("No valid name for theme")
+        }
+    }
 }

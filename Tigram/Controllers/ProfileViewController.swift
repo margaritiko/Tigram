@@ -47,13 +47,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         // Обрабатывать значения геометрии в данном методе нельзя, так как они еще некорректны
         // Все constraints не установлены, поэтому текущее значение frame считается без их учета и неверно
-        print("editButton.frame in \(#function): \(editButton!.frame)")
+        // print("editButton.frame in \(#function): \(editButton!.frame)")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         // На данном этапе все constraints установлены
         // Значение frame отличается от предыдущего, так как оно уже корректно и рассчитано с учетом всех constraints уже для той модели iPhone, на которой запускается приложение
-        print("editButton.frame in \(#function): \(editButton!.frame)")
+        // print("editButton.frame in \(#function): \(editButton!.frame)")
     }
     
     override func viewDidLayoutSubviews() {
@@ -79,7 +79,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: Actions
     @IBAction func cameraButtonClicked(_ sender: Any) {
-        print("Выбери изображение профиля")
+        // print("Выбери изображение профиля")
         self.present(self.alert, animated: true, completion: nil)
     }
     
@@ -116,6 +116,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: UIImagePickerControllerDelegate
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        userPhoto.image = nil
         dismiss(animated: true, completion: nil)
     }
     

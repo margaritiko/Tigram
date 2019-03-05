@@ -37,11 +37,7 @@ class ChatWindowTableViewCell: UITableViewCell, ConversationCellConfiguration {
     var online: Bool = true {
         didSet {
             // Changes background to light yellow if user online
-            if (self.online) {
-                // Light yellow color
-                self.backgroundColor = UIColor(red: 255 / 256.0, green: 243 / 256.0, blue: 188 / 256.0, alpha: 1)
-            }
-            else {
+            if (!self.online) {
                 self.backgroundColor = UIColor.white
             }
         }
@@ -96,5 +92,20 @@ class ChatWindowTableViewCell: UITableViewCell, ConversationCellConfiguration {
         }
         let dayAndMonth = dateFormatter.string(from: date)
         return dayAndMonth
+    }
+    
+    func configureCellWithCurrentThemes(color: String) {
+        if (self.online) {
+            switch color {
+            case "light":
+                self.backgroundColor = UIColor(red: 58 / 256.0, green: 123 / 256.0, blue: 240 / 256.0, alpha: 0.25)
+            case "dark":
+                self.backgroundColor = UIColor(red: 83 / 256.0, green: 103 / 256.0, blue: 120 / 256.0, alpha: 0.5)
+            case "champagne":
+                self.backgroundColor = UIColor(red: 244 / 256.0, green: 217 / 256.0, blue: 73 / 256.0, alpha: 0.5)
+            default:
+                self.backgroundColor = UIColor.lightGray
+            }
+        }
     }
 }

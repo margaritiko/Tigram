@@ -10,6 +10,7 @@ import UIKit
 
 class ConversationsListViewController: UIViewController {
     
+    
     // MARK: Data
     let sectionsTitles: [String] = ["Online", "History"]
     
@@ -89,6 +90,30 @@ class ConversationsListViewController: UIViewController {
         setUpNavigationBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let themeName = UserDefaults.standard.string(forKey: "Theme")
+        switch themeName {
+        case "light":
+            navigationController?.navigationBar.backgroundColor = UIColor.white
+            UINavigationBar.appearance().backgroundColor = UIColor.white
+            self.view.backgroundColor = UIColor.white
+        case "dark":
+            let darkColorForTheme = UIColor.init(red: 83 / 256.0, green: 103 / 256.0, blue: 120 / 256.0, alpha: 1.0)
+            navigationController?.navigationBar.backgroundColor = darkColorForTheme
+            UINavigationBar.appearance().backgroundColor = darkColorForTheme
+            self.view.backgroundColor = darkColorForTheme
+        case "champagne":
+            let champagneColorForTheme = UIColor.init(red: 244 / 256.0, green: 217 / 256.0, blue: 73 / 256.0, alpha: 1.0)
+            navigationController?.navigationBar.backgroundColor = champagneColorForTheme
+            UINavigationBar.appearance().backgroundColor = champagneColorForTheme
+            self.view.backgroundColor = champagneColorForTheme
+        default:
+            NSLog("No valid name for theme")
+        }
+        tableView.reloadData()
+    }
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -97,8 +122,20 @@ class ConversationsListViewController: UIViewController {
             let conversationViewController = segue.destination as? ConversationViewController
             conversationViewController?.title = cell?.name
         }
+        else if (segue.identifier == "Open Themes") {
+            let themesViewController = segue.destination as? ThemesViewController
+            themesViewController?.delegate = self
+            themesViewController?.closureForSettingNewTheme = {(color, viewController) in
+                if let colorForChosenTheme = color {
+                    self.logThemeChanging(selectedTheme: colorForChosenTheme)
+                    UINavigationBar.appearance().backgroundColor = colorForChosenTheme
+                    self.view.backgroundColor = colorForChosenTheme
+                    viewController?.view.backgroundColor = colorForChosenTheme
+                }
+            }
+        }
     }
-    
+
 
     func setUpNavigationBar() {
         
@@ -108,7 +145,19 @@ class ConversationsListViewController: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
-        // navigationItem.largeTitleDisplayMode = .never
+    }
+    
+    func logThemeChanging(selectedTheme: UIColor) {
+        print("COLOR: \(selectedTheme)")
+    }
+}
+
+
+extension ConversationsListViewController: ThemesViewControllerDelegate {
+    func themesViewController(_ controller: ThemesViewController!, didSelectTheme selectedTheme: UIColor!) {
+        self.logThemeChanging(selectedTheme: selectedTheme)
+        UINavigationBar.appearance().backgroundColor = selectedTheme
+        self.view.backgroundColor = selectedTheme
     }
 }
 
@@ -145,6 +194,8 @@ extension ConversationsListViewController: UITableViewDataSource {
                                              date: usersMessagesDates[indexPath.section * 10 + indexPath.row],
                                              isOnline: indexPath.section == 0 ? true : false,
                                              hasUnreadMessages: indexPath.row % 2 == 0 ? true : false)
+
+        cell.configureCellWithCurrentThemes(color: UserDefaults.standard.string(forKey: "Theme") ?? "light")
         return cell
     }
 
