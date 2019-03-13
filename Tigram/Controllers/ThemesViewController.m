@@ -89,21 +89,36 @@
 - (IBAction) lightThemeButtonClicked:(UIButton *)sender {
     self.view.backgroundColor = [self.model light];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:@"light" forKey:@"Theme"];
+    
+    dispatch_queue_t globalUserInitiatedQueue = dispatch_get_global_queue(NSQualityOfServiceUserInitiated, 0);
+    dispatch_sync(globalUserInitiatedQueue, ^(void) {
+        [userDefaults setObject:@"light" forKey:@"Theme"];
+    });
+    
     [_delegate themesViewController:self didSelectTheme:[self.model light]];
 }
 
 - (IBAction) darkThemeButtonClicked:(UIButton *)sender {
     self.view.backgroundColor = [self.model dark];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:@"dark" forKey:@"Theme"];
+    
+    dispatch_queue_t globalUserInitiatedQueue = dispatch_get_global_queue(NSQualityOfServiceUserInitiated, 0);
+    dispatch_sync(globalUserInitiatedQueue, ^(void) {
+        [userDefaults setObject:@"dark" forKey:@"Theme"];
+    });
+    
     [_delegate themesViewController:self didSelectTheme:[self.model dark]];
 }
 
 - (IBAction) champagneThemeButtonClicked:(UIButton *)sender {
     self.view.backgroundColor = [self.model champagne];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:@"champagne" forKey:@"Theme"];
+   
+    dispatch_queue_t globalUserInitiatedQueue = dispatch_get_global_queue(NSQualityOfServiceUserInitiated, 0);
+    dispatch_sync(globalUserInitiatedQueue, ^(void) {
+        [userDefaults setObject:@"champagne" forKey:@"Theme"];
+    });
+    
     [_delegate themesViewController:self didSelectTheme:[self.model champagne]];
 }
 

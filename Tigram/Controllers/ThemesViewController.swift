@@ -6,6 +6,7 @@
 //  Copyright © 2019 Margarita Konnova. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 // For compatibility with Objective-C class
@@ -56,16 +57,24 @@ class ThemesViewController: UIViewController {
     
     @IBAction func lightThemeButtonClicked(_ sender: Any) {
         closureForSettingNewTheme?(model?.light, self)
-        UserDefaults.standard.set("light", forKey: "Theme")
+        
+        // The priority is selected, which is used for tasks that take some time to complete and do not require immediate feedback
+        DispatchQueue.global(qos: .utilities).async {
+            UserDefaults.standard.set("light", forKey: "Theme")
+        }
     }
     
     @IBAction func darkThemeButtonClicked(_ sender: Any) {
         closureForSettingNewTheme?(model?.dark, self)
-        UserDefaults.standard.set("dark", forKey: "Theme")
+        DispatchQueue.global(qos: .utilities).async {
+            UserDefaults.standard.set("dark", forKey: "Theme")
+        }
     }
     
     @IBAction func champagneThemeButtonClicked(_ sender: Any) {
         closureForSettingNewTheme?(model?.champagne, self)
-        UserDefaults.standard.set("champagne", forKey: "Theme")
+        DispatchQueue.global(qos: .utilities).async {
+            UserDefaults.standard.set("champagne", forKey: "Theme")
+        }
     }
 }

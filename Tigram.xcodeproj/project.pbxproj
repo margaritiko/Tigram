@@ -17,6 +17,11 @@
 		5C4AACFB222292C400EAB2ED /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AACFA222292C400EAB2ED /* ConversationViewController.swift */; };
 		5C6284752221AE6900726D44 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6284742221AE6900726D44 /* ConversationsListViewController.swift */; };
 		5C6284782221B10200726D44 /* ChatWindowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6284762221B10200726D44 /* ChatWindowTableViewCell.swift */; };
+		5C6BE14322383B4000C7819D /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14222383B4000C7819D /* GCDDataManager.swift */; };
+		5C6BE14522383B4E00C7819D /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14422383B4E00C7819D /* OperationDataManager.swift */; };
+		5C6BE14722383C6500C7819D /* DataManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14622383C6500C7819D /* DataManagerProtocol.swift */; };
+		5C6BE14922384B6100C7819D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14822384B6100C7819D /* User.swift */; };
+		5C6BE14B22384B8100C7819D /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14A22384B8100C7819D /* UserManager.swift */; };
 		5CFB068F222E96C600AB54EB /* ThemesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C02DDB5222B38D80038E4CF /* ThemesViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +44,11 @@
 		5C4AACFA222292C400EAB2ED /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		5C6284742221AE6900726D44 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
 		5C6284762221B10200726D44 /* ChatWindowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWindowTableViewCell.swift; sourceTree = "<group>"; };
+		5C6BE14222383B4000C7819D /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
+		5C6BE14422383B4E00C7819D /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
+		5C6BE14622383C6500C7819D /* DataManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerProtocol.swift; sourceTree = "<group>"; };
+		5C6BE14822384B6100C7819D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		5C6BE14A22384B8100C7819D /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +84,11 @@
 				5C3874E82222AFF50041E5F3 /* MessageTableViewCell.swift */,
 				5C02DDB7222B393F0038E4CF /* Themes.h */,
 				5C02DDB8222B39490038E4CF /* Themes.m */,
+				5C6BE14222383B4000C7819D /* GCDDataManager.swift */,
+				5C6BE14422383B4E00C7819D /* OperationDataManager.swift */,
+				5C6BE14622383C6500C7819D /* DataManagerProtocol.swift */,
+				5C6BE14822384B6100C7819D /* User.swift */,
+				5C6BE14A22384B8100C7819D /* UserManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -189,11 +204,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C02DDB9222B39490038E4CF /* Themes.m in Sources */,
+				5C6BE14522383B4E00C7819D /* OperationDataManager.swift in Sources */,
 				5C077C9922105C550081F3DD /* ProfileViewController.swift in Sources */,
+				5C6BE14B22384B8100C7819D /* UserManager.swift in Sources */,
+				5C6BE14722383C6500C7819D /* DataManagerProtocol.swift in Sources */,
 				5C077C9722105C550081F3DD /* AppDelegate.swift in Sources */,
 				5C4AACFB222292C400EAB2ED /* ConversationViewController.swift in Sources */,
 				5C6284752221AE6900726D44 /* ConversationsListViewController.swift in Sources */,
 				5C6284782221B10200726D44 /* ChatWindowTableViewCell.swift in Sources */,
+				5C6BE14922384B6100C7819D /* User.swift in Sources */,
+				5C6BE14322383B4000C7819D /* GCDDataManager.swift in Sources */,
 				5CFB068F222E96C600AB54EB /* ThemesViewController.m in Sources */,
 				5C3874E92222AFF50041E5F3 /* MessageTableViewCell.swift in Sources */,
 			);

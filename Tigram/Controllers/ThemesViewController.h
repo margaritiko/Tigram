@@ -18,7 +18,7 @@
 // Not retained, when setting the delegate property, just simply assigned.
 @property (assign, nonatomic) id <ThemesViewControllerDelegate> delegate;
 @property (retain, nonatomic) Themes * model;
-// For compatibility with Swift class
+// Just for compatibility with Swift class
 @property (assign, nonatomic) void (^closureForSettingNewTheme)(UIColor * color, UIViewController * vc);
 
 @end
