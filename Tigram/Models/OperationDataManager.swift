@@ -47,7 +47,6 @@ class OperationDataManager: DataManagerProtocol {
     func saveGivenUser(user: User, completion: @escaping (Bool) -> ()) {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 3
-        
         let saveOperation = SaveOperation(user: user, completion: completion)
         saveOperation.completionBlock = {
             print("Saved all data (Operation)")

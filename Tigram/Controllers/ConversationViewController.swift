@@ -65,12 +65,11 @@ extension ConversationViewController: UITableViewDataSource {
         let themeName = UserDefaults.standard.string(forKey: "Theme")
         switch themeName {
         case "light":
-            cell.backgroundColor = UIColor.white
+            cell.backgroundColor = ThemeManager().light
         case "dark":
-            cell.backgroundColor = UIColor.init(red: 83 / 256.0, green: 103 / 256.0, blue: 120 / 256.0, alpha: 1.0)
-            
+            cell.backgroundColor = ThemeManager().dark
         case "champagne":
-            cell.backgroundColor = UIColor.init(red: 244 / 256.0, green: 217 / 256.0, blue: 73 / 256.0, alpha: 1.0)
+            cell.backgroundColor = ThemeManager().champagne
         default:
             NSLog("No valid name for theme")
         }

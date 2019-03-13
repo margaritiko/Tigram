@@ -94,24 +94,9 @@ class ConversationsListViewController: UIViewController {
         super.viewWillAppear(animated)
         
         let themeName = UserDefaults.standard.string(forKey: "Theme")
-        switch themeName {
-        case "light":
-            navigationController?.navigationBar.backgroundColor = UIColor.white
-            UINavigationBar.appearance().backgroundColor = UIColor.white
-            self.view.backgroundColor = UIColor.white
-        case "dark":
-            let darkColorForTheme = UIColor.init(red: 83 / 256.0, green: 103 / 256.0, blue: 120 / 256.0, alpha: 1.0)
-            navigationController?.navigationBar.backgroundColor = darkColorForTheme
-            UINavigationBar.appearance().backgroundColor = darkColorForTheme
-            self.view.backgroundColor = darkColorForTheme
-        case "champagne":
-            let champagneColorForTheme = UIColor.init(red: 244 / 256.0, green: 217 / 256.0, blue: 73 / 256.0, alpha: 1.0)
-            navigationController?.navigationBar.backgroundColor = champagneColorForTheme
-            UINavigationBar.appearance().backgroundColor = champagneColorForTheme
-            self.view.backgroundColor = champagneColorForTheme
-        default:
-            NSLog("No valid name for theme")
-        }
+        ThemeManager().setTheme(themeName: themeName ?? "light", navigationController: navigationController)
+        self.view.backgroundColor = ThemeManager().getColorForName(themeName ?? "light")
+        
         tableView.reloadData()
     }
     

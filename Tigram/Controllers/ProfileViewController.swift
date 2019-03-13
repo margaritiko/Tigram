@@ -178,9 +178,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         // Set new user's photo
         userPhoto.image = selectedImage
         user.photo = selectedImage
+        user.isPhotoChanged = true
         if (!isItPossibleToSaveData) {
             setAbilityToSave()
-            user.isPhotoChanged = true
         }
         // Dismiss the picker
         dismiss(animated: true, completion: nil)
@@ -214,8 +214,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @IBAction func textInNameTextFieldDidChanged(_ sender: Any) {
-        if (!isItPossibleToSaveData && nameTextField.text != nameValueBeforeEditing) {
-            setAbilityToSave()
+        if (nameTextField.text != nameValueBeforeEditing) {
+            if (!isItPossibleToSaveData) {
+                setAbilityToSave()
+            }
             user.isNameChanged = true
         }
         user.name = nameTextField.text
@@ -371,8 +373,10 @@ extension ProfileViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         descriptionTextView.textColor = UIColor.black
-        if (!isItPossibleToSaveData && descriptionTextView.text != descriptionValueBeforeEditing) {
-            setAbilityToSave()
+        if (descriptionTextView.text != descriptionValueBeforeEditing) {
+            if (!isItPossibleToSaveData) {
+                setAbilityToSave()
+            }
             user.isDescriptionChanged = true
             user.userDescription = descriptionTextView.text
         }

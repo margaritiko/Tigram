@@ -22,6 +22,7 @@
 		5C6BE14722383C6500C7819D /* DataManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14622383C6500C7819D /* DataManagerProtocol.swift */; };
 		5C6BE14922384B6100C7819D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14822384B6100C7819D /* User.swift */; };
 		5C6BE14B22384B8100C7819D /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14A22384B8100C7819D /* UserManager.swift */; };
+		5C6BE16D223996B900C7819D /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE16C223996B900C7819D /* ThemeManager.swift */; };
 		5CFB068F222E96C600AB54EB /* ThemesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C02DDB5222B38D80038E4CF /* ThemesViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		5C6BE14622383C6500C7819D /* DataManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerProtocol.swift; sourceTree = "<group>"; };
 		5C6BE14822384B6100C7819D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5C6BE14A22384B8100C7819D /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		5C6BE16C223996B900C7819D /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				5C6BE14622383C6500C7819D /* DataManagerProtocol.swift */,
 				5C6BE14822384B6100C7819D /* User.swift */,
 				5C6BE14A22384B8100C7819D /* UserManager.swift */,
+				5C6BE16C223996B900C7819D /* ThemeManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 				5C6BE14322383B4000C7819D /* GCDDataManager.swift in Sources */,
 				5CFB068F222E96C600AB54EB /* ThemesViewController.m in Sources */,
 				5C3874E92222AFF50041E5F3 /* MessageTableViewCell.swift in Sources */,
+				5C6BE16D223996B900C7819D /* ThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

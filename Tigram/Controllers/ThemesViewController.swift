@@ -20,16 +20,10 @@ class ThemesViewController: UIViewController {
     // For compatibility with Objective-C class
     var delegate: UIViewController?
     var closureForSettingNewTheme: ((_ color: UIColor?, _ viewController: UIViewController?) -> Void)?
-    var model: Themes?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         NSLog("ThemesViewController: Swift")
-
-        let lightColor: UIColor = .white
-        let darkColor: UIColor = UIColor.init(red: 83 / 256.0, green: 103 / 256.0, blue: 120 / 256.0, alpha: 1.0)
-        let champagneColor: UIColor = UIColor.init(red: 244 / 256.0, green: 217 / 256.0, blue: 73 / 256.0, alpha: 1.0)
-        model = Themes(themesWithFirstColor: lightColor, secondColor: darkColor, thirdColor: champagneColor)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,13 +32,11 @@ class ThemesViewController: UIViewController {
         let themeName = UserDefaults.standard.string(forKey: "Theme")
         switch themeName {
         case "light":
-            self.view.backgroundColor = UIColor.white
+            self.view.backgroundColor = ThemeManager().light
         case "dark":
-            // let darkColorForTheme = UIColor.init(red: 83 / 256.0, green: 103 / 256.0, blue: 120 / 256.0, alpha: 1.0)
-            self.view.backgroundColor = model?.dark
+            self.view.backgroundColor = ThemeManager().dark
         case "champagne":
-            // let champagneColorForTheme = UIColor.init(red: 244 / 256.0, green: 217 / 256.0, blue: 73 / 256.0, alpha: 1.0)
-            self.view.backgroundColor = model?.champagne
+            self.view.backgroundColor = ThemeManager().champagne
         default:
             NSLog("No valid name for theme")
         }
