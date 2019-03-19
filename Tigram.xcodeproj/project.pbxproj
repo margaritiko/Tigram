@@ -23,6 +23,12 @@
 		5C6BE14922384B6100C7819D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14822384B6100C7819D /* User.swift */; };
 		5C6BE14B22384B8100C7819D /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14A22384B8100C7819D /* UserManager.swift */; };
 		5C6BE16D223996B900C7819D /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE16C223996B900C7819D /* ThemeManager.swift */; };
+		5CA40DBA223ECB0700065200 /* MultipeerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DB9223ECB0700065200 /* MultipeerCommunicator.swift */; };
+		5CA40DBC223ECB2100065200 /* CommunicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DBB223ECB2100065200 /* CommunicationDelegate.swift */; };
+		5CA40DBE223ECB3800065200 /* CommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DBD223ECB3800065200 /* CommunicationManager.swift */; };
+		5CA40DC1223ECB6B00065200 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DC0223ECB6B00065200 /* Conversation.swift */; };
+		5CA40DC3223ECB8800065200 /* ConversationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DC2223ECB8800065200 /* ConversationManager.swift */; };
+		5CA40DC5223ECBAB00065200 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DC4223ECBAB00065200 /* Message.swift */; };
 		5CFB068F222E96C600AB54EB /* ThemesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C02DDB5222B38D80038E4CF /* ThemesViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +57,12 @@
 		5C6BE14822384B6100C7819D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5C6BE14A22384B8100C7819D /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		5C6BE16C223996B900C7819D /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		5CA40DB9223ECB0700065200 /* MultipeerCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerCommunicator.swift; sourceTree = "<group>"; };
+		5CA40DBB223ECB2100065200 /* CommunicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationDelegate.swift; sourceTree = "<group>"; };
+		5CA40DBD223ECB3800065200 /* CommunicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationManager.swift; sourceTree = "<group>"; };
+		5CA40DC0223ECB6B00065200 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		5CA40DC2223ECB8800065200 /* ConversationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManager.swift; sourceTree = "<group>"; };
+		5CA40DC4223ECBAB00065200 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,11 +82,8 @@
 				5C077C9822105C550081F3DD /* ProfileViewController.swift */,
 				5C6284742221AE6900726D44 /* ConversationsListViewController.swift */,
 				5C4AACFA222292C400EAB2ED /* ConversationViewController.swift */,
-				5C02DDAD222B2AD90038E4CF /* ThemesViewController.h */,
-				5C02DDB5222B38D80038E4CF /* ThemesViewController.m */,
+				5CA40DB7223ECAA000065200 /* ThemeControllers */,
 				5C02DDB4222B38D80038E4CF /* Tigram-Bridging-Header.h */,
-				5C02DDBA222B3AB70038E4CF /* ThemesViewControllerDelegate.h */,
-				5C348416222E739F00020CC8 /* ThemesViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -82,16 +91,12 @@
 		5C02DDAB222B29EC0038E4CF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				5C6284762221B10200726D44 /* ChatWindowTableViewCell.swift */,
-				5C3874E82222AFF50041E5F3 /* MessageTableViewCell.swift */,
-				5C02DDB7222B393F0038E4CF /* Themes.h */,
-				5C02DDB8222B39490038E4CF /* Themes.m */,
-				5C6BE14222383B4000C7819D /* GCDDataManager.swift */,
-				5C6BE14422383B4E00C7819D /* OperationDataManager.swift */,
-				5C6BE14622383C6500C7819D /* DataManagerProtocol.swift */,
-				5C6BE14822384B6100C7819D /* User.swift */,
-				5C6BE14A22384B8100C7819D /* UserManager.swift */,
-				5C6BE16C223996B900C7819D /* ThemeManager.swift */,
+				5CA40DBF223ECB5700065200 /* Conversation */,
+				5CA40DB8223ECAD100065200 /* Communication */,
+				5CA40DB3223ECA6800065200 /* Cells */,
+				5CA40DB4223ECA7900065200 /* Theme */,
+				5CA40DB5223ECA8200065200 /* DataManagers & Multithreading */,
+				5CA40DB6223ECA9400065200 /* User */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -134,6 +139,75 @@
 			path = Tigram;
 			sourceTree = "<group>";
 		};
+		5CA40DB3223ECA6800065200 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5C6284762221B10200726D44 /* ChatWindowTableViewCell.swift */,
+				5C3874E82222AFF50041E5F3 /* MessageTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		5CA40DB4223ECA7900065200 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				5C02DDB7222B393F0038E4CF /* Themes.h */,
+				5C02DDB8222B39490038E4CF /* Themes.m */,
+				5C6BE16C223996B900C7819D /* ThemeManager.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		5CA40DB5223ECA8200065200 /* DataManagers & Multithreading */ = {
+			isa = PBXGroup;
+			children = (
+				5C6BE14222383B4000C7819D /* GCDDataManager.swift */,
+				5C6BE14422383B4E00C7819D /* OperationDataManager.swift */,
+				5C6BE14622383C6500C7819D /* DataManagerProtocol.swift */,
+			);
+			path = "DataManagers & Multithreading";
+			sourceTree = "<group>";
+		};
+		5CA40DB6223ECA9400065200 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				5C6BE14822384B6100C7819D /* User.swift */,
+				5C6BE14A22384B8100C7819D /* UserManager.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		5CA40DB7223ECAA000065200 /* ThemeControllers */ = {
+			isa = PBXGroup;
+			children = (
+				5C02DDAD222B2AD90038E4CF /* ThemesViewController.h */,
+				5C02DDB5222B38D80038E4CF /* ThemesViewController.m */,
+				5C02DDBA222B3AB70038E4CF /* ThemesViewControllerDelegate.h */,
+				5C348416222E739F00020CC8 /* ThemesViewController.swift */,
+			);
+			path = ThemeControllers;
+			sourceTree = "<group>";
+		};
+		5CA40DB8223ECAD100065200 /* Communication */ = {
+			isa = PBXGroup;
+			children = (
+				5CA40DB9223ECB0700065200 /* MultipeerCommunicator.swift */,
+				5CA40DBB223ECB2100065200 /* CommunicationDelegate.swift */,
+				5CA40DBD223ECB3800065200 /* CommunicationManager.swift */,
+			);
+			path = Communication;
+			sourceTree = "<group>";
+		};
+		5CA40DBF223ECB5700065200 /* Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				5CA40DC0223ECB6B00065200 /* Conversation.swift */,
+				5CA40DC2223ECB8800065200 /* ConversationManager.swift */,
+				5CA40DC4223ECBAB00065200 /* Message.swift */,
+			);
+			path = Conversation;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -167,6 +241,14 @@
 					5C077C9222105C550081F3DD = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1010;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+							com.apple.Keychain = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -208,16 +290,22 @@
 			files = (
 				5C02DDB9222B39490038E4CF /* Themes.m in Sources */,
 				5C6BE14522383B4E00C7819D /* OperationDataManager.swift in Sources */,
+				5CA40DBA223ECB0700065200 /* MultipeerCommunicator.swift in Sources */,
 				5C077C9922105C550081F3DD /* ProfileViewController.swift in Sources */,
 				5C6BE14B22384B8100C7819D /* UserManager.swift in Sources */,
 				5C6BE14722383C6500C7819D /* DataManagerProtocol.swift in Sources */,
 				5C077C9722105C550081F3DD /* AppDelegate.swift in Sources */,
+				5CA40DBC223ECB2100065200 /* CommunicationDelegate.swift in Sources */,
 				5C4AACFB222292C400EAB2ED /* ConversationViewController.swift in Sources */,
+				5CA40DBE223ECB3800065200 /* CommunicationManager.swift in Sources */,
 				5C6284752221AE6900726D44 /* ConversationsListViewController.swift in Sources */,
 				5C6284782221B10200726D44 /* ChatWindowTableViewCell.swift in Sources */,
+				5CA40DC3223ECB8800065200 /* ConversationManager.swift in Sources */,
+				5CA40DC1223ECB6B00065200 /* Conversation.swift in Sources */,
 				5C6BE14922384B6100C7819D /* User.swift in Sources */,
 				5C6BE14322383B4000C7819D /* GCDDataManager.swift in Sources */,
 				5CFB068F222E96C600AB54EB /* ThemesViewController.m in Sources */,
+				5CA40DC5223ECBAB00065200 /* Message.swift in Sources */,
 				5C3874E92222AFF50041E5F3 /* MessageTableViewCell.swift in Sources */,
 				5C6BE16D223996B900C7819D /* ThemeManager.swift in Sources */,
 			);
@@ -367,6 +455,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5H7FLBN3TP;
 				INFOPLIST_FILE = Tigram/Info.plist;
@@ -375,8 +464,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tinkoff.fintech.ri.Tigram;
+				PRODUCT_BUNDLE_IDENTIFIER = tinkoff.fintech.ri.Tigramm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tigram/Controllers/Tigram-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -390,6 +480,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5H7FLBN3TP;
 				INFOPLIST_FILE = Tigram/Info.plist;
@@ -398,8 +489,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tinkoff.fintech.ri.Tigram;
+				PRODUCT_BUNDLE_IDENTIFIER = tinkoff.fintech.ri.Tigramm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tigram/Controllers/Tigram-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

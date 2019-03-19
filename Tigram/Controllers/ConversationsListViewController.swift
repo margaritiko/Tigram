@@ -8,78 +8,21 @@
 
 import UIKit
 
+enum SectionList: Int {
+    case onlineSection = 0
+    case historySection
+}
+
 class ConversationsListViewController: UIViewController {
-    
-    
-    // MARK: Data
-    let sectionsTitles: [String] = ["Online", "History"]
-    
-    let usersNames: [String] = ["Padmé Amidala",
-                                "Cassian Andor",
-                                "Cad Bane",
-                                "Commander Bly",
-                                "BB-8",
-                                "C-3PO",
-                                "Jar Jar Binks",
-                                "Lieutenant Kaydel Ko Connix",
-                                "Chewbacca",
-                                "Galen Erso",
-                                "Obi-Wan Kenobi",
-                                "Leia Organa",
-                                "Jyn Erso",
-                                "Jabba the Hutt",
-                                "R2-D2",
-                                "Anakin Skywalker",
-                                "Kylo Ren",
-                                "Han Solo",
-                                "Luke Skywalker",
-                                "Shmi Skywalker"]
-    
-    let usersMessages: [String?] = ["She served as the Princess 👑 of Theed and later Queen of Naboo.",
-                                    "He is a pilot, intelligence officer for the Rebel Alliance, and leader of Rogue One, a rebel unit attempting to steal the plans to the Death Star, a powerful weapon.",
-                                    nil,
-                                    nil,
-                                    "I am a cute droid! 🤤",
-                                    "Protocol droid 👾 who appears throughout the Star Wars films.",
-                                    nil,
-                                    nil,
-                                    "Han Solo's Wookiee partner and co-pilot of the Millennium Falcon.",
-                                    "Imperial research scientist and the father of Jyn Erso in Rogue One and the prequel novel Catalyst: A Rogue One Novel. As prime designer of the Death Star, Erso supplies information on a critical weakness to the Rebellion, allowing an attack on the seemingly-invulnerable battle station.",
-                                    "Wise and skilled Jedi Master who trains Anakin and later Luke Skywalker.",
-                                    "Leader in the Rebel Alliance, the New Republic, and the Resistance.",
-                                    nil,
-                                    nil,
-                                    "Astromech droid built on Naboo",
-                                    "Darth Vader ⚔️",
-                                    nil,
-                                    nil,
-                                    "Son of Anakin Skywalker and Padmé Amidala 💘",
-                                    "Anakin Skywalker's mother ❤️❤️❤️",
-                                    ]
-    
-    let usersMessagesDates: [Date] = [Date(timeIntervalSinceNow: -68820),
-                                      Date(),
-                                      Date(),
-                                      Date(),
-                                      Date(timeIntervalSince1970: 10000),
-                                      Date(timeIntervalSinceReferenceDate: 100000),
-                                      Date(timeIntervalSince1970: 366363),
-                                      Date(timeIntervalSinceReferenceDate: 38383838),
-                                      Date(timeIntervalSinceNow: 10),
-                                      Date(timeIntervalSinceNow: 10),
-                                      Date(),
-                                      Date(),
-                                      Date(),
-                                      Date(),
-                                      Date(timeIntervalSince1970: 3939393763),
-                                      Date(timeIntervalSinceReferenceDate: 35353553),
-                                      Date(timeIntervalSince1970: 2818283663),
-                                      Date(timeIntervalSinceReferenceDate: 446645247),
-                                      Date(timeIntervalSinceNow: 10),
-                                      Date(timeIntervalSinceNow: 10)]
-    
     @IBOutlet var tableView: UITableView!
+    var communicationManager: CommunicationManager?
     
+    // Lists with conversations
+    var allConversations: [[Conversation]] = []
+    var onlineConversations: [Conversation] = []
+    var historyConversations: [Conversation] = []
+    
+    // MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -88,6 +31,10 @@ class ConversationsListViewController: UIViewController {
         self.tableView.delegate = self
         
         setUpNavigationBar()
+        
+        // Inits communicationManager
+        communicationManager = CommunicationManager()
+        communicationManager?.viewDelegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,6 +45,67 @@ class ConversationsListViewController: UIViewController {
         self.view.backgroundColor = ThemeManager().getColorForName(themeName ?? "light")
         
         tableView.reloadData()
+    }
+    
+    
+    
+    // MARK: Other functions
+    
+    // Sorts all conversations in this way:
+    // If both do not have a date, sorting is done by name
+    // If only one has a date, the one who has the date is above
+    // If both have date - sort by date
+    func sortConversations( listToSort: inout [Conversation]) {
+        listToSort.sort(by: {
+            if ($0.allMessagesFromCurrentConversation?.count)! == 0 && ($1.allMessagesFromCurrentConversation?.count)! == 0 {
+                // By name
+                return $0.conversationName ?? "" < $1.conversationName ?? ""
+            }
+            if ($0.allMessagesFromCurrentConversation?.count)! == 0 {
+                return false
+            }
+            if ($1.allMessagesFromCurrentConversation?.count)! == 0 {
+                return true
+            }
+            // By date
+            if $0.dateOfLastMessage?.compare($1.dateOfLastMessage!) == ComparisonResult.orderedAscending {
+                return true
+            }
+            return false
+        })
+    }
+    
+    // Deletes all data from lists with conversations
+    private func clearAllConversations() {
+        allConversations.removeAll()
+        onlineConversations.removeAll()
+        historyConversations.removeAll()
+    }
+    
+    func setTableViewWith(data: [Conversation]) {
+        clearAllConversations()
+        
+        for conversation in data {
+            // Distributes the dialogs into sections
+            if conversation.isInterlocutorOnline == true {
+                onlineConversations.append(conversation)
+            } else {
+                historyConversations.append(conversation)
+            }
+        }
+        
+        // Sorts sections
+        sortConversations(listToSort: &onlineConversations)
+        sortConversations(listToSort: &historyConversations)
+        
+        // Adds conversations from sections to list with all conversations
+        allConversations.append(onlineConversations)
+        allConversations.append(historyConversations)
+        
+        // Reloads table view with new data
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     // MARK: - Navigation
@@ -120,7 +128,6 @@ class ConversationsListViewController: UIViewController {
             }
         }
     }
-
 
     func setUpNavigationBar() {
         
@@ -147,41 +154,114 @@ extension ConversationsListViewController: ThemesViewControllerDelegate {
 }
 
 extension ConversationsListViewController: UITableViewDelegate {
-    
+    // Opens conversations after click
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        guard let cell = tableView.cellForRow(at: indexPath) as? ChatWindowTableViewCell else {
+            return
+        }
+        
+        let nextViewController = storyboard?.instantiateViewController(withIdentifier: "ConversationViewController") as! ConversationViewController
+        
+        // Sets all data to new view controller
+        nextViewController.conversation = cell.conversation
+        print(3)
+        nextViewController.conversation?.hasUnreadMessages = false
+        nextViewController.conversationName = cell.nameLabel.text
+        
+        nextViewController.communicatorManager = self.communicationManager
+        nextViewController.communicatorManager?.conversationDelegate = nextViewController
+        
+        // Pushes new view controller into stack
+        self.navigationController?.pushViewController(nextViewController, animated: true)
+    }
 }
 
 extension ConversationsListViewController: UITableViewDataSource {
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        if section == SectionList.onlineSection.rawValue {
+            return "Online"
+        } else if section == SectionList.historySection.rawValue {
+            return "History"
+        }
+        return nil
+    }
+
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return allConversations[section].count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let currentConversation = allConversations[indexPath.section][indexPath.row]
+        return configureCell(tableView: tableView, model: currentConversation)
+    }
+    
     // There are only two sections: Online and History
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return allConversations.count
     }
     
-    // Returns title for each section
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionsTitles[section]
-    }
-    
-    // Let it be 15 chat windows in each section
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.frame.height * 0.18
-    }
-    
-    // Creates a cell for each table view row
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Chat Window", for: indexPath) as? ChatWindowTableViewCell ?? ChatWindowTableViewCell()
+    // MARK: Configuration of new cell
+    private func configureCell(tableView: UITableView, model: Conversation) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Chat Window") as! ChatWindowTableViewCell
+        cell.nameLabel.text = model.conversationName
+        cell.dateLabel.text = "\(Date.convertDateIntoString(date: model.allMessagesFromCurrentConversation?.last?.date))"
+        cell.conversation = model
+        cell.online = model.isInterlocutorOnline
         
-        cell.configureChatWindowCellWithData(userName: usersNames[indexPath.section * 10 + indexPath.row], message: usersMessages[indexPath.section * 10 + indexPath.row],
-                                             date: usersMessagesDates[indexPath.section * 10 + indexPath.row],
-                                             isOnline: indexPath.section == 0 ? true : false,
-                                             hasUnreadMessages: indexPath.row % 2 == 0 ? true : false)
-
+        if let messages = model.allMessagesFromCurrentConversation, (model.allMessagesFromCurrentConversation?.count)! > 0 {
+            
+            if (model.hasUnreadMessages) {
+                cell.messageLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 14.0)
+            }
+            else {
+                cell.messageLabel.font = UIFont(name:"HelveticaNeue", size: 14.0)
+            }
+            
+            cell.messageLabel.text = messages.last?.messageText
+        } else {
+            cell.messageLabel.text = "No messages yet"
+            cell.messageLabel.font = UIFont(name: "Noteworthy", size: 14.0)
+        }
+        
+        // Another color for online conversations
         cell.configureCellWithCurrentThemes(color: UserDefaults.standard.string(forKey: "Theme") ?? "light")
         return cell
     }
+}
 
+extension ConversationsListViewController: CommunicationManagerProtocol {
+    func didUpdateConversations(conversations: [Conversation]) {
+        setTableViewWith(data: conversations)
+    }
+}
+extension Date {
+    static func convertDateIntoString(date: Date?) -> String {
+    
+        let dateFormatter = DateFormatter()
+        // Sets format
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        
+        guard let _date = date else {
+            return "--:--"
+        }
+        
+        let today = dateFormatter.string(from: Date())
+        let messageDate = dateFormatter.string(from: _date)
+        
+        // Checks if we should change date format
+        if today == messageDate {
+            dateFormatter.dateFormat = "HH:mm"
+        }
+        else {
+            dateFormatter.dateFormat = "dd MMM"
+        }
+        
+        let resultDateString = dateFormatter.string(from: _date)
+        return resultDateString
+    }
 }

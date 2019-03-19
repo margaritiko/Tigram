@@ -17,6 +17,7 @@ protocol ConversationCellConfiguration: class {
 }
 
 class ChatWindowTableViewCell: UITableViewCell, ConversationCellConfiguration {
+    var conversation: Conversation?
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var messageLabel: UILabel!
@@ -28,12 +29,8 @@ class ChatWindowTableViewCell: UITableViewCell, ConversationCellConfiguration {
         }
     }
     var message: String?
-    var date: Date? {
-        didSet {
-            // Converts message's date to string
-            dateLabel.text = convertGivenDateToString(self.date!)
-        }
-    }
+    var date: Date?
+    
     var online: Bool = true {
         didSet {
             // Changes background to light yellow if user online
@@ -54,44 +51,6 @@ class ChatWindowTableViewCell: UITableViewCell, ConversationCellConfiguration {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-    
-    public func configureChatWindowCellWithData(userName name: String, message: String?, date: Date, isOnline online: Bool, hasUnreadMessages: Bool) {
-        self.name = name
-        self.message = message
-        self.date = date
-        self.online = online
-        self.hasUnreadMessages = hasUnreadMessages
-        
-        // Adds user's message
-        if let messageDetail = self.message {
-            messageLabel.text = messageDetail
-            
-            // Makes font bold if user hasn't read message yet
-            if (self.hasUnreadMessages) {
-                messageLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 14.0)
-            }
-            else {
-                messageLabel.font = UIFont(name:"HelveticaNeue", size: 14.0)
-            }
-        }
-        else {
-            messageLabel.text = "No messages yet."
-            messageLabel.font = UIFont(name: "Noteworthy", size: 14.0)
-        }
-    }
-    
-    func convertGivenDateToString(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        if (Calendar.current.compare(Date(), to: date, toGranularity: .day) == .orderedSame) {
-            dateFormatter.dateFormat = "HH:mm"
-            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        }
-        else {
-            dateFormatter.dateFormat = "dd MMM"
-        }
-        let dayAndMonth = dateFormatter.string(from: date)
-        return dayAndMonth
     }
     
     func configureCellWithCurrentThemes(color: String) {
