@@ -26,7 +26,6 @@ class MultipeerCommunicator: NSObject, Communicator {
     // To search for devices
     private let browser: MCNearbyServiceBrowser
     
-    // Sets an alphanumeric string that uniquely identifies a device to the app’s vendor
     private let myPeerId : MCPeerID = MCPeerID(displayName: (UIDevice.current.identifierForVendor?.uuidString)!)
     
     var isOnline: Bool
