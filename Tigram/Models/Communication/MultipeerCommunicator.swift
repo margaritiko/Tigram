@@ -73,7 +73,6 @@ class MultipeerCommunicator: NSObject, Communicator {
             }
         }
         catch {
-            print("Message wasn't send. ERROR: \(error)")
             completionHandler?(false, error)
         }
         
@@ -83,14 +82,6 @@ class MultipeerCommunicator: NSObject, Communicator {
 
 extension MultipeerCommunicator: MCSessionDelegate {
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
-        switch state {
-        case .connected:
-            print("\(peerID) connected")
-        case .notConnected:
-            print("\(peerID) not connected")
-        default:
-            break
-        }
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {

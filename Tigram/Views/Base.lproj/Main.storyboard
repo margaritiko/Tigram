@@ -332,20 +332,8 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0C4-p5-JrU">
                                 <rect key="frame" x="16" y="492" width="288" height="32"/>
                                 <subviews>
-                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aqB-DX-bku">
-                                        <rect key="frame" x="0.0" y="0.0" width="90.5" height="32"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="5"/>
-                                        <inset key="titleEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="5"/>
-                                        <state key="normal" title="GCD">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="gcdButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qqu-NA-F79"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xXk-89-gTL">
-                                        <rect key="frame" x="98.5" y="0.0" width="91" height="32"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="32"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="5"/>
                                         <inset key="titleEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="5"/>
@@ -354,18 +342,6 @@
                                         </state>
                                         <connections>
                                             <action selector="editButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="49w-tZ-MYn"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iDN-MC-SNf">
-                                        <rect key="frame" x="197.5" y="0.0" width="90.5" height="32"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="5"/>
-                                        <inset key="titleEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="5"/>
-                                        <state key="normal" title="Operation">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="operationButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Uz-bq-nVh"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -442,9 +418,7 @@
                         <outlet property="cameraButton" destination="1Y2-eq-jS8" id="2rH-np-jRU"/>
                         <outlet property="descriptionTextView" destination="IeR-lg-NGY" id="Jt7-Yd-41h"/>
                         <outlet property="editButton" destination="xXk-89-gTL" id="mYx-fD-eJP"/>
-                        <outlet property="gcdButton" destination="aqB-DX-bku" id="STS-5q-3ds"/>
                         <outlet property="nameTextField" destination="D6u-hU-6Wv" id="SEg-mh-4KY"/>
-                        <outlet property="operationButton" destination="iDN-MC-SNf" id="xwG-ox-cw7"/>
                         <outlet property="userPhoto" destination="VRb-Tw-Uex" id="PLX-wq-sPB"/>
                     </connections>
                 </viewController>

@@ -9,41 +9,40 @@
 import UIKit
 import AVFoundation
 
-class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UserProfileCoreDataManagerDelegate {
     // Current user
     var user = User()
     
+    // CoreData UserProfileCoreDataManager
+    let userProfileCoreDataManager = UserProfileCoreDataManager()
+    
+    // Titles for editButton
+    let titleForEdit = "Редактировать с CoreData"
+    let titleForSave = "Сохранить при помощи CoreData"
+    
+    // Other fields with information for detecting if there have been any changes
     var descriptionValueBeforeEditing: String?
     var nameValueBeforeEditing: String?
     var isItPossibleToSaveData: Bool = false
     
     // MARK: Outlets
     @IBOutlet var editButton: UIButton!
-    @IBOutlet var gcdButton: UIButton!
-    @IBOutlet var operationButton: UIButton!
     @IBOutlet var userPhoto: UIImageView!
     @IBOutlet var cameraButton: UIButton!
-    
     @IBOutlet var nameTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
+    // UIImagePickerController for choosing new userPhoto
     let imagePickerController = UIImagePickerController()
     
     // The alert allows user to choose between photo library and camera
-    let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    let imagePickerAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
-    // MARK: ViewController life cycle
+    // MARK: ViewController Life Cycle
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
-        // Условие не выполнится:
-        // В данный момент outlets еще не установлены и имеют значение nil
-        // Обращаться к ним нельзя
-        if let editButtonFrame = editButton?.frame {
-            print("editButton.frame in \(#function): \(editButtonFrame)")
-        }
     }
     
     override func viewDidLoad() {
@@ -51,18 +50,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         imagePickerController.delegate = self
         settingUpAnAlert()
+        
         nameTextField.delegate = self
         descriptionTextView.delegate = self
-        
-        // Обрабатывать значения геометрии в данном методе нельзя, так как они еще некорректны
-        // Все constraints не установлены, поэтому текущее значение frame считается без их учета и неверно
-        // print("editButton.frame in \(#function): \(editButton!.frame)")
+        userProfileCoreDataManager.delegate = self
         
         setNonEditableMode()
         setNotificationsForKeyboard()
         
         // All data updates
-        getUpdatesForUser()
+        loadUserProfileDataWithCoreData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -81,8 +78,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         // Default design for all buttons from stack
         setDefaultDesignFor(button: editButton)
-        setDefaultDesignFor(button: gcdButton)
-        setDefaultDesignFor(button: operationButton)
     }
     
     // If the user has clicked anywhere on the screen - remove the keyboard
@@ -157,10 +152,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 self.present(alertController, animated: true, completion: nil)
             }
         }
-        alert.addAction(choosePhotoAction)
-        alert.addAction(takePhotoAction)
+        imagePickerAlert.addAction(choosePhotoAction)
+        imagePickerAlert.addAction(takePhotoAction)
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Закрыть", comment: "Default action"), style: .cancel))
+        imagePickerAlert.addAction(UIAlertAction(title: NSLocalizedString("Закрыть", comment: "Default action"), style: .cancel))
     }
     
     // MARK: UIImagePickerControllerDelegate
@@ -172,7 +167,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else {
-            print("Not an image")
             return
         }
         // Set new user's photo
@@ -193,24 +187,17 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: Actions
     @IBAction func cameraButtonClicked(_ sender: Any) {
-        // print("Выбери изображение профиля")
-        self.present(self.alert, animated: true, completion: nil)
+        self.present(self.imagePickerAlert, animated: true, completion: nil)
     }
     
     @IBAction func editButtonClicked(_ sender: Any) {
-        setEditableMode()
-    }
-    
-    @IBAction func operationButtonClicked(_ sender: Any) {
-        gcdButton.isUserInteractionEnabled = false
-        operationButton.isUserInteractionEnabled = false
-        saveCurrentDataWith(manager: OperationDataManager())
-    }
-    
-    @IBAction func gcdButtonClicked(_ sender: Any) {
-        gcdButton.isUserInteractionEnabled = false
-        operationButton.isUserInteractionEnabled = false
-        saveCurrentDataWith(manager: GCDDataManager())
+        if (editButton.titleLabel?.text == titleForEdit) {
+            setEditableMode()
+        }
+        else {
+            setInabilityToSave()
+            saveUserProfileDataWithCoreData()
+        }
     }
     
     @IBAction func textInNameTextFieldDidChanged(_ sender: Any) {
@@ -223,19 +210,51 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         user.name = nameTextField.text
     }
     
+    // MARK: Work with CoreData
+    
+    func loadUserProfileDataWithCoreData() {
+        let data = self.userProfileCoreDataManager.load()
+        
+        // Where 0 is name, 1 is userDescription and 2 is userPhoto
+        self.nameTextField.text = data?.0
+        self.descriptionTextView.text = data?.1
+        self.userPhoto.image = data?.2
+    }
+    
+    func saveUserProfileDataWithCoreData() {
+        self.userProfileCoreDataManager.save(name: nameTextField.text, userDescription: descriptionTextView.text, photo: userPhoto.image)
+    }
+    
+    // MARK: UserProfileCoreDataManagerDelegate
+    
+    func stopAnimatingActivityIndicator() {
+        self.activityIndicator.stopAnimating()
+        setNonEditableMode()
+    }
+    
+    func startAnimatingActivityIndicator() {
+        self.activityIndicator.startAnimating()
+    }
+
     // MARK: Different modes
     
     func setNonEditableMode() {
         // Hidden buttons
-        gcdButton.isHidden = true
-        operationButton.isHidden = true
         cameraButton.isHidden = true
+        
         // Non editable views
         nameTextField.borderStyle = .none
         nameTextField.isUserInteractionEnabled = false
         descriptionTextView.isUserInteractionEnabled = false
-        // Just Edit button is visible
-        editButton.isHidden = false
+        
+        // Now text of button is "Edit"
+        editButton.setTitle(titleForEdit, for: .normal)
+        
+        // Now we can click on it
+        editButton.isEnabled = true
+        
+        // And also now we see that we can click on it
+        editButton.alpha = 1
     }
     
     func setEditableMode() {
@@ -245,115 +264,35 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         cameraButton.isHidden = false
         setInabilityToSave()
         
-        // Two buttons are visible now
-        editButton.isHidden = true
-        operationButton.isHidden = false
-        gcdButton.isHidden = false
+        // Now button has text "Save"
+        editButton.setTitle(titleForSave, for: .normal)
     }
     
     func setInabilityToSave() {
         isItPossibleToSaveData = false
         
         // You cannot press a button until changes are made
-        gcdButton.isEnabled = false
-        operationButton.isEnabled = false
+        editButton.isEnabled = false
         // Visually, you can understand that the button is inactive.
-        gcdButton.alpha = 0.4
-        operationButton.alpha = 0.4
+        editButton.alpha = 0.4
     }
     
     func setAbilityToSave() {
         isItPossibleToSaveData = true
         
         // Not it is possible to click on button
-        gcdButton.isEnabled = true
-        operationButton.isEnabled = true
-        
+        editButton.isEnabled = true
         // Visually, you can understand that the button is active.
-        gcdButton.alpha = 1
-        operationButton.alpha = 1
+        editButton.alpha = 1
     }
     
-    // MARK: Work with data
-    private func getUpdatesForUser() {
-        // It is possible to use one of managers to update data
-        // GCD Manager
-//        GCDDataManager().loadExistingUser { (userToUpdate) in
-//            if let user = userToUpdate {
-//                self.user = user
-//                self.setUpAllDataInUI(user)
-//            }
-//        }
-//
-        // Or Operation Manager
-//        OperationDataManager().loadExistingUser { (userToUpdate) in
-//            if let user = userToUpdate {
-//                self.user = user
-//                self.setUpAllDataInUI(user)
-//            }
-//        }
-        
-        // You can also call the UserManager method directly
-        DispatchQueue.global(qos: .userInteractive).async {
-            UserManager().getCurrentUser { (userToUpdate) in
-                DispatchQueue.main.async {
-                    if let user = userToUpdate {
-                        self.user = user
-                        self.setUpAllDataInUI(user)
-                    }
-                }
-            }
-        }
-    }
+    // MARK: Showing alerts
     
-    // Updates all UI with new data loaded from files
-    private func setUpAllDataInUI(_ user: User) {
-        
-        nameTextField.text = user.name
-        descriptionTextView.text = user.userDescription
-        userPhoto.image = user.photo
-        
-        if descriptionTextView.text == "" {
-            descriptionTextView.textColor = UIColor.lightGray
-            descriptionTextView.text = "Bio"
-        }
-        
-        if userPhoto.image == nil {
-            userPhoto.image = #imageLiteral(resourceName: "PlaceholderUser")
-        }
-    }
-    
-    func saveCurrentDataWith(manager: DataManagerProtocol) {
-        activityIndicator.startAnimating()
-        
-        manager.saveGivenUser(user: user) { (success) in
-            self.activityIndicator.stopAnimating()
-            
-            if success {
-                self.getUpdatesForUser()
-                self.setNonEditableMode()
-                self.gcdButton.isUserInteractionEnabled = true
-                self.operationButton.isUserInteractionEnabled = true
-                let alertVC = UIAlertController.init(title: nil, message: "Данные сохранены", preferredStyle: .alert)
-                let action = UIAlertAction.init(title: "OK", style: .cancel, handler: nil)
-                alertVC.addAction(action)
-                self.present(alertVC, animated: true, completion: nil)
-            }
-            else {
-                let alertVC = UIAlertController.init(title: "Ошибка", message: "Не удалось сохранить данные", preferredStyle: .alert)
-                let okAction = UIAlertAction.init(title: "OK", style: .cancel) { (action) in
-                    self.gcdButton.isUserInteractionEnabled = true
-                    self.operationButton.isUserInteractionEnabled = true
-                }
-                let tryAgainAction = UIAlertAction.init(title: "Повторить", style: .default) { (action) in
-                    self.saveCurrentDataWith(manager: manager)
-                }
-                
-                alertVC.addAction(okAction)
-                alertVC.addAction(tryAgainAction)
-                self.present(alertVC, animated: true, completion: nil)
-            }
-        }
+    func showAlertForUserWith(title: String, message: String?) {
+        let alertVC = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction.init(title: "OK", style: .cancel, handler: nil)
+        alertVC.addAction(action)
+        self.present(alertVC, animated: true, completion: nil)
     }
 }
 

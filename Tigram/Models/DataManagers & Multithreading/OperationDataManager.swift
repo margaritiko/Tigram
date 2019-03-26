@@ -48,9 +48,7 @@ class OperationDataManager: DataManagerProtocol {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 3
         let saveOperation = SaveOperation(user: user, completion: completion)
-        saveOperation.completionBlock = {
-            print("Saved all data (Operation)")
-        }
+        
         queue.addOperation(saveOperation)
     }
     
@@ -59,9 +57,7 @@ class OperationDataManager: DataManagerProtocol {
         queue.maxConcurrentOperationCount = 3
 
         let loadOperation = LoadOperation(completion: completion)
-        loadOperation.completionBlock = {
-            print("Loaded all data (Operation)")
-        }
+        
         queue.addOperation(loadOperation)
     }
 }

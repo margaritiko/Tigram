@@ -47,8 +47,6 @@ class ConversationsListViewController: UIViewController {
         tableView.reloadData()
     }
     
-    
-    
     // MARK: Other functions
     
     // Sorts all conversations in this way:
@@ -166,7 +164,6 @@ extension ConversationsListViewController: UITableViewDelegate {
         
         // Sets all data to new view controller
         nextViewController.conversation = cell.conversation
-        print(3)
         nextViewController.conversation?.hasUnreadMessages = false
         nextViewController.conversationName = cell.nameLabel.text
         

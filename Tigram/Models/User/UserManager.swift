@@ -78,7 +78,7 @@ class UserManager {
         user.isPhotoChanged = true
         user.isDescriptionChanged = true
         user.isNameChanged = true
-        saveGivenUser(user: user) { (success) in print("Save default user: \(success)") }
+        saveGivenUser(user: user) { (success) in print() }
         
         return user
     }
