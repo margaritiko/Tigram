@@ -23,8 +23,10 @@ extension UserProfileData {
     // Creating default data for empty user
     static func insertUserProfileData(in context: NSManagedObjectContext) -> UserProfileData? {
         if let userProfileData = NSEntityDescription.insertNewObject(forEntityName: "UserProfileData", into: context) as? UserProfileData {
-            userProfileData.name = "Name"
-            userProfileData.userDescription = "Bio"
+            userProfileData.name = "Margarita Konnova"
+            userProfileData.userDescription = "IOS Developer\nHSE Student"
+            userProfileData.photo = UIImage(named: "PlaceholderUser")?.pngData()
+            
             return userProfileData
         }
         return nil
