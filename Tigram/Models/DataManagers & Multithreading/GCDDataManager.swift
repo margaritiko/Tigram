@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 class GCDDataManager: DataManagerProtocol {
-    
-    func saveGivenUser(user: User, completion: @escaping (_ success : Bool) -> ()) {
+
+    func saveGivenUser(user: User, completion: @escaping (_ success: Bool) -> Void) {
         // Concurrent high priority queue
         let userInitiatedQueue = DispatchQueue.global(qos: .userInitiated)
         // Async photo saving
@@ -25,8 +25,8 @@ class GCDDataManager: DataManagerProtocol {
             })
         }
     }
-    
-    func loadExistingUser(completion: @escaping (User?) -> ()) {
+
+    func loadExistingUser(completion: @escaping (User?) -> Void) {
         // Concurrent high priority queue
         let userInitiatedQueue = DispatchQueue.global(qos: .userInitiated)
         // Async photo saving

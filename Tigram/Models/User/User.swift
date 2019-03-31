@@ -13,17 +13,17 @@ class User: NSObject {
     var name: String?
     var userDescription: String?
     var photo: UIImage?
-    
+
     var isNameChanged: Bool = false
     var isDescriptionChanged: Bool = false
     var isPhotoChanged: Bool = false
-    
+
     init(name: String?, description: String?, photo: UIImage?) {
         self.name = name
         self.userDescription = description
         self.photo = photo
     }
-    
+
     override init() {
     }
 }

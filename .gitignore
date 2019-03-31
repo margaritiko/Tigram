@@ -2,7 +2,6 @@
 # .gitignore file for Tigram app
 
 
-
 # Ignore folder build
 build/
 
@@ -17,3 +16,6 @@ DerivedData/
 
 # Ignore all files with extension .xcscmblueprint
 *.xcscmblueprint
+
+# Cocoapods
+Pods/

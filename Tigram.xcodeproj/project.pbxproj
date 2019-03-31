@@ -34,9 +34,11 @@
 		5CA40DC3223ECB8800065200 /* ConversationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DC2223ECB8800065200 /* ConversationManager.swift */; };
 		5CA40DC5223ECBAB00065200 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DC4223ECBAB00065200 /* Message.swift */; };
 		5CFB068F222E96C600AB54EB /* ThemesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C02DDB5222B38D80038E4CF /* ThemesViewController.m */; };
+		621E36B7FA273CD361DD3B2A /* Pods_Tigram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52148FF529C8BBC43E903F3 /* Pods_Tigram.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D977DE183DC200EA93A7659 /* Pods-Tigram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tigram.debug.xcconfig"; path = "Target Support Files/Pods-Tigram/Pods-Tigram.debug.xcconfig"; sourceTree = "<group>"; };
 		5C02DDAD222B2AD90038E4CF /* ThemesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemesViewController.h; sourceTree = "<group>"; };
 		5C02DDB4222B38D80038E4CF /* Tigram-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tigram-Bridging-Header.h"; sourceTree = "<group>"; };
 		5C02DDB5222B38D80038E4CF /* ThemesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThemesViewController.m; sourceTree = "<group>"; };
@@ -71,6 +73,8 @@
 		5CA40DC0223ECB6B00065200 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		5CA40DC2223ECB8800065200 /* ConversationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationManager.swift; sourceTree = "<group>"; };
 		5CA40DC4223ECBAB00065200 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		888EFD4087BF30755493AA1C /* Pods-Tigram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tigram.release.xcconfig"; path = "Target Support Files/Pods-Tigram/Pods-Tigram.release.xcconfig"; sourceTree = "<group>"; };
+		F52148FF529C8BBC43E903F3 /* Pods_Tigram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tigram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				621E36B7FA273CD361DD3B2A /* Pods_Tigram.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +128,8 @@
 			children = (
 				5C077C9522105C550081F3DD /* Tigram */,
 				5C077C9422105C550081F3DD /* Products */,
+				C65527DA648AE3BBAEB997F9 /* Pods */,
+				A831AB036CA745A43FB00241 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -228,6 +235,23 @@
 			path = Conversation;
 			sourceTree = "<group>";
 		};
+		A831AB036CA745A43FB00241 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F52148FF529C8BBC43E903F3 /* Pods_Tigram.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C65527DA648AE3BBAEB997F9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3D977DE183DC200EA93A7659 /* Pods-Tigram.debug.xcconfig */,
+				888EFD4087BF30755493AA1C /* Pods-Tigram.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -235,6 +259,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5C077CA522105C560081F3DD /* Build configuration list for PBXNativeTarget "Tigram" */;
 			buildPhases = (
+				5C1976A5224FC9E700F55F32 /* ShellScript */,
+				C31AB35040B850F90B999B6B /* [CP] Check Pods Manifest.lock */,
 				5C077C8F22105C550081F3DD /* Sources */,
 				5C077C9022105C550081F3DD /* Frameworks */,
 				5C077C9122105C550081F3DD /* Resources */,
@@ -302,6 +328,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5C1976A5224FC9E700F55F32 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		C31AB35040B850F90B999B6B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Tigram-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5C077C8F22105C550081F3DD /* Sources */ = {
@@ -475,6 +543,7 @@
 		};
 		5C077CA622105C560081F3DD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D977DE183DC200EA93A7659 /* Pods-Tigram.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -500,6 +569,7 @@
 		};
 		5C077CA722105C560081F3DD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 888EFD4087BF30755493AA1C /* Pods-Tigram.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

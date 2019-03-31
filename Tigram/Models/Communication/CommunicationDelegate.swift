@@ -11,11 +11,9 @@ protocol CommunicatorDelegate: class {
     // MARK: Looking for users
     func didFoundUser(userID: String, userName: String?)
     func didLostUser(userID: String)
-    
     // MARK: Some errors
     func failedToStartBrowsingForUsers(error: Error)
     func failedToStartAdvertising(error: Error)
-    
     // MARK: Check for getting messages
     func didReceiveMessage(text: String, fromUser: String, toUser: String)
 }

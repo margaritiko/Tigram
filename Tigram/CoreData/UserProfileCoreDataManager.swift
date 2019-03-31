@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol UserProfileCoreDataManagerDelegate {
+protocol UserProfileCoreDataManagerDelegate: class {
     func showAlertForUserWith(title: String, message: String?)
 
     // Activity Indicator control
@@ -20,7 +20,7 @@ class UserProfileCoreDataManager {
 
     // MARK: Delegate
 
-    var delegate: UserProfileCoreDataManagerDelegate?
+    weak var delegate: UserProfileCoreDataManagerDelegate?
 
     // MARK: Saving new data with CoreData
 
@@ -33,7 +33,6 @@ class UserProfileCoreDataManager {
                 self.delegate?.showAlertForUserWith(title: "Ошибка", message: "Возникла проблема, попробуйте снова")
                 return
             }
-            
             guard let profileData = UserProfileData.findOrInsertUserProfileData(in: saveContext) else {
                 self.delegate?.showAlertForUserWith(title: "Ошибка", message: "Не удалось сохранить данные профиля")
                 return
@@ -60,8 +59,7 @@ class UserProfileCoreDataManager {
 
                 if !saveContext.hasChanges {
                     self.delegate?.showAlertForUserWith(title: "Сохранение было остановлено", message: "Причина: ничего не было изменено")
-                }
-                else {
+                } else {
                     StorageManager.mainInstance.perfomSave(context: saveContext) {
                         self.delegate?.showAlertForUserWith(title: "", message: "Данные успешно сохранены с CoreData")
                     }
@@ -74,7 +72,6 @@ class UserProfileCoreDataManager {
             }
         }
     }
-    
     // MARK: Loading Data with CoreData
 
     func load() -> (String?, String?, UIImage?)? {
@@ -83,10 +80,8 @@ class UserProfileCoreDataManager {
             self.delegate?.showAlertForUserWith(title: "Ошибка", message: "Получение данных было прервано")
             return nil
         }
-        
         // Getting all data
         let userProfileData = UserProfileData.findOrInsertUserProfileData(in: mainContext)
-        
         var photo: UIImage?
         if let userPhotoData = userProfileData?.photo {
             photo = UIImage(data: userPhotoData)

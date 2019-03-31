@@ -13,8 +13,7 @@ public class ThemeManager {
     let light = UIColor.white
     let dark = UIColor.init(red: 83 / 256.0, green: 103 / 256.0, blue: 120 / 256.0, alpha: 1.0)
     let champagne = UIColor.init(red: 244 / 256.0, green: 217 / 256.0, blue: 73 / 256.0, alpha: 1.0)
-    
-    
+
     public func setTheme(themeName: String, navigationController: UINavigationController?) {
         switch themeName {
         case "light":
@@ -30,7 +29,7 @@ public class ThemeManager {
             NSLog("No valid name for theme")
         }
     }
-    
+
     func getColorForName(_ name: String) -> UIColor {
         switch name {
         case "light":

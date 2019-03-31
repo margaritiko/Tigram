@@ -9,7 +9,6 @@
 import UIKit
 
 class ConversationManager: NSObject {
-    
     // Creates new conversation with given user's name and id
     func createNewConversationWith(userName: String, userID: String) -> Conversation {
         let conversation = Conversation(userName: userName, userId: userID)

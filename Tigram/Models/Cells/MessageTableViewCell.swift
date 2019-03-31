@@ -9,20 +9,18 @@
 import UIKit
 
 protocol MessageCellConfiguration: class {
-    var Text: String? {get set}
+    var messageText: String? {get set}
 }
 
 class MessageTableViewCell: UITableViewCell, MessageCellConfiguration {
-    
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageView: UIView!
-    
-    var Text: String? {
+    var messageText: String? {
         didSet {
-            self.messageLabel.text = self.Text
+            self.messageLabel.text = self.messageText
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -33,7 +31,7 @@ class MessageTableViewCell: UITableViewCell, MessageCellConfiguration {
     }
 
     func configureMessage(withText text: String) {
-        self.Text = text
+        self.messageText = text
         messageView.layer.cornerRadius = 15
     }
 }

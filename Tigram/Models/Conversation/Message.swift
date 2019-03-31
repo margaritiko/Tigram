@@ -19,11 +19,11 @@ class Message: MessageProtocol {
     var messageText: String?
     var isIncoming: Bool
     var date: Date?
-    
+
     init(text: String?, isIncoming: Bool) {
         self.messageText = text
         self.isIncoming = isIncoming
-        
+
         // Start values for fields
         self.messageID = nil
         self.date = Date()

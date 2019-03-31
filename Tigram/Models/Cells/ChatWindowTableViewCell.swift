@@ -18,11 +18,9 @@ protocol ConversationCellConfiguration: class {
 
 class ChatWindowTableViewCell: UITableViewCell, ConversationCellConfiguration {
     var conversation: Conversation?
-    
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var messageLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
-    
     var name: String? {
         didSet {
             self.nameLabel.text = self.name
@@ -30,18 +28,15 @@ class ChatWindowTableViewCell: UITableViewCell, ConversationCellConfiguration {
     }
     var message: String?
     var date: Date?
-    
     var online: Bool = true {
         didSet {
             // Changes background to light yellow if user online
-            if (!self.online) {
+            if !self.online {
                 self.backgroundColor = UIColor.white
             }
         }
     }
-    
     var hasUnreadMessages: Bool = true
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -52,9 +47,8 @@ class ChatWindowTableViewCell: UITableViewCell, ConversationCellConfiguration {
 
         // Configure the view for the selected state
     }
-    
     func configureCellWithCurrentThemes(color: String) {
-        if (self.online) {
+        if self.online {
             switch color {
             case "light":
                 self.backgroundColor = UIColor(red: 58 / 256.0, green: 123 / 256.0, blue: 240 / 256.0, alpha: 0.25)

@@ -8,22 +8,14 @@
 
 import Foundation
 
-//protocol UserManagerProtocol {
-//    func saveUser(user: User, completion: @escaping (_ success: Bool) -> Void)
-//    func getUser(completion: @escaping (_ user: User?) -> Void)
-//}
-
 class UserManager {
-    
     // Names of files in which we are going to save the data
     private let userNameFileName = "userName.txt"
     private let userDescriptionFileName = "userDescription.txt"
     private let userPhotoFileName = "userPhoto.png"
-    
     func saveGivenUser(user: User, completion: @escaping (Bool) -> Void) {
         do {
             let filePath = self.getDocumentsDirectory()
-            
             // Checks if we need to save name
             if user.isNameChanged, let name = user.name {
                 // The data is written directly to given location
@@ -40,18 +32,15 @@ class UserManager {
                 // Option is a hint to write data to an auxiliary file first and then exchange the files
                 try data?.write(to: filePath.appendingPathComponent(userPhotoFileName), options: .atomic)
             }
-        
             user.isNameChanged = false
             user.isDescriptionChanged = false
             user.isPhotoChanged = false
             completion(true)
-        }
-        catch {
+        } catch {
             print("ERROR: \(error)")
             completion(false)
         }
     }
-    
     func getCurrentUser(completion: @escaping (User?) -> Void) {
         do {
             // Creates an empty user
@@ -61,15 +50,12 @@ class UserManager {
             user.name = try String(contentsOf: path.appendingPathComponent(userNameFileName))
             user.userDescription = try String(contentsOf: path.appendingPathComponent(userDescriptionFileName))
             user.photo = UIImage(contentsOfFile: path.appendingPathComponent(userPhotoFileName).path)
-            
             completion(user)
-        }
-        catch {
+        } catch {
             // Creates a new user
             completion(createNewUser())
         }
     }
-    
     // Creates a new user with information about developer and saves all data to files
     private func createNewUser() -> User {
         let user = User(name: "Margarita Konnova",
@@ -78,15 +64,12 @@ class UserManager {
         user.isPhotoChanged = true
         user.isDescriptionChanged = true
         user.isNameChanged = true
-        saveGivenUser(user: user) { (success) in print() }
-        
+        saveGivenUser(user: user) { (_) in print() }
         return user
     }
-    
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
 }
-

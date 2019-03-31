@@ -11,7 +11,7 @@ import Foundation
 // Protocol for optimizing the choice of instance of the appropriate class
 protocol DataManagerProtocol {
     // Saves all data
-    func saveGivenUser(user: User, completion: @escaping (_ success: Bool) -> ())
+    func saveGivenUser(user: User, completion: @escaping (_ success: Bool) -> Void)
     // Loads all data
-    func loadExistingUser(completion: @escaping (_ user: User?) -> ())
+    func loadExistingUser(completion: @escaping (_ user: User?) -> Void)
 }
