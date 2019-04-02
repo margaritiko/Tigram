@@ -12,6 +12,11 @@ import CoreData
 
 @objc(Message)
 public class Message: NSManagedObject {
+    @nonobjc public class func fetchRequestForConversationWith(userId: String) -> NSFetchRequest<Message> {
+        let request = NSFetchRequest<Message>(entityName: "Message")
+        request.predicate = NSPredicate(format: "conversation.userId == %@", userId)
+        return request
+    }
     convenience init() {
         let context = CoreDataManager.instance.getContextWith(name: "save")
         // Entity description

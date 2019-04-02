@@ -141,4 +141,11 @@ class CoreDataManager {
         }
         return saveContext
     }
+    // Getting fetch request with given name
+    public func getUserFetchRequest(named name: String, with value: String) -> NSFetchRequest<UserProfileData>? {
+        guard let model = managedObjectModel else {
+            return nil
+        }
+        return model.fetchRequestFromTemplate(withName: name, substitutionVariables: ["ID": value]) as? NSFetchRequest<UserProfileData>
+    }
 }

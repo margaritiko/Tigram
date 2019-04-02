@@ -43,7 +43,6 @@ class CommunicationManager: NSObject, CommunicatorDelegate {
         conversationDelegate?.didUserIsOnline(online: false)
     }
 
-    // TODO: Change
     func haveSendMessage(for userId: String, withText text: String, completion: ((Bool, Error?) -> Void)?) {
         communicator?.sendMessage(string: text, to: userId, completionHandler: { (success, error) in
             if success {

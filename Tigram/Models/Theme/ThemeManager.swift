@@ -26,7 +26,7 @@ public class ThemeManager {
             navigationController?.navigationBar.backgroundColor = champagne
             UINavigationBar.appearance().backgroundColor = champagne
         default:
-            NSLog("No valid name for theme")
+            return
         }
     }
 

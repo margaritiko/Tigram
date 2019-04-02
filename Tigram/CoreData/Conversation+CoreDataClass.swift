@@ -12,6 +12,12 @@ import CoreData
 
 @objc(Conversation)
 public class Conversation: NSManagedObject {
+    @nonobjc public class func fetchRequestForUserWith(userId: String) -> NSFetchRequest<Conversation> {
+        let request = NSFetchRequest<Conversation>(entityName: "Conversation")
+        request.predicate = NSPredicate(format: "%K == %@", "userId", userId)
+        return request
+    }
+
     convenience init() {
         let context = CoreDataManager.instance.getContextWith(name: "save")
         // Entity description
@@ -31,8 +37,7 @@ public class Conversation: NSManagedObject {
 
     static func findOrInsertConversation(inContext context: NSManagedObjectContext, forUserWithId userId: String) -> Conversation? {
         var conversation: Conversation?
-        let request: NSFetchRequest<Conversation> = Conversation.fetchRequest()
-        request.predicate = NSPredicate(format: "%K == %@", "userId", userId)
+        let request: NSFetchRequest<Conversation> = Conversation.fetchRequestForUserWith(userId: userId)
 
         do {
             let results = try context.fetch(request)

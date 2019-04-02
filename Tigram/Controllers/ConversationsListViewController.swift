@@ -43,7 +43,7 @@ class ConversationsListViewController: UIViewController {
         guard let context = CoreDataManager.instance.getContextWith(name: "save") else {
             return
         }
-        // TODO: Batching
+        request.fetchBatchSize = 20
         fetchedResultsController = NSFetchedResultsController<Conversation>(fetchRequest: request,
                                                                             managedObjectContext: context,
                                                                             sectionNameKeyPath:
@@ -220,6 +220,7 @@ extension ConversationsListViewController: UITableViewDataSource {
         }
         // Another color for online conversations
         cell.configureCellWithCurrentThemes(color: UserDefaults.standard.string(forKey: "Theme") ?? "light")
+
         return cell
     }
 }

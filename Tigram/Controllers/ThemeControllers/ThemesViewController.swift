@@ -37,7 +37,7 @@ class ThemesViewController: UIViewController {
         case "champagne":
             self.view.backgroundColor = ThemeManager().champagne
         default:
-            NSLog("No valid name for theme")
+            return
         }
     }
     // Returns user to conversations list screen

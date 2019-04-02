@@ -31,15 +31,16 @@ extension UserProfileData {
 
     static func findOrInsertUser(in context: NSManagedObjectContext, userId: String? = nil) -> UserProfileData? {
         var user: UserProfileData?
-        let fetchRequest = UserProfileData.getFetchRequest()
-        if let userId = userId {
-            fetchRequest.predicate = NSPredicate(format: "%K == %@", "userId", userId)
+        var fetchRequest: NSFetchRequest<UserProfileData>
+        if let userId = userId, let request = CoreDataManager.instance.getUserFetchRequest(named: "UserWithId", with: userId) {
+            fetchRequest = request
+        } else {
+            fetchRequest = UserProfileData.getFetchRequest()
         }
         // Waiting for finish
         context.performAndWait {
             do {
                 let results = try context.fetch(fetchRequest)
-                assert(results.count < 2, "Multiple UserProfileData found!")
                 if let foundUser = results.first {
                     user = foundUser
                 }

@@ -17,15 +17,21 @@
         <relationship name="conversationWhereLast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="lastMessage" inverseEntity="Conversation" syncable="YES"/>
     </entity>
     <entity name="UserProfileData" representedClassName="UserProfileData" syncable="YES" codeGenerationType="class">
+        <attribute name="isOnline" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photo" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="userDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conversations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Conversation" inverseName="user" inverseEntity="Conversation" syncable="YES"/>
     </entity>
+    <fetchRequest name="ConversationsWithOnlineUsers" entity="Conversation" predicateString="isInterlocutorOnline == 0 AND messages != nil"/>
+    <fetchRequest name="ConversationWithId" entity="Conversation" predicateString="user.userId == $ID"/>
+    <fetchRequest name="MessagesWithId" entity="Message" predicateString="conversation.userId == $ID"/>
+    <fetchRequest name="UsersOnline" entity="UserProfileData" predicateString="isOnline == 1"/>
+    <fetchRequest name="UserWithId" entity="UserProfileData" predicateString="userId == &quot;$ID&quot;"/>
     <elements>
         <element name="Conversation" positionX="-54" positionY="18" width="128" height="150"/>
         <element name="Message" positionX="-63" positionY="9" width="128" height="120"/>
-        <element name="UserProfileData" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="UserProfileData" positionX="-63" positionY="-18" width="128" height="135"/>
     </elements>
 </model>

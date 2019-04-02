@@ -28,6 +28,7 @@ class ConversationViewController: UIViewController {
     var conversation: Conversation?
     var communicatorManager: CommunicationManager?
     var lastColorOfNavigationBar: UIColor?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,12 +36,9 @@ class ConversationViewController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
 
-        let request: NSFetchRequest<Message> = Message.fetchRequest()
-        request.predicate = NSPredicate(format: "conversation.userId == %@", conversation?.userId ?? "emptyUserID")
-        request.sortDescriptors = [
-            NSSortDescriptor(key: "date", ascending: true)
-        ]
-
+        let request: NSFetchRequest<Message> = Message.fetchRequestForConversationWith(userId: conversation?.userId ?? "emptyUserID")
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+        request.fetchBatchSize = 20
         guard let context = CoreDataManager.instance.getContextWith(name: "save") else {
             fetchedResultsController = nil
             return
@@ -66,6 +64,7 @@ class ConversationViewController: UIViewController {
         self.title = conversationName
         // Scroll to the end of current conversation
         scrollToBottom()
+        communicatorManager?.readAllNewMessages(with: conversation?.userId ?? "")
     }
     // MARK: Actions
     @objc func didTapOnTableView() {
@@ -157,7 +156,7 @@ extension ConversationViewController: UITableViewDataSource {
         case "champagne":
             cell.backgroundColor = ThemeManager().champagne
         default:
-            NSLog("No valid name for theme")
+            return
         }
     }
 }

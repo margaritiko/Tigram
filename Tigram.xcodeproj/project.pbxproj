@@ -34,8 +34,6 @@
 		5CECAC212252B39300D8514B /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CECAC1D2252B39300D8514B /* Message+CoreDataProperties.swift */; };
 		5CECAC222252B39300D8514B /* Conversation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CECAC1E2252B39300D8514B /* Conversation+CoreDataClass.swift */; };
 		5CECAC232252B39300D8514B /* Conversation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CECAC1F2252B39300D8514B /* Conversation+CoreDataProperties.swift */; };
-		5CECAC2522538BB500D8514B /* ConversationsFetchedResultsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CECAC2422538BB500D8514B /* ConversationsFetchedResultsControllerManager.swift */; };
-		5CECAC2722538E5300D8514B /* MessagesFetchedResultsControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CECAC2622538E5300D8514B /* MessagesFetchedResultsControllerManager.swift */; };
 		5CFB068F222E96C600AB54EB /* ThemesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C02DDB5222B38D80038E4CF /* ThemesViewController.m */; };
 		621E36B7FA273CD361DD3B2A /* Pods_Tigram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52148FF529C8BBC43E903F3 /* Pods_Tigram.framework */; };
 /* End PBXBuildFile section */
@@ -77,8 +75,6 @@
 		5CECAC1D2252B39300D8514B /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5CECAC1E2252B39300D8514B /* Conversation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5CECAC1F2252B39300D8514B /* Conversation+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5CECAC2422538BB500D8514B /* ConversationsFetchedResultsControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsFetchedResultsControllerManager.swift; sourceTree = "<group>"; };
-		5CECAC2622538E5300D8514B /* MessagesFetchedResultsControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesFetchedResultsControllerManager.swift; sourceTree = "<group>"; };
 		888EFD4087BF30755493AA1C /* Pods-Tigram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tigram.release.xcconfig"; path = "Target Support Files/Pods-Tigram/Pods-Tigram.release.xcconfig"; sourceTree = "<group>"; };
 		F52148FF529C8BBC43E903F3 /* Pods_Tigram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tigram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -171,8 +167,6 @@
 				5C40D433224838170073E0FC /* UserProfileData.swift */,
 				5C40D435224838470073E0FC /* UserProfileCoreDataManager.swift */,
 				5C40D4372248386D0073E0FC /* TigramStorage.xcdatamodeld */,
-				5CECAC2422538BB500D8514B /* ConversationsFetchedResultsControllerManager.swift */,
-				5CECAC2622538E5300D8514B /* MessagesFetchedResultsControllerManager.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -394,10 +388,8 @@
 				5CECAC232252B39300D8514B /* Conversation+CoreDataProperties.swift in Sources */,
 				5C6284782221B10200726D44 /* ChatWindowTableViewCell.swift in Sources */,
 				5C6BE14922384B6100C7819D /* User.swift in Sources */,
-				5CECAC2522538BB500D8514B /* ConversationsFetchedResultsControllerManager.swift in Sources */,
 				5C6BE14322383B4000C7819D /* GCDDataManager.swift in Sources */,
 				5CFB068F222E96C600AB54EB /* ThemesViewController.m in Sources */,
-				5CECAC2722538E5300D8514B /* MessagesFetchedResultsControllerManager.swift in Sources */,
 				5C40D4392248386D0073E0FC /* TigramStorage.xcdatamodeld in Sources */,
 				5C3874E92222AFF50041E5F3 /* MessageTableViewCell.swift in Sources */,
 				5CECAC222252B39300D8514B /* Conversation+CoreDataClass.swift in Sources */,
