@@ -32,7 +32,7 @@ extension UserProfileData {
     static func findOrInsertUser(in context: NSManagedObjectContext, userId: String? = nil) -> UserProfileData? {
         var user: UserProfileData?
         var fetchRequest: NSFetchRequest<UserProfileData>
-        if let userId = userId, let request = CoreDataManager.instance.getUserFetchRequest(named: "UserWithId", with: userId) {
+        if let userId = userId, let request = CoreDataManager.instance.getProfileFetchRequest(named: "UserWithId", with: userId) {
             fetchRequest = request
         } else {
             fetchRequest = UserProfileData.getFetchRequest()
@@ -41,9 +41,16 @@ extension UserProfileData {
         context.performAndWait {
             do {
                 let results = try context.fetch(fetchRequest)
-                if let foundUser = results.first {
-                    user = foundUser
+                if results.count > 1 {
+                    if let foundUser = results.last {
+                        user = foundUser
+                    }
+                } else {
+                    if let foundUser = results.first {
+                        user = foundUser
+                    }
                 }
+
             } catch {
                 print("Failed to fetch UserProfileData: \(error)")
             }

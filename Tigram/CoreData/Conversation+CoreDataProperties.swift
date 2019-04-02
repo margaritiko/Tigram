@@ -22,7 +22,7 @@ extension Conversation {
     @NSManaged public var userId: String?
     @NSManaged public var lastMessage: Message?
     @NSManaged public var messages: NSSet?
-    @NSManaged public var user: UserProfileData?
+    @NSManaged public var user: ChatUser?
 
 }
 

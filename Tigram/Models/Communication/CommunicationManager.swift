@@ -19,7 +19,7 @@ class CommunicationManager: NSObject, CommunicatorDelegate {
     }
     func didFoundUser(userID: String, userName: String?) {
         guard let saveContext = CoreDataManager.instance.getContextWith(name: "save"),
-              let user = UserProfileData.findOrInsertUser(in: saveContext, userId: userID) else {
+              let user = ChatUser.findOrInsertUser(in: saveContext, userId: userID) else {
             assert(false, "Cannot find or create such user")
         }
         user.name = userName

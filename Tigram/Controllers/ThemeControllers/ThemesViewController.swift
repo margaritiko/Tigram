@@ -19,12 +19,6 @@ class ThemesViewController: UIViewController {
     // For compatibility with Objective-C class
     weak var delegate: UIViewController?
     var closureForSettingNewTheme: ((_ color: UIColor?, _ viewController: UIViewController?) -> Void)?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        NSLog("ThemesViewController: Swift")
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
