@@ -19,21 +19,19 @@ protocol UserProfileCoreDataManagerDelegate: class {
 class UserProfileCoreDataManager {
 
     // MARK: Delegate
-
     weak var delegate: UserProfileCoreDataManagerDelegate?
 
     // MARK: Saving new data with CoreData
-
     func save(name: String?, userDescription: String?, photo: UIImage?) {
         // Let's save data in background queue
         let dispatchQueue = DispatchQueue(label: "QueueForSavingUserProfileData", qos: .background)
         dispatchQueue.async {
             // Getting save context
-            guard let saveContext = StorageManager.mainInstance.getContextWith(name: "save") else {
+            guard let saveContext = CoreDataManager.instance.getContextWith(name: "save") else {
                 self.delegate?.showAlertForUserWith(title: "Ошибка", message: "Возникла проблема, попробуйте снова")
                 return
             }
-            guard let profileData = UserProfileData.findOrInsertUserProfileData(in: saveContext) else {
+            guard let profileData = UserProfileData.findOrInsertUser(in: saveContext) else {
                 self.delegate?.showAlertForUserWith(title: "Ошибка", message: "Не удалось сохранить данные профиля")
                 return
             }
@@ -60,7 +58,7 @@ class UserProfileCoreDataManager {
                 if !saveContext.hasChanges {
                     self.delegate?.showAlertForUserWith(title: "Сохранение было остановлено", message: "Причина: ничего не было изменено")
                 } else {
-                    StorageManager.mainInstance.perfomSave(context: saveContext) {
+                    CoreDataManager.instance.performSave(context: saveContext) {
                         self.delegate?.showAlertForUserWith(title: "", message: "Данные успешно сохранены с CoreData")
                     }
                 }
@@ -72,16 +70,16 @@ class UserProfileCoreDataManager {
             }
         }
     }
-    // MARK: Loading Data with CoreData
 
+    // MARK: Loading Data with CoreData
     func load() -> (String?, String?, UIImage?)? {
         // Getting main context
-        guard let mainContext = StorageManager.mainInstance.getContextWith(name: "main") else {
+        guard let mainContext = CoreDataManager.instance.getContextWith(name: "main") else {
             self.delegate?.showAlertForUserWith(title: "Ошибка", message: "Получение данных было прервано")
             return nil
         }
         // Getting all data
-        let userProfileData = UserProfileData.findOrInsertUserProfileData(in: mainContext)
+        let userProfileData = UserProfileData.findOrInsertUser(in: mainContext)
         var photo: UIImage?
         if let userPhotoData = userProfileData?.photo {
             photo = UIImage(data: userPhotoData)

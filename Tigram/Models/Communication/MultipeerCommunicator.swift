@@ -22,20 +22,38 @@ class MultipeerCommunicator: NSObject, Communicator {
     private let discoveryInfo = ["userName": "Margarita Konnova"]
 
     // To make the device visible to others
-    private let advertiser: MCNearbyServiceAdvertiser
+    private var advertiser: MCNearbyServiceAdvertiser
     // To search for devices
-    private let browser: MCNearbyServiceBrowser
+    private var browser: MCNearbyServiceBrowser
 
     private let myPeerId: MCPeerID = MCPeerID(displayName: (UIDevice.current.identifierForVendor?.uuidString)!)
 
-    var isOnline: Bool
-    var allSessions: [String: MCSession] = [String: MCSession]()
+    var isOnline: Bool {
+        didSet {
+            DispatchQueue.global(qos: .userInitiated).async {
+                if self.isOnline {
+                    self.browser = MCNearbyServiceBrowser(peer: self.myPeerId, serviceType: self.serviceType)
+                    self.advertiser = MCNearbyServiceAdvertiser(peer: self.myPeerId, discoveryInfo: self.discoveryInfo, serviceType: self.serviceType)
+                    self.browser.delegate = self
+                    self.advertiser.delegate = self
+                    self.browser.startBrowsingForPeers()
+                    self.advertiser.startAdvertisingPeer()
+                } else {
+                    self.browser.stopBrowsingForPeers()
+                    self.advertiser.stopAdvertisingPeer()
+                }
+            }
+        }
+    }
+    private var allSessions: [String: MCSession] = [String: MCSession]()
+    private var userNames: [MCPeerID: String] = [MCPeerID: String]()
 
     lazy var session: MCSession = {
         let session = MCSession(peer: myPeerId)
         session.delegate = self
         return session
     }()
+
     init(delegate: CommunicatorDelegate) {
         // Init advertiser and browser with data
         self.advertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: discoveryInfo, serviceType: serviceType)
@@ -50,6 +68,7 @@ class MultipeerCommunicator: NSObject, Communicator {
         self.advertiser.startAdvertisingPeer()
         self.browser.startBrowsingForPeers()
     }
+
     deinit {
         // Stops advertiser and browser
         self.advertiser.stopAdvertisingPeer()
@@ -94,6 +113,7 @@ extension MultipeerCommunicator: MCSessionDelegate {
 extension MultipeerCommunicator: MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: Error) {
         delegate?.failedToStartAdvertising(error: error)
+        isOnline = false
     }
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser,
                     didReceiveInvitationFromPeer peerID: MCPeerID,
@@ -111,6 +131,18 @@ extension MultipeerCommunicator: MCNearbyServiceAdvertiserDelegate {
                 self.allSessions[peerID.displayName] = session
             }
             invitationHandler(true, session)
+            if let username = getUsername(from: context) {
+                userNames[peerID] = username
+            }
+        }
+    }
+    func getUsername(from data: Data?) -> String? {
+        guard let data = data else { return nil }
+        do {
+            let username = try JSONDecoder().decode([String: String].self, from: data)["userName"]
+            return username
+        } catch {
+            return nil
         }
     }
 }
@@ -118,14 +150,17 @@ extension MultipeerCommunicator: MCNearbyServiceAdvertiserDelegate {
 extension MultipeerCommunicator: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
         delegate?.didLostUser(userID: peerID.displayName)
+        // allSessions.removeValue(forKey: "\(peerID)")
     }
     func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {
         delegate?.failedToStartBrowsingForUsers(error: error)
+        isOnline = false
     }
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
         guard peerID.displayName != myPeerId.displayName, let userInfo = info, let userName = userInfo["userName"]  else {
             return
         }
+        userNames[peerID] = userName
         var session = self.allSessions[peerID.displayName]
         if session == nil {
             // Creates new session

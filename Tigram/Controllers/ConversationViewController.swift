@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import CoreData
 
 protocol ConversationDelegate: class {
     func didUserIsOnline(online: Bool)
-    func didGetMessages(messages: [Message]?)
 }
 
 class ConversationViewController: UIViewController {
+    // MARK: NSFetchedResultsController
+    var fetchedResultsController: NSFetchedResultsController<Message>?
+
     let incomingMessageID = "Incoming Message"
     let sentMessageID = "Sent Message"
     // MARK: Outlets
@@ -31,6 +34,21 @@ class ConversationViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.tableView.dataSource = self
         self.tableView.delegate = self
+
+        let request: NSFetchRequest<Message> = Message.fetchRequest()
+        request.predicate = NSPredicate(format: "conversation.userId == %@", conversation?.userId ?? "emptyUserID")
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "date", ascending: true)
+        ]
+
+        guard let context = CoreDataManager.instance.getContextWith(name: "save") else {
+            fetchedResultsController = nil
+            return
+        }
+        fetchedResultsController = NSFetchedResultsController<Message>(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController?.delegate = self as NSFetchedResultsControllerDelegate
+
+        updateWithFetchedResultsController()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -54,21 +72,19 @@ class ConversationViewController: UIViewController {
         messageTextField.resignFirstResponder()
     }
     @IBAction func sendMessageAction(_ sender: UIButton) {
-        if messageTextField.text != "" && messageTextField.text != nil {
-            let message = Message(text: messageTextField.text, isIncoming: false)
-            conversation?.allMessagesFromCurrentConversation?.append(message)
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-            communicatorManager?.communicator?.sendMessage(string: messageTextField.text!, to: (conversation?.userId)!) { (_, error) in
-                if let error = error {
-                    print(error)
+        if let messageText = messageTextField.text, messageTextField.text != "" {
+            communicatorManager?.haveSendMessage(for: conversation?.userId ?? "Id", withText: messageText, completion: { [weak self] (result, _) in
+                if result {
+                    self?.messageTextField.text = ""
+                    self?.messageTextField.resignFirstResponder()
+                    self?.scrollToBottom()
+                } else {
+                    let alertVC = UIAlertController(title: "ERROR", message: "Cannot send message", preferredStyle: .alert)
+                    alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self?.present(alertVC, animated: true, completion: nil)
                 }
-            }
-            messageTextField.text = ""
+            })
         }
-        scrollToBottom()
-        messageTextField.resignFirstResponder()
     }
     // MARK: Notifications
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -91,9 +107,16 @@ class ConversationViewController: UIViewController {
         DispatchQueue.main.async {
             let rowsCount = self.tableView.numberOfRows(inSection: 0)
             if rowsCount > 0 {
-                let indexPath = IndexPath(row: (self.conversation?.allMessagesFromCurrentConversation?.count)!-1, section: 0)
+                let indexPath = IndexPath(row: (self.conversation?.messages?.count)!-1, section: 0)
                 self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
             }
+        }
+    }
+    func updateWithFetchedResultsController() {
+        do {
+            try self.fetchedResultsController?.performFetch()
+        } catch let error as NSError {
+            print("ERROR: \(error.description)")
         }
     }
 }
@@ -101,27 +124,26 @@ class ConversationViewController: UIViewController {
 extension ConversationViewController: UITableViewDelegate {}
 extension ConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let messages = conversation?.allMessagesFromCurrentConversation {
+        if let messages = conversation?.messages {
             return messages.count
         }
         return 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let messages = conversation?.allMessagesFromCurrentConversation {
-            return configureCell(tableView: tableView, message: messages[indexPath.row])
-        }
-        return UITableViewCell()
+        let message = self.fetchedResultsController?.object(at: indexPath)
+        // Configure the cell with data from the managed object
+        return configureCell(message: message!, for: indexPath)
     }
     // MARK: Creates a cell for each table view row
-    private func configureCell(tableView: UITableView, message: Message) -> UITableViewCell {
+    private func configureCell(message: Message, for indexPath: IndexPath) -> UITableViewCell {
         if message.isIncoming {
-            let cell = tableView.dequeueReusableCell(withIdentifier: incomingMessageID) as? MessageTableViewCell ?? MessageTableViewCell()
-            cell.configureMessage(withText: message.messageText ?? "")
+            let cell = tableView.dequeueReusableCell(withIdentifier: incomingMessageID, for: indexPath) as? MessageTableViewCell ?? MessageTableViewCell()
+            cell.configureMessage(withText: message.text ?? "")
             updateCellWithCurrentTheme(cell)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: sentMessageID) as? MessageTableViewCell ?? MessageTableViewCell()
-            cell.configureMessage(withText: message.messageText ?? "")
+            let cell = tableView.dequeueReusableCell(withIdentifier: sentMessageID, for: indexPath) as? MessageTableViewCell ?? MessageTableViewCell()
+            cell.configureMessage(withText: message.text ?? "")
             return cell
         }
     }
@@ -139,17 +161,52 @@ extension ConversationViewController: UITableViewDataSource {
         }
     }
 }
-
+extension ConversationViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        DispatchQueue.main.async {
+            self.tableView.beginUpdates()
+        }
+    }
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        DispatchQueue.main.async {
+            self.tableView.endUpdates()
+        }
+    }
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        DispatchQueue.main.async {
+            switch type {
+            case .insert:
+                self.tableView.insertRows(at: [newIndexPath!], with: .automatic)
+            case .move:
+                self.tableView.deleteRows(at: [indexPath!], with: .automatic)
+                self.tableView.insertRows(at: [newIndexPath!], with: .automatic)
+            case .delete:
+                self.tableView.deleteRows(at: [indexPath!], with: .automatic)
+            case .update:
+                self.tableView.reloadRows(at: [indexPath!], with: .automatic)
+            }
+        }
+    }
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        DispatchQueue.main.async {
+            switch type {
+            case .delete:
+                self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
+            case .insert:
+                self.tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
+            case .move, .update:
+                break
+            }
+        }
+    }
+}
 extension ConversationViewController: ConversationDelegate {
     func didUserIsOnline(online: Bool) {
         self.sendMessageButton.isEnabled = online
         self.messageTextField.isUserInteractionEnabled = online
-    }
-    func didGetMessages(messages: [Message]?) {
-        conversation?.allMessagesFromCurrentConversation = messages
-        // Updates table view with new messages
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
     }
 }

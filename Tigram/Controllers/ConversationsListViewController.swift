@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 enum SectionList: Int {
     case onlineSection = 0
@@ -16,10 +17,8 @@ enum SectionList: Int {
 class ConversationsListViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     var communicationManager: CommunicationManager?
-    // Lists with conversations
-    var allConversations: [[Conversation]] = []
-    var onlineConversations: [Conversation] = []
-    var historyConversations: [Conversation] = []
+    // MARK: NSFetchedResultsController
+    var fetchedResultsController: NSFetchedResultsController<Conversation>?
     // MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +29,29 @@ class ConversationsListViewController: UIViewController {
         setUpNavigationBar()
         // Inits communicationManager
         communicationManager = CommunicationManager()
-        communicationManager?.viewDelegate = self
+        // Makes fetch request
+        let request: NSFetchRequest<Conversation> = Conversation.fetchRequest()
+        // Sorts all conversations in this way:
+        // If both do not have a date, sorting is done by name
+        // If only one has a date, the one who has the date is above
+        // If both have date - sort by date
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "isInterlocutorOnline", ascending: false),
+            NSSortDescriptor(key: "lastMessage.date", ascending: false),
+            NSSortDescriptor(key: "conversationName", ascending: true)
+        ]
+        guard let context = CoreDataManager.instance.getContextWith(name: "save") else {
+            return
+        }
+        // TODO: Batching
+        fetchedResultsController = NSFetchedResultsController<Conversation>(fetchRequest: request,
+                                                                            managedObjectContext: context,
+                                                                            sectionNameKeyPath:
+                                                                            #keyPath(Conversation.isInterlocutorOnline),
+                                                                            cacheName: nil)
+        fetchedResultsController?.delegate = self as NSFetchedResultsControllerDelegate
+
+        updateWithFetchedResultsController()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -39,57 +60,7 @@ class ConversationsListViewController: UIViewController {
         self.view.backgroundColor = ThemeManager().getColorForName(themeName ?? "light")
         tableView.reloadData()
     }
-    // MARK: Other functions
-    // Sorts all conversations in this way:
-    // If both do not have a date, sorting is done by name
-    // If only one has a date, the one who has the date is above
-    // If both have date - sort by date
-    func sortConversations( listToSort: inout [Conversation]) {
-        listToSort.sort(by: {
-            if ($0.allMessagesFromCurrentConversation?.count)! == 0 && ($1.allMessagesFromCurrentConversation?.count)! == 0 {
-                // By name
-                return $0.conversationName ?? "" < $1.conversationName ?? ""
-            }
-            if ($0.allMessagesFromCurrentConversation?.count)! == 0 {
-                return false
-            }
-            if ($1.allMessagesFromCurrentConversation?.count)! == 0 {
-                return true
-            }
-            // By date
-            if $0.dateOfLastMessage?.compare($1.dateOfLastMessage!) == ComparisonResult.orderedAscending {
-                return true
-            }
-            return false
-        })
-    }
-    // Deletes all data from lists with conversations
-    private func clearAllConversations() {
-        allConversations.removeAll()
-        onlineConversations.removeAll()
-        historyConversations.removeAll()
-    }
-    func setTableViewWith(data: [Conversation]) {
-        clearAllConversations()
-        for conversation in data {
-            // Distributes the dialogs into sections
-            if conversation.isInterlocutorOnline == true {
-                onlineConversations.append(conversation)
-            } else {
-                historyConversations.append(conversation)
-            }
-        }
-        // Sorts sections
-        sortConversations(listToSort: &onlineConversations)
-        sortConversations(listToSort: &historyConversations)
-        // Adds conversations from sections to list with all conversations
-        allConversations.append(onlineConversations)
-        allConversations.append(historyConversations)
-        // Reloads table view with new data
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
+
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Open Chat" {
@@ -120,8 +91,58 @@ class ConversationsListViewController: UIViewController {
     func logThemeChanging(selectedTheme: UIColor) {
         print("COLOR: \(selectedTheme)")
     }
-}
 
+    func updateWithFetchedResultsController() {
+        do {
+            try self.fetchedResultsController?.performFetch()
+        } catch let error as NSError {
+            print("ERROR: \(error.description)")
+        }
+    }
+}
+extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        DispatchQueue.main.async {
+            self.tableView.beginUpdates()
+        }
+    }
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        DispatchQueue.main.async {
+            self.tableView.endUpdates()
+        }
+    }
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        DispatchQueue.main.async {
+            switch type {
+            case .insert:
+                self.tableView.insertRows(at: [newIndexPath!], with: .automatic)
+            case .move:
+                self.tableView.deleteRows(at: [indexPath!], with: .automatic)
+                self.tableView.insertRows(at: [newIndexPath!], with: .automatic)
+            case .delete:
+                self.tableView.deleteRows(at: [indexPath!], with: .automatic)
+            case .update:
+                self.tableView.reloadRows(at: [indexPath!], with: .automatic)
+            }
+        }
+    }
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        DispatchQueue.main.async {
+            switch type {
+            case .delete:
+                self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
+            case .insert:
+                self.tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
+            case .move, .update:
+                break
+            }
+        }
+    }
+}
 extension ConversationsListViewController: ThemesViewControllerDelegate {
     func themesViewController(_ controller: ThemesViewController!, didSelectTheme selectedTheme: UIColor!) {
         self.logThemeChanging(selectedTheme: selectedTheme)
@@ -152,39 +173,47 @@ extension ConversationsListViewController: UITableViewDelegate {
 
 extension ConversationsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == SectionList.onlineSection.rawValue {
-            return "Online"
-        } else if section == SectionList.historySection.rawValue {
-            return "History"
+        guard let sections = fetchedResultsController?.sections else {
+            return nil
         }
-        return nil
+        return sections[section].indexTitle == "1" ? "Online" : "History"
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allConversations[section].count
+        guard let sections = self.fetchedResultsController?.sections else {
+            assert(false, "No sections in fetchedResultsController")
+        }
+        let sectionInfo = sections[section]
+        return sectionInfo.numberOfObjects
     }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let currentConversation = allConversations[indexPath.section][indexPath.row]
-        return configureCell(tableView: tableView, model: currentConversation)
-    }
-    // There are only two sections: Online and History
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return allConversations.count
-    }
-    // MARK: Configuration of new cell
-    private func configureCell(tableView: UITableView, model: Conversation) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Chat Window") as? ChatWindowTableViewCell ?? ChatWindowTableViewCell()
+        let conversation = self.fetchedResultsController?.object(at: indexPath)
+        return configureCell(cell: cell, model: conversation ?? Conversation())
+    }
+
+    // There are maximum two sections: Online and History
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if let sections = fetchedResultsController?.sections {
+            return sections.count
+        }
+        return 0
+    }
+
+    // MARK: Configuration of new cell
+    private func configureCell(cell: ChatWindowTableViewCell, model: Conversation) -> UITableViewCell {
         cell.nameLabel.text = model.conversationName
-        cell.dateLabel.text = "\(Date.convertDateIntoString(date: model.allMessagesFromCurrentConversation?.last?.date))"
+        cell.dateLabel.text = "\(Date.convertDateIntoString(date: model.lastMessage?.date as Date?))"
         cell.conversation = model
         cell.online = model.isInterlocutorOnline
-        if let messages = model.allMessagesFromCurrentConversation, (model.allMessagesFromCurrentConversation?.count)! > 0 {
+        if let lastMessage = model.lastMessage, (model.messages?.count)! > 0 {
             if model.hasUnreadMessages {
                 cell.messageLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 14.0)
             } else {
                 cell.messageLabel.font = UIFont(name: "HelveticaNeue", size: 14.0)
             }
-            cell.messageLabel.text = messages.last?.messageText
+            cell.messageLabel.text = lastMessage.text
         } else {
             cell.messageLabel.text = "No messages yet"
             cell.messageLabel.font = UIFont(name: "Noteworthy", size: 14.0)
@@ -195,11 +224,6 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
 }
 
-extension ConversationsListViewController: CommunicationManagerProtocol {
-    func didUpdateConversations(conversations: [Conversation]) {
-        setTableViewWith(data: conversations)
-    }
-}
 extension Date {
     static func convertDateIntoString(date: Date?) -> String {
         let dateFormatter = DateFormatter()

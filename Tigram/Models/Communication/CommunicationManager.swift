@@ -8,15 +8,8 @@
 
 import UIKit
 
-protocol CommunicationManagerProtocol: class {
-    func didUpdateConversations(conversations: [Conversation])
-}
-
 class CommunicationManager: NSObject, CommunicatorDelegate {
-    var allConversations: [Conversation] = []
     var communicator: MultipeerCommunicator?
-    // Updates view
-    weak var viewDelegate: CommunicationManagerProtocol?
     // Updates data
     weak var conversationDelegate: ConversationDelegate?
     override init() {
@@ -25,32 +18,72 @@ class CommunicationManager: NSObject, CommunicatorDelegate {
         communicator = MultipeerCommunicator(delegate: self)
     }
     func didFoundUser(userID: String, userName: String?) {
-        if let conversation = allConversations.first(where: {$0.userId == userID}) {
-            conversation.isInterlocutorOnline = true
-        } else {
-            let conversation = ConversationManager().createNewConversationWith(userName: userName ?? "Name", userID: userID)
-            // Adds new conversation to list with all conversations
-            allConversations.append(conversation)
+        guard let saveContext = CoreDataManager.instance.getContextWith(name: "save"),
+              let user = UserProfileData.findOrInsertUser(in: saveContext, userId: userID) else {
+            assert(false, "Cannot find or create such user")
         }
-        viewDelegate?.didUpdateConversations(conversations: allConversations)
+        user.name = userName
+
+        let conversation = Conversation.findOrInsertConversation(inContext: saveContext, forUserWithId: userID)
+        conversation?.user = user
+        conversation?.conversationName = userName
+        conversation?.isInterlocutorOnline = true
+        CoreDataManager.instance.performSave(context: saveContext, completionHandler: nil)
+
         conversationDelegate?.didUserIsOnline(online: true)
     }
     func didLostUser(userID: String) {
-        if let conversation = allConversations.first(where: {$0.userId == userID}) {
-            // Now interlocutor is offline
-            conversation.isInterlocutorOnline = false
+        guard let saveContext = CoreDataManager.instance.getContextWith(name: "save") else {
+            fatalError("Save context is nil")
         }
-        viewDelegate?.didUpdateConversations(conversations: allConversations)
+        let conversation = Conversation.findOrInsertConversation(inContext: saveContext, forUserWithId: userID)
+        conversation?.isInterlocutorOnline = false
+        CoreDataManager.instance.performSave(context: saveContext, completionHandler: nil)
+
         conversationDelegate?.didUserIsOnline(online: false)
     }
+
+    // TODO: Change
+    func haveSendMessage(for userId: String, withText text: String, completion: ((Bool, Error?) -> Void)?) {
+        communicator?.sendMessage(string: text, to: userId, completionHandler: { (success, error) in
+            if success {
+                guard let context = CoreDataManager.instance.getContextWith(name: "save"), let conversation = Conversation.findOrInsertConversation(inContext: context, forUserWithId: userId) else {
+                    assert(false, "Cannot send a message")
+                    return
+                }
+                let message = Message.insertMessage()
+                message?.conversation = conversation
+                message?.text = text
+                message?.isIncoming = false
+                message?.date = Date() as NSDate
+                conversation.lastMessage = message
+                CoreDataManager.instance.performSave(context: context, completionHandler: nil)
+            }
+            DispatchQueue.main.async {
+                completion?(success, error)
+            }
+        })
+    }
+
     func didReceiveMessage(text: String, fromUser: String, toUser: String) {
-        for conversation in allConversations where conversation.userId == fromUser {
-            // Adds new message to conversation
-            conversation.allMessagesFromCurrentConversation?.append(Message(text: text, isIncoming: true))
-            conversation.hasUnreadMessages = true
-            conversationDelegate?.didGetMessages(messages: conversation.allMessagesFromCurrentConversation)
+        guard let saveContext = CoreDataManager.instance.getContextWith(name: "save"), let conversation = Conversation.findOrInsertConversation(inContext: saveContext, forUserWithId: fromUser) else {
+            assert(false, "Cannot receive messages")
         }
-        viewDelegate?.didUpdateConversations(conversations: allConversations)
+        let message = Message.insertMessage()
+        message?.conversation = conversation
+        message?.text = text
+        message?.date = Date() as NSDate
+        message?.isIncoming = true
+        conversation.hasUnreadMessages = true
+        conversation.lastMessage = message
+        CoreDataManager.instance.performSave(context: saveContext, completionHandler: nil)
+    }
+    func readAllNewMessages(with userId: String) {
+        guard let saveContext = CoreDataManager.instance.getContextWith(name: "save"), let conversation = Conversation.findOrInsertConversation(inContext: saveContext, forUserWithId: userId) else {
+            assert(false, "Cannot read messages")
+        }
+        conversation.hasUnreadMessages = false
+        CoreDataManager.instance.performSave(context: saveContext, completionHandler: nil)
     }
     // MARK: Errors
     func failedToStartBrowsingForUsers(error: Error) {

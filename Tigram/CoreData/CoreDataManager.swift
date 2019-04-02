@@ -9,8 +9,8 @@
 import Foundation
 import CoreData
 
-class StorageManager {
-    static let mainInstance = StorageManager()
+class CoreDataManager {
+    static let instance = CoreDataManager()
     // MARK: Life Cycle
     private init() {}
 
@@ -111,7 +111,7 @@ class StorageManager {
     }
 
     // Recursion save
-    public func perfomSave(context: NSManagedObjectContext, completionHandler: (() -> Void)?) {
+    public func performSave(context: NSManagedObjectContext, completionHandler: (() -> Void)?) {
         context.performAndWait {
             if context.hasChanges {
                 context.perform { [weak self] in
@@ -121,7 +121,7 @@ class StorageManager {
                         print("Context save error: \(error)")
                     }
                     if let parent = context.parent {
-                        self?.perfomSave(context: parent, completionHandler: completionHandler)
+                        self?.performSave(context: parent, completionHandler: completionHandler)
                     } else {
                         completionHandler?()
                     }

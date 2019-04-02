@@ -13,13 +13,12 @@ extension UserProfileData {
 
     // MARK: CoreData
     // Forming a query from the query pattern
-    static func fetchRequestProfileData() -> NSFetchRequest<UserProfileData> {
-        let templateName = "UserProfileData"
-        let fetchRequest = NSFetchRequest<UserProfileData>(entityName: templateName)
+    static func getFetchRequest() -> NSFetchRequest<UserProfileData> {
+        let fetchRequest = NSFetchRequest<UserProfileData>(entityName: "UserProfileData")
         return fetchRequest
     }
     // Creating default data for empty user
-    static func insertUserProfileData(in context: NSManagedObjectContext) -> UserProfileData? {
+    static func insertNewUser(in context: NSManagedObjectContext) -> UserProfileData? {
         if let userProfileData = NSEntityDescription.insertNewObject(forEntityName: "UserProfileData", into: context) as? UserProfileData {
             userProfileData.name = "Margarita Konnova"
             userProfileData.userDescription = "IOS Developer\nHSE Student"
@@ -29,24 +28,28 @@ extension UserProfileData {
         return nil
     }
     // In order to get an object from the repository, we should execute a query to it.
-    static func findOrInsertUserProfileData(in context: NSManagedObjectContext) -> UserProfileData? {
-        var userProfileData: UserProfileData?
-        let fetchRequest = UserProfileData.fetchRequestProfileData()
+
+    static func findOrInsertUser(in context: NSManagedObjectContext, userId: String? = nil) -> UserProfileData? {
+        var user: UserProfileData?
+        let fetchRequest = UserProfileData.getFetchRequest()
+        if let userId = userId {
+            fetchRequest.predicate = NSPredicate(format: "%K == %@", "userId", userId)
+        }
         // Waiting for finish
         context.performAndWait {
             do {
                 let results = try context.fetch(fetchRequest)
                 assert(results.count < 2, "Multiple UserProfileData found!")
                 if let foundUser = results.first {
-                    userProfileData = foundUser
+                    user = foundUser
                 }
             } catch {
                 print("Failed to fetch UserProfileData: \(error)")
             }
         }
-        if userProfileData == nil {
-            userProfileData = UserProfileData.insertUserProfileData(in: context)
+        if user == nil {
+            user = UserProfileData.insertNewUser(in: context)
         }
-        return userProfileData
+        return user
     }
 }
