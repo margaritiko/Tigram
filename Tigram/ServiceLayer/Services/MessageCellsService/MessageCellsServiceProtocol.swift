@@ -10,5 +10,6 @@ import Foundation
 import UIKit
 
 protocol MessageCellsServiceProtocol {
+    func reinit(tableView: UITableView)
     func configure(cellWithMessage message: Message?, at indexPath: IndexPath) -> MessageTableViewCell
 }

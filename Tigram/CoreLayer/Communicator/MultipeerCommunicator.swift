@@ -16,9 +16,9 @@ class MultipeerCommunicator: NSObject, MultipeerCommunicatorProtocol {
     private let discoveryInfo = ["userName": "Margarita Konnova"]
 
     // To make the device visible to others
-    private var advertiser: MCNearbyServiceAdvertiser
+    private var advertiser: MCNearbyServiceAdvertiser?
     // To search for devices
-    private var browser: MCNearbyServiceBrowser
+    private var browser: MCNearbyServiceBrowser?
 
     private let myPeerId: MCPeerID = MCPeerID(displayName: (UIDevice.current.identifierForVendor?.uuidString)!)
 
@@ -28,13 +28,13 @@ class MultipeerCommunicator: NSObject, MultipeerCommunicatorProtocol {
                 if self.isOnline {
                     self.browser = MCNearbyServiceBrowser(peer: self.myPeerId, serviceType: self.serviceType)
                     self.advertiser = MCNearbyServiceAdvertiser(peer: self.myPeerId, discoveryInfo: self.discoveryInfo, serviceType: self.serviceType)
-                    self.browser.delegate = self
-                    self.advertiser.delegate = self
-                    self.browser.startBrowsingForPeers()
-                    self.advertiser.startAdvertisingPeer()
+                    self.browser?.delegate = self
+                    self.advertiser?.delegate = self
+                    self.browser?.startBrowsingForPeers()
+                    self.advertiser?.startAdvertisingPeer()
                 } else {
-                    self.browser.stopBrowsingForPeers()
-                    self.advertiser.stopAdvertisingPeer()
+                    self.browser?.stopBrowsingForPeers()
+                    self.advertiser?.stopAdvertisingPeer()
                 }
             }
         }
@@ -48,25 +48,27 @@ class MultipeerCommunicator: NSObject, MultipeerCommunicatorProtocol {
         return session
     }()
 
-    init(delegate: CommunicatorServiceProtocol) {
+    override init() {
+        isOnline = true
+        super.init()
+    }
+    func reinit(delegate: CommunicatorServiceProtocol) {
         // Init advertiser and browser with data
         self.advertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: discoveryInfo, serviceType: serviceType)
         self.browser = MCNearbyServiceBrowser(peer: myPeerId, serviceType: serviceType)
         self.isOnline = true
-        // Calls super.init() to init all NSObject components
-        super.init()
         self.delegate = delegate
-        self.browser.delegate = self
-        self.advertiser.delegate = self
+        self.browser?.delegate = self
+        self.advertiser?.delegate = self
         // Starts advertiser and browser
-        self.advertiser.startAdvertisingPeer()
-        self.browser.startBrowsingForPeers()
+        self.advertiser?.startAdvertisingPeer()
+        self.browser?.startBrowsingForPeers()
     }
 
     deinit {
         // Stops advertiser and browser
-        self.advertiser.stopAdvertisingPeer()
-        self.browser.stopBrowsingForPeers()
+        self.advertiser?.stopAdvertisingPeer()
+        self.browser?.stopBrowsingForPeers()
     }
     func sendMessage(string: String, to userID: String, completionHandler: ((Bool, Error?) -> Void)?) {
         let message = ["eventType": "TextMessage",

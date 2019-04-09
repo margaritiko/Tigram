@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 protocol KeyboardServiceProtocol {
+    func reinit(view: UIView)
     func beginObservingKeyboard()
     func endObservingKeyboard()
 }

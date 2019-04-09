@@ -10,5 +10,9 @@ import Foundation
 import UIKit
 
 protocol ThemeServiceProtocol {
+    var light: UIColor { get }
+    var dark: UIColor { get }
+    var champagne: UIColor { get }
     func setTheme(themeName: String, navigationController: UINavigationController?)
+    func getColorForName(_ name: String) -> UIColor
 }

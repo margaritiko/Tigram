@@ -10,7 +10,7 @@ import UIKit
 
 protocol MessageCellConfiguration: class {
     var messageText: String? {get set}
-    func configureMessage(forState state: Bool, withText text: String)
+    func configureMessage(forState state: Bool, withText text: String, withThemeService themeService: ThemeServiceProtocol)
 }
 
 class MessageTableViewCell: UITableViewCell, MessageCellConfiguration {
@@ -25,22 +25,22 @@ class MessageTableViewCell: UITableViewCell, MessageCellConfiguration {
         super.setSelected(selected, animated: animated)
     }
 
-    func configureMessage(forState state: Bool, withText text: String) {
+    func configureMessage(forState state: Bool, withText text: String, withThemeService themeService: ThemeServiceProtocol) {
         self.messageText = text
         messageView.layer.cornerRadius = 15
         if state {
-            updateCellWithCurrentTheme()
+            updateCellWithCurrentTheme(withThemeService: themeService)
         }
     }
-    func updateCellWithCurrentTheme() {
+    func updateCellWithCurrentTheme(withThemeService themeService: ThemeServiceProtocol) {
         let themeName = UserDefaults.standard.string(forKey: "Theme")
         switch themeName {
         case "light":
-            self.backgroundColor = ThemeService().light
+            self.backgroundColor = themeService.light
         case "dark":
-            self.backgroundColor = ThemeService().dark
+            self.backgroundColor = themeService.dark
         case "champagne":
-            self.backgroundColor = ThemeService().champagne
+            self.backgroundColor = themeService.champagne
         default:
             return
         }

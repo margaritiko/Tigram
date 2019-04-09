@@ -9,6 +9,7 @@
 import Foundation
 
 protocol MultipeerCommunicatorProtocol {
+    func reinit(delegate: CommunicatorServiceProtocol)
     func sendMessage(string: String, to userID: String, completionHandler:((_ success: Bool, _ error: Error?) -> Void)?)
     var delegate: CommunicatorServiceProtocol? {get set}
     var isOnline: Bool {get set}

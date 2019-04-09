@@ -16,20 +16,34 @@ enum SectionList: Int {
 
 class ConversationsListViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
-    var communicationManager: CommunicatorService?
-    // MARK: NSFetchedResultsController
-    var fetchedResultsController: NSFetchedResultsController<Conversation>?
-    var frcDelegate: FRCDelegate?
+
+    // MARK: Fields
+    var communicationService: CommunicatorServiceProtocol!
+    var themeService: ThemeServiceProtocol!
+    var coreDataManager: CoreDataManagerProtocol!
+    // Dependencies
+    private var presentationAssembly: IPresentationAssembly!
+    // NSFetchedResultsController
+    var fetchedResultsController: NSFetchedResultsController<Conversation>!
+    var frcDelegate: NSFetchedResultsControllerDelegate?
+
     // MARK: Life cycle
+    func reinit(communicator: CommunicatorServiceProtocol, manager: CoreDataManagerProtocol, frcDelegate: NSFetchedResultsControllerDelegate, themeService: ThemeServiceProtocol, presentationAssembly: IPresentationAssembly) {
+        // Sets communicationManager
+        self.communicationService = communicator
+        self.coreDataManager = manager
+        self.frcDelegate = frcDelegate
+        self.themeService = themeService
+        self.presentationAssembly = presentationAssembly
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+
         self.tableView.dataSource = self
         self.tableView.delegate = self
         setUpNavigationBar()
-        // Inits communicationManager
-        communicationManager = CommunicatorService()
         // Makes fetch request
         let request: NSFetchRequest<Conversation> = Conversation.fetchRequest()
         // Sorts all conversations in this way:
@@ -41,7 +55,7 @@ class ConversationsListViewController: UIViewController {
             NSSortDescriptor(key: "lastMessage.date", ascending: false),
             NSSortDescriptor(key: "conversationName", ascending: true)
         ]
-        guard let context = CoreDataManager.getInstance().getContextWith(name: "save") else {
+        guard let context = coreDataManager.getSaveContext() else {
             return
         }
         request.fetchBatchSize = 20
@@ -50,7 +64,7 @@ class ConversationsListViewController: UIViewController {
                                                                             sectionNameKeyPath:
                                                                             #keyPath(Conversation.isInterlocutorOnline),
                                                                             cacheName: nil)
-        frcDelegate = FRCDelegate(tableView: tableView)
+        frcDelegate?.reinit(tableView: tableView)
         fetchedResultsController?.delegate = frcDelegate // self as NSFetchedResultsControllerDelegate
 
         updateWithFetchedResultsController()
@@ -58,8 +72,8 @@ class ConversationsListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let themeName = UserDefaults.standard.string(forKey: "Theme")
-        ThemeService().setTheme(themeName: themeName ?? "light", navigationController: navigationController)
-        self.view.backgroundColor = ThemeService().getColorForName(themeName ?? "light")
+        themeService.setTheme(themeName: themeName ?? "light", navigationController: navigationController)
+        self.view.backgroundColor = themeService.getColorForName(themeName ?? "light")
         tableView.reloadData()
     }
 
@@ -101,6 +115,19 @@ class ConversationsListViewController: UIViewController {
             print("ERROR: \(error.description)")
         }
     }
+    // MARK: Actions
+    @IBAction func themesButtonClicked(_ sender: Any) {
+        if let nextViewController = presentationAssembly.themesViewController() {
+            // Presents Modally
+            present(nextViewController, animated: true, completion: nil)
+        }
+    }
+    @IBAction func profileButtonClicked(_ sender: Any) {
+        if let nextViewController = presentationAssembly.profileViewController() {
+            // Presents Modally
+            present(nextViewController, animated: true, completion: nil)
+        }
+    }
 }
 extension ConversationsListViewController: ThemesViewControllerDelegate {
     func themesViewController(_ controller: ThemesViewController!, didSelectTheme selectedTheme: UIColor!) {
@@ -117,13 +144,13 @@ extension ConversationsListViewController: UITableViewDelegate {
         guard let cell = tableView.cellForRow(at: indexPath) as? ChatWindowTableViewCell else {
             return
         }
-        if let nextViewController = storyboard?.instantiateViewController(withIdentifier: "ConversationViewController") as? ConversationViewController {
+        if let nextViewController = presentationAssembly.conversationViewController() {
             // Sets all data to new view controller
             nextViewController.conversation = cell.conversation
             nextViewController.conversation?.hasUnreadMessages = false
             nextViewController.conversationName = cell.nameLabel.text
-            nextViewController.communicatorManager = self.communicationManager
-            nextViewController.communicatorManager?.conversationDelegate = nextViewController
+            nextViewController.communicatorService = self.communicationService
+            nextViewController.communicatorService?.conversationDelegate = nextViewController
             // Pushes new view controller into stack
             self.navigationController?.pushViewController(nextViewController, animated: true)
         }

@@ -16,8 +16,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     // Current user
     var user = User()
-    // CoreData UserProfileCoreDataManager
-    let userProfileCoreDataManager = UserProfileCDService()
     // Other fields with information for detecting if there have been any changes
     var descriptionValueBeforeEditing: String?
     var nameValueBeforeEditing: String?
@@ -27,20 +25,26 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     // The alert allows user to choose between photo library and camera
     let imagePickerAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
+    // MARK: CoreData UserProfileCoreDataService
+    var userProfileCoreDataService: UserProfileCDServiceProtocol!
     // MARK: KeyboardManager
-    var keyboardService: KeyboardProfileService!
+    var keyboardService: KeyboardServiceProtocol!
     // MARK: ViewController Life Cycle
+    func reinit(userProfileCDService: UserProfileCDServiceProtocol, keyboardService: KeyboardServiceProtocol) {
+        self.userProfileCoreDataService = userProfileCDService
+        self.keyboardService = keyboardService
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePickerController.delegate = self
         settingUpAnAlert()
         profileView.nameTextField.delegate = self
         profileView.descriptionTextView.delegate = self
-        userProfileCoreDataManager.delegate = self
+        userProfileCoreDataService.delegate = self
         profileView.setNonEditableMode()
         // All data updates
         loadUserProfileDataWithCoreData()
-        keyboardService = KeyboardProfileService(view: profileView)
+        keyboardService.reinit(view: profileView)
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -137,21 +141,21 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     // MARK: Work with CoreData
     func loadUserProfileDataWithCoreData() {
-        let data = self.userProfileCoreDataManager.load()
+        let data = self.userProfileCoreDataService.load()
         // Where 0 is name, 1 is userDescription and 2 is userPhoto
         profileView.setName(with: data?.0)
         profileView.setDescription(with: data?.1)
         profileView.setImage(with: data?.2)
     }
     func saveUserProfileDataWithCoreData() {
-        self.userProfileCoreDataManager.save(name: profileView.getName(), userDescription: profileView.getDescription(), photo: profileView.getImage())
+        self.userProfileCoreDataService.save(name: profileView.getName(), userDescription: profileView.getDescription(), photo: profileView.getImage())
     }
     // MARK: UserProfileCoreDataManagerDelegate
-    func stopAnimatingActivityIndicator() {
+    func stopSavingWithCD() {
         profileView.stopAnimatingIndicator()
         profileView.setNonEditableMode()
     }
-    func startAnimatingActivityIndicator() {
+    func startSavingWithCD() {
         profileView.startAnimatingIndicator()
     }
     // MARK: Showing alerts

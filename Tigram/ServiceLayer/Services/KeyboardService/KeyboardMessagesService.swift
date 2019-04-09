@@ -11,11 +11,11 @@ import UIKit
 
 class KeyboardMessagesService: KeyboardServiceProtocol {
     // MARK: Fields
-    let view: UIView!
+    var view: UIView?
     var keyboardIsShowing: Bool = false
 
     // MARK: Functions
-    init(view: UIView) {
+    func reinit(view: UIView) {
         self.view = view
     }
     // MARK: KeyboardManagerProtocol
@@ -35,14 +35,14 @@ class KeyboardMessagesService: KeyboardServiceProtocol {
         if !keyboardIsShowing {
             if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
                 let keyboardRectangle = keyboardFrame.cgRectValue
-                self.view.bounds.origin.y = keyboardRectangle.height
+                self.view?.bounds.origin.y = keyboardRectangle.height
                 keyboardIsShowing = true
             }
         }
     }
     @objc private func keyboardDidHide(notification: NSNotification) {
         if keyboardIsShowing {
-            self.view.bounds.origin.y = 0
+            self.view?.bounds.origin.y = 0
             keyboardIsShowing = false
         }
     }

@@ -38,6 +38,13 @@
 		5C6BE14522383B4E00C7819D /* OperationDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14422383B4E00C7819D /* OperationDataService.swift */; };
 		5C6BE14722383C6500C7819D /* DataServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14622383C6500C7819D /* DataServiceProtocol.swift */; };
 		5C6BE16D223996B900C7819D /* ThemeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE16C223996B900C7819D /* ThemeService.swift */; };
+		5C7F32D4225BF2C8001749E1 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F32D3225BF2C8001749E1 /* PresentationAssembly.swift */; };
+		5C7F32D6225BF2D6001749E1 /* IPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F32D5225BF2D6001749E1 /* IPresentationAssembly.swift */; };
+		5C7F32D9225BF42E001749E1 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F32D8225BF42E001749E1 /* ServicesAssembly.swift */; };
+		5C7F32DB225BF436001749E1 /* IServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F32DA225BF436001749E1 /* IServicesAssembly.swift */; };
+		5C7F32DE225BF761001749E1 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F32DD225BF761001749E1 /* CoreAssembly.swift */; };
+		5C7F32E0225BF768001749E1 /* ICoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F32DF225BF768001749E1 /* ICoreAssembly.swift */; };
+		5C7F32E2225D37CA001749E1 /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F32E1225D37CA001749E1 /* RootAssembly.swift */; };
 		5CA40DBA223ECB0700065200 /* MultipeerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DB9223ECB0700065200 /* MultipeerCommunicator.swift */; };
 		5CA40DBC223ECB2100065200 /* CommunicatorServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DBB223ECB2100065200 /* CommunicatorServiceProtocol.swift */; };
 		5CA40DBE223ECB3800065200 /* CommunicatorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DBD223ECB3800065200 /* CommunicatorService.swift */; };
@@ -96,6 +103,13 @@
 		5C6BE14822384B6100C7819D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5C6BE14A22384B8100C7819D /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		5C6BE16C223996B900C7819D /* ThemeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeService.swift; sourceTree = "<group>"; };
+		5C7F32D3225BF2C8001749E1 /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
+		5C7F32D5225BF2D6001749E1 /* IPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPresentationAssembly.swift; sourceTree = "<group>"; };
+		5C7F32D8225BF42E001749E1 /* ServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembly.swift; sourceTree = "<group>"; };
+		5C7F32DA225BF436001749E1 /* IServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IServicesAssembly.swift; sourceTree = "<group>"; };
+		5C7F32DD225BF761001749E1 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
+		5C7F32DF225BF768001749E1 /* ICoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICoreAssembly.swift; sourceTree = "<group>"; };
+		5C7F32E1225D37CA001749E1 /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
 		5CA40DB9223ECB0700065200 /* MultipeerCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerCommunicator.swift; sourceTree = "<group>"; };
 		5CA40DBB223ECB2100065200 /* CommunicatorServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicatorServiceProtocol.swift; sourceTree = "<group>"; };
 		5CA40DBD223ECB3800065200 /* CommunicatorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicatorService.swift; sourceTree = "<group>"; };
@@ -144,12 +158,13 @@
 		5C077C9522105C550081F3DD /* Tigram */ = {
 			isa = PBXGroup;
 			children = (
-				5C077CA222105C560081F3DD /* Info.plist */,
-				5CECAC372259440C00D8514B /* Supporting Files */,
 				5CECAC34225943AF00D8514B /* PresentationLayer */,
 				5CECAC35225943C000D8514B /* ServiceLayer */,
 				5CECAC36225943D100D8514B /* CoreLayer */,
+				5CECAC372259440C00D8514B /* Supporting Files */,
 				5C077C9622105C550081F3DD /* AppDelegate.swift */,
+				5C7F32E1225D37CA001749E1 /* RootAssembly.swift */,
+				5C077CA222105C560081F3DD /* Info.plist */,
 			);
 			path = Tigram;
 			sourceTree = "<group>";
@@ -427,11 +442,39 @@
 			path = FRCDelegate;
 			sourceTree = "<group>";
 		};
+		5C7F32D2225BF2AD001749E1 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				5C7F32D5225BF2D6001749E1 /* IPresentationAssembly.swift */,
+				5C7F32D3225BF2C8001749E1 /* PresentationAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
+		5C7F32D7225BF420001749E1 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				5C7F32DA225BF436001749E1 /* IServicesAssembly.swift */,
+				5C7F32D8225BF42E001749E1 /* ServicesAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
+		5C7F32DC225BF753001749E1 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				5C7F32DF225BF768001749E1 /* ICoreAssembly.swift */,
+				5C7F32DD225BF761001749E1 /* CoreAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
 		5CECAC34225943AF00D8514B /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
-				5C1191BF225BEC0B0099138F /* Storyboards */,
+				5C7F32D2225BF2AD001749E1 /* Assembly */,
 				5C119197225A9E770099138F /* Modules */,
+				5C1191BF225BEC0B0099138F /* Storyboards */,
 			);
 			path = PresentationLayer;
 			sourceTree = "<group>";
@@ -439,6 +482,7 @@
 		5CECAC35225943C000D8514B /* ServiceLayer */ = {
 			isa = PBXGroup;
 			children = (
+				5C7F32D7225BF420001749E1 /* Assembly */,
 				5C11919C225A9FC40099138F /* Services */,
 			);
 			path = ServiceLayer;
@@ -447,6 +491,7 @@
 		5CECAC36225943D100D8514B /* CoreLayer */ = {
 			isa = PBXGroup;
 			children = (
+				5C7F32DC225BF753001749E1 /* Assembly */,
 				5C1191BC225BE99E0099138F /* CoreData */,
 				5C1191B9225BE96E0099138F /* Communicator */,
 			);
@@ -604,16 +649,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C1191BE225BE9E80099138F /* CoreDataManagerProtocol.swift in Sources */,
+				5C7F32E2225D37CA001749E1 /* RootAssembly.swift in Sources */,
 				5C1191AF225AA3630099138F /* UserServiceProtocol.swift in Sources */,
 				5CECAC2E2253F7A600D8514B /* User.swift in Sources */,
+				5C7F32DB225BF436001749E1 /* IServicesAssembly.swift in Sources */,
+				5C7F32D4225BF2C8001749E1 /* PresentationAssembly.swift in Sources */,
 				5C02DDB9222B39490038E4CF /* Themes.m in Sources */,
 				5C6BE14522383B4E00C7819D /* OperationDataService.swift in Sources */,
 				5C40D434224838170073E0FC /* UserProfileData.swift in Sources */,
+				5C7F32D6225BF2D6001749E1 /* IPresentationAssembly.swift in Sources */,
 				5CA40DBA223ECB0700065200 /* MultipeerCommunicator.swift in Sources */,
 				5C1191A1225AA0580099138F /* MessageCellsServiceProtocol.swift in Sources */,
 				5C40D432224834630073E0FC /* CoreDataManager.swift in Sources */,
 				5C077C9922105C550081F3DD /* ProfileViewController.swift in Sources */,
 				5C6BE14722383C6500C7819D /* DataServiceProtocol.swift in Sources */,
+				5C7F32DE225BF761001749E1 /* CoreAssembly.swift in Sources */,
 				5C077C9722105C550081F3DD /* AppDelegate.swift in Sources */,
 				5C1191C1225BEC6B0099138F /* UserProfileCDServiceProtocol.swift in Sources */,
 				5CECAC202252B39300D8514B /* Message+CoreDataClass.swift in Sources */,
@@ -622,10 +672,12 @@
 				5C4AACFB222292C400EAB2ED /* ConversationViewController.swift in Sources */,
 				5CA40DBE223ECB3800065200 /* CommunicatorService.swift in Sources */,
 				5C1191B8225BE42A0099138F /* ThemesViewController.swift in Sources */,
+				5C7F32E0225BF768001749E1 /* ICoreAssembly.swift in Sources */,
 				5C6284752221AE6900726D44 /* ConversationsListViewController.swift in Sources */,
 				5CECAC232252B39300D8514B /* Conversation+CoreDataProperties.swift in Sources */,
 				5C6284782221B10200726D44 /* ChatWindowTableViewCell.swift in Sources */,
 				5CECAC322253F7C100D8514B /* ChatUser+CoreDataClass.swift in Sources */,
+				5C7F32D9225BF42E001749E1 /* ServicesAssembly.swift in Sources */,
 				5CECAC2F2253F7A800D8514B /* UserService.swift in Sources */,
 				5C119190225A93980099138F /* KeyboardServiceProtocol.swift in Sources */,
 				5C6BE14322383B4000C7819D /* GCDDataService.swift in Sources */,

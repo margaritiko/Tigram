@@ -16,21 +16,34 @@ protocol ConversationDelegate: class {
 class ConversationViewController: UIViewController {
     // MARK: NSFetchedResultsController
     var fetchedResultsController: NSFetchedResultsController<Message>?
-    var frcDelegate: FRCDelegate?
+    var frcDelegate: NSFetchedResultsControllerDelegate!
     // MARK: Messages Service for cells configuration
-    var mcService: MessageCellsService!
+    var mcService: MessageCellsServiceProtocol!
     // MARK: Keyboard Service
-    var keyboardService: KeyboardMessagesService!
+    var keyboardService: KeyboardServiceProtocol!
+    // MARK: Communicator Service
+    var communicatorService: CommunicatorServiceProtocol!
+    // MARK: CoreData Manager
+    var coreDataManager: CoreDataManagerProtocol!
 
     // MARK: Outlets
     @IBOutlet var tableView: UITableView!
     @IBOutlet var messageTextField: UITextField!
     @IBOutlet var sendMessageButton: UIButton!
+
+    // MARK: Other fields
     var conversationName: String?
     var conversation: Conversation?
-    var communicatorManager: CommunicatorService?
     var lastColorOfNavigationBar: UIColor?
 
+    // MARK: Life Cycle
+    func reinit(communicator: CommunicatorServiceProtocol, mcService: MessageCellsServiceProtocol, keyboardService: KeyboardServiceProtocol, coreDataManager: CoreDataManagerProtocol, frcDelegate: NSFetchedResultsControllerDelegate) {
+        self.communicatorService = communicator
+        self.mcService = mcService
+        self.keyboardService = keyboardService
+        self.coreDataManager = coreDataManager
+        self.frcDelegate = frcDelegate
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,22 +56,19 @@ class ConversationViewController: UIViewController {
         // Sorting messages by data (true order)
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
         request.fetchBatchSize = 20
-        guard let context = CoreDataManager.getInstance().getContextWith(name: "save") else {
+        guard let context = coreDataManager.getSaveContext() else {
             fetchedResultsController = nil
             return
         }
         fetchedResultsController = NSFetchedResultsController<Message>(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
 
-        // Creating delegate instance
-        frcDelegate = FRCDelegate(tableView: tableView)
+        // reinit
+        frcDelegate.reinit(tableView: tableView)
+        mcService.reinit(tableView: tableView)
+        keyboardService.reinit(view: self.view)
         // Setting delegate to FRController
         fetchedResultsController?.delegate = frcDelegate
         updateWithFetchedResultsController()
-
-        // Creating MessageCellsService instance for configuring cells
-        mcService = MessageCellsService(tableView: tableView)
-        // Creating se
-        keyboardService = KeyboardMessagesService(view: self.view)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -73,7 +83,7 @@ class ConversationViewController: UIViewController {
         self.title = conversationName
         // Scroll to the end of current conversation
         scrollToBottom()
-        communicatorManager?.readAllNewMessages(with: conversation?.userId ?? "")
+        communicatorService?.readAllNewMessages(with: conversation?.userId ?? "")
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -90,7 +100,7 @@ class ConversationViewController: UIViewController {
     }
     @IBAction func sendMessageAction(_ sender: UIButton) {
         if let messageText = messageTextField.text, messageTextField.text != "" {
-            communicatorManager?.haveSendMessage(for: conversation?.userId ?? "Id", withText: messageText, completion: { [weak self] (result, _) in
+            communicatorService?.haveSendMessage(for: conversation?.userId ?? "Id", withText: messageText, completion: { [weak self] (result, _) in
                 if result {
                     self?.messageTextField.text = ""
                     self?.messageTextField.resignFirstResponder()

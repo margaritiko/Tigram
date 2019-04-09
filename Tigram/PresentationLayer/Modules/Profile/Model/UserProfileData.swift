@@ -29,10 +29,10 @@ extension UserProfileData {
     }
     // In order to get an object from the repository, we should execute a query to it.
 
-    static func findOrInsertUser(in context: NSManagedObjectContext, userId: String? = nil) -> UserProfileData? {
+    static func findOrInsertUser(in context: NSManagedObjectContext, userId: String? = nil, with coreDataManager: CoreDataManagerProtocol) -> UserProfileData? {
         var user: UserProfileData?
         var fetchRequest: NSFetchRequest<UserProfileData>
-        if let userId = userId, let request = CoreDataManager.getInstance().getProfileFetchRequest(named: "UserWithId", with: userId) {
+        if let userId = userId, let request = coreDataManager.getProfileFetchRequest(named: "UserWithId", with: userId) {
             fetchRequest = request
         } else {
             fetchRequest = UserProfileData.getFetchRequest()

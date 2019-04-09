@@ -18,8 +18,8 @@ public class Conversation: NSManagedObject {
         return request
     }
 
-    convenience init() {
-        let context = CoreDataManager.getInstance().getContextWith(name: "save")
+    convenience init(coreDataManager: CoreDataManagerProtocol?) {
+        let context = coreDataManager?.getSaveContext()
         // Entity description
         let entity = NSEntityDescription.entity(forEntityName: "Conversation", in: context!)
 

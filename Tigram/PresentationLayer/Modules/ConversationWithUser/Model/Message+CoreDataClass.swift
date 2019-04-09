@@ -17,16 +17,16 @@ public class Message: NSManagedObject {
         request.predicate = NSPredicate(format: "conversation.userId == %@", userId)
         return request
     }
-    convenience init() {
-        let context = CoreDataManager.getInstance().getContextWith(name: "save")
+    convenience init(coreDataManager: CoreDataManagerProtocol) {
+        let context = coreDataManager.getSaveContext()
         // Entity description
         let entity = NSEntityDescription.entity(forEntityName: "Message", in: context!)
 
         // Creating new object
         self.init(entity: entity!, insertInto: context)
     }
-    static func insertMessage() -> Message? {
-        guard let saveContext = CoreDataManager.getInstance().getContextWith(name: "save") else {
+    static func insertMessage(with coreDataManager: CoreDataManagerProtocol) -> Message? {
+        guard let saveContext = coreDataManager.getSaveContext() else {
             assert(false, "Cannot insert new message")
             return nil
         }

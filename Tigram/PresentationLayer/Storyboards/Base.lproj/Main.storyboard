@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0QB-VF-FWe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -14,7 +14,7 @@
         <!--Tigram-->
         <scene sceneID="k1R-CP-DHW">
             <objects>
-                <viewController id="U55-dJ-naW" customClass="ConversationsListViewController" customModule="Tigram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConversationsListVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="U55-dJ-naW" customClass="ConversationsListViewController" customModule="Tigram" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XsL-pg-RjT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -84,7 +84,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Item" image="GoToThemes" style="done" id="hkg-a8-Nof">
                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
-                                <segue destination="KTh-ze-98L" kind="presentation" identifier="Open Themes" id="aUE-NO-kSn"/>
+                                <action selector="themesButtonClicked:" destination="U55-dJ-naW" id="AZN-f7-WRu"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="ProfileIcon" style="done" id="Jvy-zS-hRl">
@@ -92,7 +92,7 @@
                             <inset key="largeContentSizeImageInsets" minX="1" minY="0.0" maxX="-20" maxY="0.0"/>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="presentation" identifier="Open Profile" id="xMb-fj-2Mx"/>
+                                <action selector="profileButtonClicked:" destination="U55-dJ-naW" id="Vz9-h1-fo0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -107,7 +107,7 @@
         <!--Themes View Controller-->
         <scene sceneID="V5k-dc-z6o">
             <objects>
-                <viewController id="KTh-ze-98L" customClass="ThemesViewController" customModule="Tigram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ThemesVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KTh-ze-98L" customClass="ThemesViewController" customModule="Tigram" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Rv1-j7-KlU" customClass="ThemesView" customModule="Tigram" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -178,7 +178,7 @@
         <!--Title-->
         <scene sceneID="9mS-hw-49i">
             <objects>
-                <viewController storyboardIdentifier="ConversationViewController" id="vdU-tn-wUO" customClass="ConversationViewController" customModule="Tigram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConversationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vdU-tn-wUO" customClass="ConversationViewController" customModule="Tigram" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="abj-9K-4u3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -318,7 +318,7 @@
         <!--Profile View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ProfileViewController" customModule="Tigram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ProfileViewController" customModule="Tigram" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="ProfileView" customModule="Tigram" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -429,7 +429,7 @@
         <!--Navigation Controller-->
         <scene sceneID="OcI-Tt-Neh">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0QB-VF-FWe" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavigationVC" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0QB-VF-FWe" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="GNg-Y7-Ykz">
                         <rect key="frame" x="0.0" y="20" width="320" height="91"/>

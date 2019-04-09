@@ -10,21 +10,25 @@ import Foundation
 import UIKit
 import CoreData
 
-class FRCDelegate: NSObject, NSFetchedResultsControllerDelegate {
-    private let tableView: UITableView
+extension NSFetchedResultsControllerDelegate {
+    func reinit(tableView: UITableView) {}
+}
 
-    init(tableView: UITableView) {
+class FRCDelegate: NSObject, NSFetchedResultsControllerDelegate {
+    private var tableView: UITableView?
+
+    func reinit(tableView: UITableView) {
         self.tableView = tableView
     }
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         DispatchQueue.main.async {
-            self.tableView.beginUpdates()
+            self.tableView?.beginUpdates()
         }
     }
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         DispatchQueue.main.async {
-            self.tableView.endUpdates()
+            self.tableView?.endUpdates()
         }
     }
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
@@ -35,14 +39,14 @@ class FRCDelegate: NSObject, NSFetchedResultsControllerDelegate {
         DispatchQueue.main.async {
             switch type {
             case .insert:
-                self.tableView.insertRows(at: [newIndexPath!], with: .automatic)
+                self.tableView?.insertRows(at: [newIndexPath!], with: .automatic)
             case .move:
-                self.tableView.deleteRows(at: [indexPath!], with: .automatic)
-                self.tableView.insertRows(at: [newIndexPath!], with: .automatic)
+                self.tableView?.deleteRows(at: [indexPath!], with: .automatic)
+                self.tableView?.insertRows(at: [newIndexPath!], with: .automatic)
             case .delete:
-                self.tableView.deleteRows(at: [indexPath!], with: .automatic)
+                self.tableView?.deleteRows(at: [indexPath!], with: .automatic)
             case .update:
-                self.tableView.reloadRows(at: [indexPath!], with: .automatic)
+                self.tableView?.reloadRows(at: [indexPath!], with: .automatic)
             }
         }
     }
@@ -50,9 +54,9 @@ class FRCDelegate: NSObject, NSFetchedResultsControllerDelegate {
         DispatchQueue.main.async {
             switch type {
             case .delete:
-                self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
+                self.tableView?.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
             case .insert:
-                self.tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
+                self.tableView?.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
             case .move, .update:
                 break
             }

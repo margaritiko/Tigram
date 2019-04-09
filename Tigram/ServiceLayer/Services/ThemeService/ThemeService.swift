@@ -11,15 +11,9 @@ import UIKit
 
 public class ThemeService: ThemeServiceProtocol {
     // MARK: Fields
-    private static let instance = ThemeService()
     let light = UIColor.white
     let dark = UIColor.init(red: 83 / 256.0, green: 103 / 256.0, blue: 120 / 256.0, alpha: 1.0)
     let champagne = UIColor.init(red: 244 / 256.0, green: 217 / 256.0, blue: 73 / 256.0, alpha: 1.0)
-
-    // MARK: Getters
-    static func getInstance() -> ThemeService {
-        return ThemeService.instance
-    }
 
     // MARK: Other functions
     public func setTheme(themeName: String, navigationController: UINavigationController?) {

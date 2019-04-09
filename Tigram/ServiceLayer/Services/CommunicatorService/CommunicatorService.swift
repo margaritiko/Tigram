@@ -8,18 +8,21 @@
 
 import UIKit
 
-class CommunicatorService: NSObject, CommunicatorServiceProtocol {
-    var communicator: MultipeerCommunicator?
+class CommunicatorService: CommunicatorServiceProtocol {
+    let coreDataManager: CoreDataManagerProtocol
+    var communicator: MultipeerCommunicatorProtocol
     // Updates data
     weak var conversationDelegate: ConversationDelegate?
-    override init() {
-        super.init()
+    init(manager: CoreDataManagerProtocol, communicator: MultipeerCommunicatorProtocol) {
+        // Creates CoreData manager
+        coreDataManager = manager
         // Creates communicator
-        communicator = MultipeerCommunicator(delegate: self)
+        self.communicator = communicator
+        self.communicator.reinit(delegate: self)
     }
     func didFoundUser(userID: String, userName: String?) {
-        guard let saveContext = CoreDataManager.getInstance().getContextWith(name: "save"),
-              let user = ChatUser.findOrInsertUser(in: saveContext, userId: userID) else {
+        guard let saveContext = coreDataManager.getSaveContext(),
+            let user = ChatUser.findOrInsertUser(in: saveContext, userId: userID, with: coreDataManager) else {
             assert(false, "Cannot find or create such user")
         }
         user.name = userName
@@ -28,35 +31,36 @@ class CommunicatorService: NSObject, CommunicatorServiceProtocol {
         conversation?.user = user
         conversation?.conversationName = userName
         conversation?.isInterlocutorOnline = true
-        CoreDataManager.getInstance().performSave(context: saveContext, completionHandler: nil)
+        conversation?.hasUnreadMessages = false
+        coreDataManager.performSave(context: saveContext, completionHandler: nil)
 
         conversationDelegate?.didUserIsOnline(online: true)
     }
     func didLostUser(userID: String) {
-        guard let saveContext = CoreDataManager.getInstance().getContextWith(name: "save") else {
+        guard let saveContext = coreDataManager.getSaveContext() else {
             fatalError("Save context is nil")
         }
         let conversation = Conversation.findOrInsertConversation(inContext: saveContext, forUserWithId: userID)
         conversation?.isInterlocutorOnline = false
-        CoreDataManager.getInstance().performSave(context: saveContext, completionHandler: nil)
+        coreDataManager.performSave(context: saveContext, completionHandler: nil)
 
         conversationDelegate?.didUserIsOnline(online: false)
     }
 
     func haveSendMessage(for userId: String, withText text: String, completion: ((Bool, Error?) -> Void)?) {
-        communicator?.sendMessage(string: text, to: userId, completionHandler: { (success, error) in
+        communicator.sendMessage(string: text, to: userId, completionHandler: { (success, error) in
             if success {
-                guard let context = CoreDataManager.getInstance().getContextWith(name: "save"), let conversation = Conversation.findOrInsertConversation(inContext: context, forUserWithId: userId) else {
+                guard let context = self.coreDataManager.getSaveContext(), let conversation = Conversation.findOrInsertConversation(inContext: context, forUserWithId: userId) else {
                     assert(false, "Cannot send a message")
                     return
                 }
-                let message = Message.insertMessage()
+                let message = Message.insertMessage(with: self.coreDataManager)
                 message?.conversation = conversation
                 message?.text = text
                 message?.isIncoming = false
                 message?.date = Date() as NSDate
                 conversation.lastMessage = message
-                CoreDataManager.getInstance().performSave(context: context, completionHandler: nil)
+                self.coreDataManager.performSave(context: context, completionHandler: nil)
             }
             DispatchQueue.main.async {
                 completion?(success, error)
@@ -65,24 +69,24 @@ class CommunicatorService: NSObject, CommunicatorServiceProtocol {
     }
 
     func didReceiveMessage(text: String, fromUser: String, toUser: String) {
-        guard let saveContext = CoreDataManager.getInstance().getContextWith(name: "save"), let conversation = Conversation.findOrInsertConversation(inContext: saveContext, forUserWithId: fromUser) else {
+        guard let saveContext = coreDataManager.getSaveContext(), let conversation = Conversation.findOrInsertConversation(inContext: saveContext, forUserWithId: fromUser) else {
             assert(false, "Cannot receive messages")
         }
-        let message = Message.insertMessage()
+        let message = Message.insertMessage(with: self.coreDataManager)
         message?.conversation = conversation
         message?.text = text
         message?.date = Date() as NSDate
         message?.isIncoming = true
         conversation.hasUnreadMessages = true
         conversation.lastMessage = message
-        CoreDataManager.getInstance().performSave(context: saveContext, completionHandler: nil)
+        coreDataManager.performSave(context: saveContext, completionHandler: nil)
     }
     func readAllNewMessages(with userId: String) {
-        guard let saveContext = CoreDataManager.getInstance().getContextWith(name: "save"), let conversation = Conversation.findOrInsertConversation(inContext: saveContext, forUserWithId: userId) else {
+        guard let saveContext = coreDataManager.getSaveContext(), let conversation = Conversation.findOrInsertConversation(inContext: saveContext, forUserWithId: userId) else {
             assert(false, "Cannot read messages")
         }
         conversation.hasUnreadMessages = false
-        CoreDataManager.getInstance().performSave(context: saveContext, completionHandler: nil)
+        coreDataManager.performSave(context: saveContext, completionHandler: nil)
     }
     // MARK: Errors
     func failedToStartBrowsingForUsers(error: Error) {

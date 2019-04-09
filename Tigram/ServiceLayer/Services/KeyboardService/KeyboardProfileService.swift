@@ -11,11 +11,11 @@ import UIKit
 
 class KeyboardProfileService: KeyboardServiceProtocol {
     // MARK: Fields
-    let profileView: ProfileView!
+    var profileView: ProfileView!
 
     // MARK: Functions
-    init(view: ProfileView) {
-        self.profileView = view
+    func reinit(view: UIView) {
+        self.profileView = view as? ProfileView
     }
     // MARK: KeyboardManagerProtocol
     func beginObservingKeyboard() {

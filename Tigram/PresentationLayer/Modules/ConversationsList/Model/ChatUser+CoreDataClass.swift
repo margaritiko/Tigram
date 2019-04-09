@@ -28,10 +28,10 @@ public class ChatUser: NSManagedObject {
     }
     // In order to get an object from the repository, we should execute a query to it.
 
-    static func findOrInsertUser(in context: NSManagedObjectContext, userId: String? = nil) -> ChatUser? {
+    static func findOrInsertUser(in context: NSManagedObjectContext, userId: String? = nil, with coreDataManager: CoreDataManagerProtocol) -> ChatUser? {
         var user: ChatUser?
         var fetchRequest: NSFetchRequest<ChatUser>
-        if let userId = userId, let request = CoreDataManager.getInstance().getUserFetchRequest(named: "UserWithId", with: userId) {
+        if let userId = userId, let request = coreDataManager.getUserFetchRequest(named: "UserWithId", with: userId) {
             fetchRequest = request
         } else {
             fetchRequest = ChatUser.getFetchRequest()

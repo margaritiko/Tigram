@@ -1,5 +1,5 @@
 line_length:
-  - 210 # warning
+  - 300 # warning
   - 400 # error
 large_tuple:
   - 3 # warning

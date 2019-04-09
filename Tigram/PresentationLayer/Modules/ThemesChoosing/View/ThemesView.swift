@@ -11,5 +11,6 @@ import UIKit
 class ThemesView: UIView {
     func changeBackgroundColorTo(_ color: UIColor) {
         self.backgroundColor = color
+        print("OLEOLEOLEOLE")
     }
 }

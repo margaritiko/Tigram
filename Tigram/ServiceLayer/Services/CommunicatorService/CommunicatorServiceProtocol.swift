@@ -8,6 +8,7 @@
 
 import Foundation
 protocol CommunicatorServiceProtocol: class {
+    var conversationDelegate: ConversationDelegate? { get set }
     // MARK: Looking for users
     func didFoundUser(userID: String, userName: String?)
     func didLostUser(userID: String)
@@ -17,4 +18,5 @@ protocol CommunicatorServiceProtocol: class {
     // MARK: Check for getting messages
     func didReceiveMessage(text: String, fromUser: String, toUser: String)
     func readAllNewMessages(with userId: String)
+    func haveSendMessage(for userId: String, withText text: String, completion: ((Bool, Error?) -> Void)?)
 }
