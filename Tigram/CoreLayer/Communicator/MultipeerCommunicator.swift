@@ -49,14 +49,13 @@ class MultipeerCommunicator: NSObject, MultipeerCommunicatorProtocol {
     }()
 
     override init() {
-        isOnline = true
-        super.init()
-    }
-    func reinit(delegate: CommunicatorServiceProtocol) {
         // Init advertiser and browser with data
         self.advertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: discoveryInfo, serviceType: serviceType)
         self.browser = MCNearbyServiceBrowser(peer: myPeerId, serviceType: serviceType)
         self.isOnline = true
+        super.init()
+    }
+    func reinit(delegate: CommunicatorServiceProtocol) {
         self.delegate = delegate
         self.browser?.delegate = self
         self.advertiser?.delegate = self

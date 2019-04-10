@@ -25,11 +25,11 @@ class ServicesAssembly: IServicesAssembly {
 
     lazy var keyboardMessagesService: KeyboardServiceProtocol = KeyboardMessagesService()
 
-    lazy var frcDelegate: NSFetchedResultsControllerDelegate = FRCDelegate()
+    lazy var frcDelegate: FetchedResultsControllerProtocol = FRCDelegate()
 
     lazy var userProfileCDService: UserProfileCDServiceProtocol = UserProfileCDService(manager: coreAssembly.coreDataStorage)
 
-    lazy var communicatorService: CommunicatorServiceProtocol = CommunicatorService(manager: coreAssembly.coreDataStorage, communicator: coreAssembly.communicatorStorage)
+    lazy var communicatorService: CommunicatorServiceProtocol = CommunicatorService(multipeerCommunicator: coreAssembly.communicatorStorage, manager: coreAssembly.coreDataStorage)
 
     lazy var userService: UserServiceProtocol = UserService()
 

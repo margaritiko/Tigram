@@ -21,70 +21,90 @@ class CoreDataManager: CoreDataManagerProtocol {
 
     // MARK: NSManagedObjectModel
     private let managedObjectModelName: String = "TigramStorage"
-    lazy private var managedObjectModel: NSManagedObjectModel? = {
-        guard let modelURL = Bundle.main.url(forResource:
-            self.managedObjectModelName, withExtension: "momd") else {
-                print("Empty model url!")
-                return nil
+    private var _managedObjectModel: NSManagedObjectModel?
+    private var managedObjectModel: NSManagedObjectModel? {
+        if _managedObjectModel == nil {
+            guard let modelURL = Bundle.main.url(forResource:
+                self.managedObjectModelName, withExtension: "momd") else {
+                    print("Empty model url!")
+                    return nil
+            }
+            _managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)
         }
-        return NSManagedObjectModel(contentsOf: modelURL)
-    }()
+        return _managedObjectModel
+    }
 
     // MARK: NSPersistentStoreCoordinator
-    lazy private var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
-        guard let model = managedObjectModel else {
-            print("Empty managed object model!")
-            return nil
+    private var _persistentStoreCoordinator: NSPersistentStoreCoordinator?
+    private var persistentStoreCoordinator: NSPersistentStoreCoordinator? {
+        if _persistentStoreCoordinator == nil {
+            guard let model = self.managedObjectModel else {
+                print("Empty managed object model!")
+                return nil
+            }
+            _persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
+            do {
+                try _persistentStoreCoordinator?.addPersistentStore(ofType: NSSQLiteStoreType,
+                                                                    configurationName: nil,
+                                                                    at: storeURL,
+                                                                    options: nil)
+            } catch {
+                assert(false, "Error adding persistent store to coordinator: \(error)")
+            }
         }
-        var coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
-        do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
-                                                                configurationName: nil,
-                                                                at: storeURL,
-                                                                options: nil)
-        } catch {
-            assert(false, "Error adding persistent store to coordinator: \(error)")
-        }
-        return coordinator
-    }()
+        return _persistentStoreCoordinator
+    }
 
     // MARK: NSManagedObjectContext (Master)
-    lazy private var masterContext: NSManagedObjectContext? = {
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        guard let persistentStoreCoordinator = self.persistentStoreCoordinator else {
-            print("Empty persistent store coordinator!")
-            return nil
+    private var _masterContext: NSManagedObjectContext?
+    private var masterContext: NSManagedObjectContext? {
+        if _masterContext == nil {
+            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+            guard let persistentStoreCoordinator = self.persistentStoreCoordinator else {
+                print("Empty persistent store coordinator!")
+                return nil
+            }
+            context.persistentStoreCoordinator = persistentStoreCoordinator
+            context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+            context.undoManager = nil
+            _masterContext = context
         }
-        context.persistentStoreCoordinator = persistentStoreCoordinator
-        context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-        context.undoManager = nil
-        return context
-    }()
+        return _masterContext
+    }
 
     // MARK: NSManagedObjectContext (Main)
-    lazy private var mainContext: NSManagedObjectContext? = {
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        guard let parentContext = self.masterContext else {
-            print("No master context!")
-            return nil
+    private var _mainContext: NSManagedObjectContext?
+    private var mainContext: NSManagedObjectContext? {
+
+        if _mainContext == nil {
+            let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+            guard let parentContext = self.masterContext else {
+                print("No master context!")
+                return nil
+            }
+            context.parent = parentContext
+            context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+            context.undoManager = nil
+            _mainContext = context
         }
-        context.parent = parentContext
-        context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-        context.undoManager = nil
-        return context
-    }()
+        return _mainContext
+    }
 
     // MARK: NSManagedObjectContext (Save)
+    private var _saveContext: NSManagedObjectContext?
     private var saveContext: NSManagedObjectContext? {
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        guard let parentContext = self.mainContext else {
-            print("No master context!")
-            return nil
+        if _saveContext == nil {
+            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+            guard let parentContext = self.mainContext else {
+                print("No master context!")
+                return nil
+            }
+            context.parent = parentContext
+            context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+            context.undoManager = nil
+            _saveContext = context
         }
-        context.parent = parentContext
-        context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-        context.undoManager = nil
-        return context
+        return _saveContext
     }
 
     // Recursion save

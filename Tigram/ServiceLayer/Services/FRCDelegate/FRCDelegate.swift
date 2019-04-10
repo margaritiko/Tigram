@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 import CoreData
 
-extension NSFetchedResultsControllerDelegate {
-    func reinit(tableView: UITableView) {}
+protocol FetchedResultsControllerProtocol: NSFetchedResultsControllerDelegate {
+    func reinit(tableView: UITableView)
 }
 
-class FRCDelegate: NSObject, NSFetchedResultsControllerDelegate {
+class FRCDelegate: NSObject, FetchedResultsControllerProtocol {
     private var tableView: UITableView?
 
     func reinit(tableView: UITableView) {

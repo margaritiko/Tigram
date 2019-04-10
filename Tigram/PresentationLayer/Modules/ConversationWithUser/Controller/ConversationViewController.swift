@@ -16,7 +16,7 @@ protocol ConversationDelegate: class {
 class ConversationViewController: UIViewController {
     // MARK: NSFetchedResultsController
     var fetchedResultsController: NSFetchedResultsController<Message>?
-    var frcDelegate: NSFetchedResultsControllerDelegate!
+    var frcDelegate: FetchedResultsControllerProtocol!
     // MARK: Messages Service for cells configuration
     var mcService: MessageCellsServiceProtocol!
     // MARK: Keyboard Service
@@ -37,7 +37,7 @@ class ConversationViewController: UIViewController {
     var lastColorOfNavigationBar: UIColor?
 
     // MARK: Life Cycle
-    func reinit(communicator: CommunicatorServiceProtocol, mcService: MessageCellsServiceProtocol, keyboardService: KeyboardServiceProtocol, coreDataManager: CoreDataManagerProtocol, frcDelegate: NSFetchedResultsControllerDelegate) {
+    func reinit(communicator: CommunicatorServiceProtocol, mcService: MessageCellsServiceProtocol, keyboardService: KeyboardServiceProtocol, coreDataManager: CoreDataManagerProtocol, frcDelegate: FetchedResultsControllerProtocol) {
         self.communicatorService = communicator
         self.mcService = mcService
         self.keyboardService = keyboardService

@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class PresentationAssembly: IPresentationAssembly {
+
     private let serviceAssembly: IServicesAssembly
 
     init(serviceAssembly: IServicesAssembly) {

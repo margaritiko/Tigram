@@ -25,10 +25,10 @@ class ConversationsListViewController: UIViewController {
     private var presentationAssembly: IPresentationAssembly!
     // NSFetchedResultsController
     var fetchedResultsController: NSFetchedResultsController<Conversation>!
-    var frcDelegate: NSFetchedResultsControllerDelegate?
+    var frcDelegate: FetchedResultsControllerProtocol?
 
     // MARK: Life cycle
-    func reinit(communicator: CommunicatorServiceProtocol, manager: CoreDataManagerProtocol, frcDelegate: NSFetchedResultsControllerDelegate, themeService: ThemeServiceProtocol, presentationAssembly: IPresentationAssembly) {
+    func reinit(communicator: CommunicatorServiceProtocol, manager: CoreDataManagerProtocol, frcDelegate: FetchedResultsControllerProtocol, themeService: ThemeServiceProtocol, presentationAssembly: IPresentationAssembly) {
         // Sets communicationManager
         self.communicationService = communicator
         self.coreDataManager = manager
@@ -64,8 +64,9 @@ class ConversationsListViewController: UIViewController {
                                                                             sectionNameKeyPath:
                                                                             #keyPath(Conversation.isInterlocutorOnline),
                                                                             cacheName: nil)
-        frcDelegate?.reinit(tableView: tableView)
-        fetchedResultsController?.delegate = frcDelegate // self as NSFetchedResultsControllerDelegate
+
+        self.frcDelegate?.reinit(tableView: tableView)
+        fetchedResultsController?.delegate = self.frcDelegate
 
         updateWithFetchedResultsController()
     }

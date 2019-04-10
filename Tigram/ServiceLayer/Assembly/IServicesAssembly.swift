@@ -15,7 +15,7 @@ protocol IServicesAssembly {
     var messageCellsService: MessageCellsServiceProtocol { get }
     var keyboardProfileService: KeyboardServiceProtocol {get}
     var keyboardMessagesService: KeyboardServiceProtocol {get}
-    var frcDelegate: NSFetchedResultsControllerDelegate { get }
+    var frcDelegate: FetchedResultsControllerProtocol { get }
     var userProfileCDService: UserProfileCDServiceProtocol { get }
     var communicatorService: CommunicatorServiceProtocol {get}
     var userService: UserServiceProtocol { get }
