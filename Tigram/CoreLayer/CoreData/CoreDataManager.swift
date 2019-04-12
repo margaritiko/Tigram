@@ -10,6 +10,9 @@ import Foundation
 import CoreData
 
 class CoreDataManager: CoreDataManagerProtocol {
+    // Singleton pattern
+    private static let instance = CoreDataManager()
+    // MARK: Life Cycle
 
     // MARK: NSPersistentStore
     private var storeURL: URL? {
@@ -17,6 +20,11 @@ class CoreDataManager: CoreDataManagerProtocol {
                                                                   in: .userDomainMask).first else { return nil }
         let url = documentsDirURL.appendingPathComponent("Store.sqlite")
         return url
+    }
+
+    // MARK: Getters
+    static func getInstance() -> CoreDataManager {
+        return CoreDataManager.instance
     }
 
     // MARK: NSManagedObjectModel
@@ -127,6 +135,16 @@ class CoreDataManager: CoreDataManagerProtocol {
                 completionHandler?()
             }
         }
+    }
+    // Getting context with given name
+    public func getContextWith(name: String) -> NSManagedObjectContext? {
+        if name == "master" {
+            return masterContext
+        }
+        if name == "main" {
+            return mainContext
+        }
+        return saveContext
     }
     // Getting contexts
     public func getSaveContext() -> NSManagedObjectContext? {

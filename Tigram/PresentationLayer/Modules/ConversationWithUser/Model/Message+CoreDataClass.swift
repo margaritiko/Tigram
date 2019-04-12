@@ -17,8 +17,8 @@ public class Message: NSManagedObject {
         request.predicate = NSPredicate(format: "conversation.userId == %@", userId)
         return request
     }
-    convenience init(coreDataManager: CoreDataManagerProtocol) {
-        let context = coreDataManager.getSaveContext()
+    convenience init() {
+        let context = CoreDataManager.getInstance().getSaveContext()
         // Entity description
         let entity = NSEntityDescription.entity(forEntityName: "Message", in: context!)
 

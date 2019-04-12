@@ -25,7 +25,9 @@ class ServicesAssembly: IServicesAssembly {
 
     lazy var keyboardMessagesService: KeyboardServiceProtocol = KeyboardMessagesService()
 
-    lazy var frcDelegate: FetchedResultsControllerProtocol = FRCDelegate()
+    lazy var frcDelegateListConversations: FetchedResultsControllerProtocol = FRCDelegate()
+
+    lazy var frcDelegateConversation: FetchedResultsControllerProtocol = FRCDelegate()
 
     lazy var userProfileCDService: UserProfileCDServiceProtocol = UserProfileCDService(manager: coreAssembly.coreDataStorage)
 

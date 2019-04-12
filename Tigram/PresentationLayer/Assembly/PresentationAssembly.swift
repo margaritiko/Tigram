@@ -31,14 +31,14 @@ class PresentationAssembly: IPresentationAssembly {
     func listWithConversationsViewController() -> ConversationsListViewController {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = mainStoryboard.instantiateViewController(withIdentifier: "ConversationsListVC") as? ConversationsListViewController
-        viewController?.reinit(communicator: serviceAssembly.communicatorService, manager: serviceAssembly.coreDataManager, frcDelegate: serviceAssembly.frcDelegate, themeService: serviceAssembly.themeService, presentationAssembly: self)
+        viewController?.reinit(communicator: serviceAssembly.communicatorService, manager: serviceAssembly.coreDataManager, frcDelegate: serviceAssembly.frcDelegateListConversations, themeService: serviceAssembly.themeService, presentationAssembly: self)
         return viewController ?? ConversationsListViewController()
     }
 
     func conversationViewController() -> ConversationViewController? {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = mainStoryboard.instantiateViewController(withIdentifier: "ConversationViewController") as? ConversationViewController
-        viewController?.reinit(communicator: serviceAssembly.communicatorService, mcService: serviceAssembly.messageCellsService, keyboardService: serviceAssembly.keyboardMessagesService, coreDataManager: serviceAssembly.coreDataManager, frcDelegate: serviceAssembly.frcDelegate)
+        viewController?.reinit(mcService: serviceAssembly.messageCellsService, keyboardService: serviceAssembly.keyboardMessagesService, coreDataManager: serviceAssembly.coreDataManager, frcDelegate: serviceAssembly.frcDelegateConversation)
         return viewController
     }
 

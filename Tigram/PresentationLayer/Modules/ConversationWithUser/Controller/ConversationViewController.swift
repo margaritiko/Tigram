@@ -5,7 +5,6 @@
 //  Created by Маргарита Коннова on 24/02/2019.
 //  Copyright © 2019 Margarita Konnova. All rights reserved.
 //
-
 import UIKit
 import CoreData
 
@@ -15,8 +14,8 @@ protocol ConversationDelegate: class {
 
 class ConversationViewController: UIViewController {
     // MARK: NSFetchedResultsController
-    var fetchedResultsController: NSFetchedResultsController<Message>?
-    var frcDelegate: FetchedResultsControllerProtocol!
+    var fetchedResultsController: NSFetchedResultsController<Message>!
+    var frcDelegate: FetchedResultsControllerProtocol?
     // MARK: Messages Service for cells configuration
     var mcService: MessageCellsServiceProtocol!
     // MARK: Keyboard Service
@@ -30,20 +29,18 @@ class ConversationViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var messageTextField: UITextField!
     @IBOutlet var sendMessageButton: UIButton!
-
-    // MARK: Other fields
     var conversationName: String?
     var conversation: Conversation?
     var lastColorOfNavigationBar: UIColor?
 
     // MARK: Life Cycle
-    func reinit(communicator: CommunicatorServiceProtocol, mcService: MessageCellsServiceProtocol, keyboardService: KeyboardServiceProtocol, coreDataManager: CoreDataManagerProtocol, frcDelegate: FetchedResultsControllerProtocol) {
-        self.communicatorService = communicator
+    func reinit(mcService: MessageCellsServiceProtocol, keyboardService: KeyboardServiceProtocol, coreDataManager: CoreDataManagerProtocol, frcDelegate: FetchedResultsControllerProtocol) {
         self.mcService = mcService
         self.keyboardService = keyboardService
         self.coreDataManager = coreDataManager
         self.frcDelegate = frcDelegate
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -62,13 +59,15 @@ class ConversationViewController: UIViewController {
         }
         fetchedResultsController = NSFetchedResultsController<Message>(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
 
-        // reinit
-        frcDelegate.reinit(tableView: tableView)
-        mcService.reinit(tableView: tableView)
-        keyboardService.reinit(view: self.view)
+        // Setting delegate instance
+        frcDelegate?.reinit(tableView: self.tableView)
         // Setting delegate to FRController
         fetchedResultsController?.delegate = frcDelegate
         updateWithFetchedResultsController()
+        // Creating MessageCellsService instance for configuring cells
+        mcService.reinit(tableView: self.tableView)
+        // Creating se
+        keyboardService.reinit(view: self.view)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -83,7 +82,7 @@ class ConversationViewController: UIViewController {
         self.title = conversationName
         // Scroll to the end of current conversation
         scrollToBottom()
-        communicatorService?.readAllNewMessages(with: conversation?.userId ?? "")
+        self.communicatorService.readAllNewMessages(with: conversation?.userId ?? "")
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
