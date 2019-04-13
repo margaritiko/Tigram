@@ -11,10 +11,11 @@ import UIKit
 import CoreData
 
 protocol IServicesAssembly {
+    var networkService: NetworkServiceProtocol { get }
     var dataService: DataServiceProtocol { get }
     var messageCellsService: MessageCellsServiceProtocol { get }
-    var keyboardProfileService: KeyboardServiceProtocol {get}
-    var keyboardMessagesService: KeyboardServiceProtocol {get}
+    var keyboardProfileService: KeyboardServiceProtocol { get }
+    var keyboardMessagesService: KeyboardServiceProtocol { get }
     var frcDelegateListConversations: FetchedResultsControllerProtocol { get }
     var frcDelegateConversation: FetchedResultsControllerProtocol { get }
     var userProfileCDService: UserProfileCDServiceProtocol { get }

@@ -25,14 +25,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     // The alert allows user to choose between photo library and camera
     let imagePickerAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-    // MARK: CoreData UserProfileCoreDataService
+    // MARK: Services
     var userProfileCoreDataService: UserProfileCDServiceProtocol!
-    // MARK: KeyboardManager
     var keyboardService: KeyboardServiceProtocol!
+    // Presentation Assembly
+    var presentationAssembly: IPresentationAssembly!
     // MARK: ViewController Life Cycle
-    func reinit(userProfileCDService: UserProfileCDServiceProtocol, keyboardService: KeyboardServiceProtocol) {
+    func reinit(userProfileCDService: UserProfileCDServiceProtocol, keyboardService: KeyboardServiceProtocol, presentationAssembly: IPresentationAssembly) {
         self.userProfileCoreDataService = userProfileCDService
         self.keyboardService = keyboardService
+        self.presentationAssembly = presentationAssembly
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,8 +88,17 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 self.present(alertController, animated: true, completion: nil)
             }
         }
+        // Third action in list
+        let loadFromInternetAction = UIAlertAction(title: "Загрузить", style: .default) { [weak self] _ in
+            guard let loadingVC = self?.presentationAssembly.loadingIllustrationsViewController() else {
+                return
+            }
+            loadingVC.delegate = self
+            self?.present(loadingVC, animated: true, completion: nil)
+        }
         imagePickerAlert.addAction(choosePhotoAction)
         imagePickerAlert.addAction(takePhotoAction)
+        imagePickerAlert.addAction(loadFromInternetAction)
         imagePickerAlert.addAction(UIAlertAction(title: NSLocalizedString("Закрыть", comment: "Default action"), style: .cancel))
     }
     // MARK: UIImagePickerControllerDelegate
@@ -164,6 +175,18 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         let action = UIAlertAction.init(title: "OK", style: .cancel, handler: nil)
         alertVC.addAction(action)
         self.present(alertVC, animated: true, completion: nil)
+    }
+}
+
+extension ProfileViewController: LoadingIllustrationsVCDelegate {
+    func userSelected(image: UIImage) {
+        profileView.setImage(with: image)
+        user.photo = image
+        user.isPhotoChanged = true
+        if !isItPossibleToSaveData {
+            profileView.setAbilityToSave()
+            isItPossibleToSaveData = true
+        }
     }
 }
 

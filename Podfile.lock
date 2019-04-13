@@ -1,16 +1,20 @@
 PODS:
   - SwiftLint (0.29.1)
+  - SwiftyJSON (4.2.0)
 
 DEPENDENCIES:
   - SwiftLint
+  - SwiftyJSON
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - SwiftLint
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
   SwiftLint: 6772320e40b52049053a518c17db9b0634a0b45a
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: f22f0edc8a98a1724a187aa8346f914ed6c4fc2c
+PODFILE CHECKSUM: b5334df614f885cdf977fd11371cc0260488cce3
 
 COCOAPODS: 1.6.1

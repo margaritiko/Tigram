@@ -190,24 +190,25 @@ extension ConversationsListViewController: UITableViewDataSource {
 
     // MARK: Configuration of new cell
     private func configureCell(cell: ChatWindowTableViewCell, model: Conversation) -> UITableViewCell {
-        cell.nameLabel.text = model.conversationName
-        cell.dateLabel.text = "\(Date.convertDateIntoString(date: model.lastMessage?.date as Date?))"
-        cell.conversation = model
-        cell.online = model.isInterlocutorOnline
-        if let lastMessage = model.lastMessage, (model.messages?.count)! > 0 {
-            if model.hasUnreadMessages {
-                cell.messageLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 14.0)
+        coreDataManager.getSaveContext()?.performAndWait {
+            cell.nameLabel.text = model.conversationName
+            cell.dateLabel.text = "\(Date.convertDateIntoString(date: model.lastMessage?.date as Date?))"
+            cell.conversation = model
+            cell.online = model.isInterlocutorOnline
+            if let lastMessage = model.lastMessage, (model.messages?.count)! > 0 {
+                if model.hasUnreadMessages {
+                    cell.messageLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 14.0)
+                } else {
+                    cell.messageLabel.font = UIFont(name: "HelveticaNeue", size: 14.0)
+                }
+                cell.messageLabel.text = lastMessage.text
             } else {
-                cell.messageLabel.font = UIFont(name: "HelveticaNeue", size: 14.0)
+                cell.messageLabel.text = "No messages yet"
+                cell.messageLabel.font = UIFont(name: "Noteworthy", size: 14.0)
             }
-            cell.messageLabel.text = lastMessage.text
-        } else {
-            cell.messageLabel.text = "No messages yet"
-            cell.messageLabel.font = UIFont(name: "Noteworthy", size: 14.0)
+            // Another color for online conversations
+            cell.configureCellWithCurrentThemes(color: UserDefaults.standard.string(forKey: "Theme") ?? "light")
         }
-        // Another color for online conversations
-        cell.configureCellWithCurrentThemes(color: UserDefaults.standard.string(forKey: "Theme") ?? "light")
-
         return cell
     }
 }

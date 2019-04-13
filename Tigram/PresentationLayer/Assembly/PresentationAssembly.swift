@@ -37,7 +37,7 @@ class PresentationAssembly: IPresentationAssembly {
 
     func conversationViewController() -> ConversationViewController? {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "ConversationViewController") as? ConversationViewController
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "ConversationVC") as? ConversationViewController
         viewController?.reinit(mcService: serviceAssembly.messageCellsService, keyboardService: serviceAssembly.keyboardMessagesService, coreDataManager: serviceAssembly.coreDataManager, frcDelegate: serviceAssembly.frcDelegateConversation)
         return viewController
     }
@@ -52,7 +52,14 @@ class PresentationAssembly: IPresentationAssembly {
     func profileViewController() -> ProfileViewController? {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = mainStoryboard.instantiateViewController(withIdentifier: "ProfileVC") as? ProfileViewController
-        viewController?.reinit(userProfileCDService: serviceAssembly.userProfileCDService, keyboardService: serviceAssembly.keyboardProfileService)
+        viewController?.reinit(userProfileCDService: serviceAssembly.userProfileCDService, keyboardService: serviceAssembly.keyboardProfileService, presentationAssembly: self)
+        return viewController
+    }
+
+    func loadingIllustrationsViewController() -> LoadingIllustrationsViewController? {
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "LoadingVC") as? LoadingIllustrationsViewController
+        viewController?.reinit(networkService: serviceAssembly.networkService)
         return viewController
     }
 }

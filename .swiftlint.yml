@@ -4,4 +4,13 @@ line_length:
 large_tuple:
   - 3 # warning
 disabled_rules:
+  - force_cast
+  - force_try
+  - variable_name
+  - type_name
+  - file_length
+  - line_length
+  - type_body_length
+  - cyclomatic_complexity
+  - function_body_length
   - weak_delegate 

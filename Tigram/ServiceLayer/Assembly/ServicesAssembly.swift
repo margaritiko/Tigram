@@ -17,6 +17,8 @@ class ServicesAssembly: IServicesAssembly {
         self.coreAssembly = coreAssembly
     }
 
+    lazy var networkService: NetworkServiceProtocol = NetworkService(requestSender: coreAssembly.requestSender)
+
     lazy var dataService: DataServiceProtocol = GCDDataService()
 
     lazy var messageCellsService: MessageCellsServiceProtocol = MessageCellsService(themesService: self.themeService)

@@ -19,4 +19,6 @@ protocol IPresentationAssembly {
     func themesViewController() -> ThemesViewController?
     // Profile screen
     func profileViewController() -> ProfileViewController?
+    // Screen where user can find illustration from internet
+    func loadingIllustrationsViewController() -> LoadingIllustrationsViewController?
 }

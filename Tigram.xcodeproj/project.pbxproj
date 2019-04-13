@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		537839FCBEA1181A1D68AE80 /* Pods_Tigram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A124053E2A05712057C14746 /* Pods_Tigram.framework */; };
 		5C02DDB9222B39490038E4CF /* Themes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C02DDB8222B39490038E4CF /* Themes.m */; };
 		5C077C9722105C550081F3DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C077C9622105C550081F3DD /* AppDelegate.swift */; };
 		5C077C9922105C550081F3DD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C077C9822105C550081F3DD /* ProfileViewController.swift */; };
@@ -45,9 +46,22 @@
 		5C7F32DE225BF761001749E1 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F32DD225BF761001749E1 /* CoreAssembly.swift */; };
 		5C7F32E0225BF768001749E1 /* ICoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F32DF225BF768001749E1 /* ICoreAssembly.swift */; };
 		5C7F32E2225D37CA001749E1 /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F32E1225D37CA001749E1 /* RootAssembly.swift */; };
+		5C7F331622611BD6001749E1 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F331522611BD6001749E1 /* LoadingViewController.swift */; };
+		5C7F331822612C28001749E1 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F331722612C28001749E1 /* PhotoCollectionViewCell.swift */; };
+		5C7F3320226138D2001749E1 /* RequestsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F331F226138D2001749E1 /* RequestsFactory.swift */; };
 		5CA40DBA223ECB0700065200 /* MultipeerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DB9223ECB0700065200 /* MultipeerCommunicator.swift */; };
 		5CA40DBC223ECB2100065200 /* CommunicatorServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DBB223ECB2100065200 /* CommunicatorServiceProtocol.swift */; };
 		5CA40DBE223ECB3800065200 /* CommunicatorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA40DBD223ECB3800065200 /* CommunicatorService.swift */; };
+		5CD9B97A22629E480070AD4E /* IParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD9B97922629E480070AD4E /* IParser.swift */; };
+		5CD9B97C22629E5F0070AD4E /* IllustrationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD9B97B22629E5F0070AD4E /* IllustrationParser.swift */; };
+		5CD9B97E22629E6A0070AD4E /* IllustrationDetailsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD9B97D22629E6A0070AD4E /* IllustrationDetailsParser.swift */; };
+		5CD9B98122629ED40070AD4E /* IRequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD9B98022629ED40070AD4E /* IRequestSender.swift */; };
+		5CD9B98322629F260070AD4E /* RequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD9B98222629F260070AD4E /* RequestSender.swift */; };
+		5CD9B98622629F870070AD4E /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD9B98522629F870070AD4E /* IRequest.swift */; };
+		5CD9B98822629FB10070AD4E /* IllustrationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD9B98722629FB10070AD4E /* IllustrationRequest.swift */; };
+		5CD9B98A22629FBC0070AD4E /* IllustrationDetailsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD9B98922629FBC0070AD4E /* IllustrationDetailsRequest.swift */; };
+		5CD9B98C2262A1430070AD4E /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD9B98B2262A1430070AD4E /* NetworkServiceProtocol.swift */; };
+		5CD9B98E2262A1560070AD4E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD9B98D2262A1560070AD4E /* NetworkService.swift */; };
 		5CECAC202252B39300D8514B /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CECAC1C2252B39300D8514B /* Message+CoreDataClass.swift */; };
 		5CECAC212252B39300D8514B /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CECAC1D2252B39300D8514B /* Message+CoreDataProperties.swift */; };
 		5CECAC222252B39300D8514B /* Conversation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CECAC1E2252B39300D8514B /* Conversation+CoreDataClass.swift */; };
@@ -58,11 +72,10 @@
 		5CECAC332253F7C100D8514B /* ChatUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CECAC312253F7C100D8514B /* ChatUser+CoreDataProperties.swift */; };
 		5CECAC39225944B100D8514B /* FRCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CECAC38225944B100D8514B /* FRCDelegate.swift */; };
 		5CECAC3B22594B0700D8514B /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CECAC3A22594B0700D8514B /* ProfileView.swift */; };
-		621E36B7FA273CD361DD3B2A /* Pods_Tigram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F52148FF529C8BBC43E903F3 /* Pods_Tigram.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3D977DE183DC200EA93A7659 /* Pods-Tigram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tigram.debug.xcconfig"; path = "Target Support Files/Pods-Tigram/Pods-Tigram.debug.xcconfig"; sourceTree = "<group>"; };
+		4284B7E0FC519437409D7B8E /* Pods-Tigram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tigram.release.xcconfig"; path = "Target Support Files/Pods-Tigram/Pods-Tigram.release.xcconfig"; sourceTree = "<group>"; };
 		5C02DDAD222B2AD90038E4CF /* ThemesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemesViewController.h; sourceTree = "<group>"; };
 		5C02DDB4222B38D80038E4CF /* Tigram-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tigram-Bridging-Header.h"; sourceTree = "<group>"; };
 		5C02DDB5222B38D80038E4CF /* ThemesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThemesViewController.m; sourceTree = "<group>"; };
@@ -110,9 +123,22 @@
 		5C7F32DD225BF761001749E1 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
 		5C7F32DF225BF768001749E1 /* ICoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICoreAssembly.swift; sourceTree = "<group>"; };
 		5C7F32E1225D37CA001749E1 /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
+		5C7F331522611BD6001749E1 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		5C7F331722612C28001749E1 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		5C7F331F226138D2001749E1 /* RequestsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsFactory.swift; sourceTree = "<group>"; };
 		5CA40DB9223ECB0700065200 /* MultipeerCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerCommunicator.swift; sourceTree = "<group>"; };
 		5CA40DBB223ECB2100065200 /* CommunicatorServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicatorServiceProtocol.swift; sourceTree = "<group>"; };
 		5CA40DBD223ECB3800065200 /* CommunicatorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicatorService.swift; sourceTree = "<group>"; };
+		5CD9B97922629E480070AD4E /* IParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IParser.swift; sourceTree = "<group>"; };
+		5CD9B97B22629E5F0070AD4E /* IllustrationParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IllustrationParser.swift; sourceTree = "<group>"; };
+		5CD9B97D22629E6A0070AD4E /* IllustrationDetailsParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IllustrationDetailsParser.swift; sourceTree = "<group>"; };
+		5CD9B98022629ED40070AD4E /* IRequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequestSender.swift; sourceTree = "<group>"; };
+		5CD9B98222629F260070AD4E /* RequestSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSender.swift; sourceTree = "<group>"; };
+		5CD9B98522629F870070AD4E /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
+		5CD9B98722629FB10070AD4E /* IllustrationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IllustrationRequest.swift; sourceTree = "<group>"; };
+		5CD9B98922629FBC0070AD4E /* IllustrationDetailsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IllustrationDetailsRequest.swift; sourceTree = "<group>"; };
+		5CD9B98B2262A1430070AD4E /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
+		5CD9B98D2262A1560070AD4E /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		5CECAC1C2252B39300D8514B /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5CECAC1D2252B39300D8514B /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5CECAC1E2252B39300D8514B /* Conversation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -121,8 +147,8 @@
 		5CECAC312253F7C100D8514B /* ChatUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5CECAC38225944B100D8514B /* FRCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRCDelegate.swift; sourceTree = "<group>"; };
 		5CECAC3A22594B0700D8514B /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		888EFD4087BF30755493AA1C /* Pods-Tigram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tigram.release.xcconfig"; path = "Target Support Files/Pods-Tigram/Pods-Tigram.release.xcconfig"; sourceTree = "<group>"; };
-		F52148FF529C8BBC43E903F3 /* Pods_Tigram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tigram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A124053E2A05712057C14746 /* Pods_Tigram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tigram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF0288C7FF9A1E75362E95E9 /* Pods-Tigram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tigram.debug.xcconfig"; path = "Target Support Files/Pods-Tigram/Pods-Tigram.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,7 +156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				621E36B7FA273CD361DD3B2A /* Pods_Tigram.framework in Frameworks */,
+				537839FCBEA1181A1D68AE80 /* Pods_Tigram.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,7 +169,7 @@
 				5C077C9522105C550081F3DD /* Tigram */,
 				5C077C9422105C550081F3DD /* Products */,
 				C65527DA648AE3BBAEB997F9 /* Pods */,
-				A831AB036CA745A43FB00241 /* Frameworks */,
+				DE51546ADF7590F6860ECF57 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -182,6 +208,7 @@
 		5C119197225A9E770099138F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				5C7F331122611B44001749E1 /* LoadingPhoto */,
 				5C119198225A9EA60099138F /* ConversationsList */,
 				5C119199225A9EBE0099138F /* ConversationWithUser */,
 				5C11919B225A9EEE0099138F /* ThemesChoosing */,
@@ -233,6 +260,7 @@
 		5C11919C225A9FC40099138F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				5C7F331E226138C7001749E1 /* NetworkService */,
 				5C1191B0225BE1780099138F /* DataService */,
 				5C1191A2225AA05D0099138F /* MessageCellsService */,
 				5C11918E225A938A0099138F /* KeyboardService */,
@@ -469,6 +497,88 @@
 			path = Assembly;
 			sourceTree = "<group>";
 		};
+		5C7F331122611B44001749E1 /* LoadingPhoto */ = {
+			isa = PBXGroup;
+			children = (
+				5C7F331222611BA2001749E1 /* Model */,
+				5C7F331322611BA7001749E1 /* View */,
+				5C7F331422611BAD001749E1 /* Controller */,
+			);
+			path = LoadingPhoto;
+			sourceTree = "<group>";
+		};
+		5C7F331222611BA2001749E1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5C7F331322611BA7001749E1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5C7F331722612C28001749E1 /* PhotoCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5C7F331422611BAD001749E1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5C7F331522611BD6001749E1 /* LoadingViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5C7F3319226131AB001749E1 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				5CD9B98422629F700070AD4E /* Requests */,
+				5CD9B97F22629EC60070AD4E /* RequestManager */,
+				5CD9B97822629E360070AD4E /* Parsers */,
+				5C7F331F226138D2001749E1 /* RequestsFactory.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		5C7F331E226138C7001749E1 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				5CD9B98B2262A1430070AD4E /* NetworkServiceProtocol.swift */,
+				5CD9B98D2262A1560070AD4E /* NetworkService.swift */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		5CD9B97822629E360070AD4E /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				5CD9B97922629E480070AD4E /* IParser.swift */,
+				5CD9B97B22629E5F0070AD4E /* IllustrationParser.swift */,
+				5CD9B97D22629E6A0070AD4E /* IllustrationDetailsParser.swift */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
+		5CD9B97F22629EC60070AD4E /* RequestManager */ = {
+			isa = PBXGroup;
+			children = (
+				5CD9B98022629ED40070AD4E /* IRequestSender.swift */,
+				5CD9B98222629F260070AD4E /* RequestSender.swift */,
+			);
+			path = RequestManager;
+			sourceTree = "<group>";
+		};
+		5CD9B98422629F700070AD4E /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				5CD9B98522629F870070AD4E /* IRequest.swift */,
+				5CD9B98722629FB10070AD4E /* IllustrationRequest.swift */,
+				5CD9B98922629FBC0070AD4E /* IllustrationDetailsRequest.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
 		5CECAC34225943AF00D8514B /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -492,6 +602,7 @@
 			isa = PBXGroup;
 			children = (
 				5C7F32DC225BF753001749E1 /* Assembly */,
+				5C7F3319226131AB001749E1 /* Network */,
 				5C1191BC225BE99E0099138F /* CoreData */,
 				5C1191B9225BE96E0099138F /* Communicator */,
 			);
@@ -507,21 +618,21 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		A831AB036CA745A43FB00241 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				F52148FF529C8BBC43E903F3 /* Pods_Tigram.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		C65527DA648AE3BBAEB997F9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3D977DE183DC200EA93A7659 /* Pods-Tigram.debug.xcconfig */,
-				888EFD4087BF30755493AA1C /* Pods-Tigram.release.xcconfig */,
+				CF0288C7FF9A1E75362E95E9 /* Pods-Tigram.debug.xcconfig */,
+				4284B7E0FC519437409D7B8E /* Pods-Tigram.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		DE51546ADF7590F6860ECF57 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A124053E2A05712057C14746 /* Pods_Tigram.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -531,11 +642,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5C077CA522105C560081F3DD /* Build configuration list for PBXNativeTarget "Tigram" */;
 			buildPhases = (
+				E493E969EE1323E37FCCB24F /* [CP] Check Pods Manifest.lock */,
 				5C1976A5224FC9E700F55F32 /* ShellScript */,
-				C31AB35040B850F90B999B6B /* [CP] Check Pods Manifest.lock */,
 				5C077C8F22105C550081F3DD /* Sources */,
 				5C077C9022105C550081F3DD /* Frameworks */,
 				5C077C9122105C550081F3DD /* Resources */,
+				23CADF6E1334E082E650A1F1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -602,6 +714,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		23CADF6E1334E082E650A1F1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Tigram/Pods-Tigram-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Tigram/Pods-Tigram-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5C1976A5224FC9E700F55F32 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -619,7 +753,7 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
-		C31AB35040B850F90B999B6B /* [CP] Check Pods Manifest.lock */ = {
+		E493E969EE1323E37FCCB24F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -651,7 +785,9 @@
 				5C1191BE225BE9E80099138F /* CoreDataManagerProtocol.swift in Sources */,
 				5C7F32E2225D37CA001749E1 /* RootAssembly.swift in Sources */,
 				5C1191AF225AA3630099138F /* UserServiceProtocol.swift in Sources */,
+				5CD9B98622629F870070AD4E /* IRequest.swift in Sources */,
 				5CECAC2E2253F7A600D8514B /* User.swift in Sources */,
+				5CD9B97C22629E5F0070AD4E /* IllustrationParser.swift in Sources */,
 				5C7F32DB225BF436001749E1 /* IServicesAssembly.swift in Sources */,
 				5C7F32D4225BF2C8001749E1 /* PresentationAssembly.swift in Sources */,
 				5C02DDB9222B39490038E4CF /* Themes.m in Sources */,
@@ -667,10 +803,16 @@
 				5C077C9722105C550081F3DD /* AppDelegate.swift in Sources */,
 				5C1191C1225BEC6B0099138F /* UserProfileCDServiceProtocol.swift in Sources */,
 				5CECAC202252B39300D8514B /* Message+CoreDataClass.swift in Sources */,
+				5CD9B98822629FB10070AD4E /* IllustrationRequest.swift in Sources */,
+				5CD9B97A22629E480070AD4E /* IParser.swift in Sources */,
 				5CA40DBC223ECB2100065200 /* CommunicatorServiceProtocol.swift in Sources */,
 				5CECAC3B22594B0700D8514B /* ProfileView.swift in Sources */,
 				5C4AACFB222292C400EAB2ED /* ConversationViewController.swift in Sources */,
+				5C7F3320226138D2001749E1 /* RequestsFactory.swift in Sources */,
 				5CA40DBE223ECB3800065200 /* CommunicatorService.swift in Sources */,
+				5CD9B98122629ED40070AD4E /* IRequestSender.swift in Sources */,
+				5CD9B97E22629E6A0070AD4E /* IllustrationDetailsParser.swift in Sources */,
+				5CD9B98322629F260070AD4E /* RequestSender.swift in Sources */,
 				5C1191B8225BE42A0099138F /* ThemesViewController.swift in Sources */,
 				5C7F32E0225BF768001749E1 /* ICoreAssembly.swift in Sources */,
 				5C6284752221AE6900726D44 /* ConversationsListViewController.swift in Sources */,
@@ -679,14 +821,19 @@
 				5CECAC322253F7C100D8514B /* ChatUser+CoreDataClass.swift in Sources */,
 				5C7F32D9225BF42E001749E1 /* ServicesAssembly.swift in Sources */,
 				5CECAC2F2253F7A800D8514B /* UserService.swift in Sources */,
+				5C7F331822612C28001749E1 /* PhotoCollectionViewCell.swift in Sources */,
 				5C119190225A93980099138F /* KeyboardServiceProtocol.swift in Sources */,
 				5C6BE14322383B4000C7819D /* GCDDataService.swift in Sources */,
 				5C1191BB225BE9820099138F /* MultipeerCommunicatorProtocol.swift in Sources */,
 				5C1191B5225BE2ED0099138F /* UserProtocol.swift in Sources */,
+				5CD9B98C2262A1430070AD4E /* NetworkServiceProtocol.swift in Sources */,
+				5C7F331622611BD6001749E1 /* LoadingViewController.swift in Sources */,
 				5C40D4392248386D0073E0FC /* TigramStorage.xcdatamodeld in Sources */,
 				5C3874E92222AFF50041E5F3 /* MessageTableViewCell.swift in Sources */,
+				5CD9B98E2262A1560070AD4E /* NetworkService.swift in Sources */,
 				5CECAC39225944B100D8514B /* FRCDelegate.swift in Sources */,
 				5C1191B7225BE3B00099138F /* ThemesView.swift in Sources */,
+				5CD9B98A22629FBC0070AD4E /* IllustrationDetailsRequest.swift in Sources */,
 				5CECAC222252B39300D8514B /* Conversation+CoreDataClass.swift in Sources */,
 				5C119194225A98F30099138F /* KeyboardProfileService.swift in Sources */,
 				5C6BE16D223996B900C7819D /* ThemeService.swift in Sources */,
@@ -839,7 +986,7 @@
 		};
 		5C077CA622105C560081F3DD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D977DE183DC200EA93A7659 /* Pods-Tigram.debug.xcconfig */;
+			baseConfigurationReference = CF0288C7FF9A1E75362E95E9 /* Pods-Tigram.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -865,7 +1012,7 @@
 		};
 		5C077CA722105C560081F3DD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 888EFD4087BF30755493AA1C /* Pods-Tigram.release.xcconfig */;
+			baseConfigurationReference = 4284B7E0FC519437409D7B8E /* Pods-Tigram.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
