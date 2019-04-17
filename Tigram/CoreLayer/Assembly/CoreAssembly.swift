@@ -9,9 +9,9 @@
 import Foundation
 
 class CoreAssembly: ICoreAssembly {
-    lazy var communicatorStorage: MultipeerCommunicatorProtocol = MultipeerCommunicator()
+    var communicatorStorage: MultipeerCommunicatorProtocol = MultipeerCommunicator()
 
-    lazy var coreDataStorage: CoreDataManagerProtocol = CoreDataManager()
+    var coreDataStorage: CoreDataManagerProtocol = CoreDataManager()
 
     lazy var requestSender: IRequestSender = RequestSender()
 }
