@@ -31,10 +31,12 @@ class TigramWindow: UIWindow {
     override func sendEvent(_ event: UIEvent) {
         // Checks if there was any touch
         if event.type != UIEvent.EventType.touches {
+            super.sendEvent(event)
             return
         }
         // Gets information about all touches
         guard let touches = event.allTouches else {
+            super.sendEvent(event)
             return
         }
         // Looking for each touch from array
@@ -47,6 +49,7 @@ class TigramWindow: UIWindow {
             case .moved:
                 emblemsEmitterService.updateEmitting(for: touch)
             case .stationary:
+                super.sendEvent(event)
                 return
             }
         }
