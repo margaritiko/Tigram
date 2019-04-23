@@ -11,7 +11,7 @@
 		5C02DDB9222B39490038E4CF /* Themes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C02DDB8222B39490038E4CF /* Themes.m */; };
 		5C077C9722105C550081F3DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C077C9622105C550081F3DD /* AppDelegate.swift */; };
 		5C077C9922105C550081F3DD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C077C9822105C550081F3DD /* ProfileViewController.swift */; };
-		5C077C9C22105C550081F3DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C077C9A22105C550081F3DD /* Main.storyboard */; };
+		5C077C9C22105C550081F3DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C077C9A22105C550081F3DD /* Main.storyboard */; settings = {ASSET_TAGS = (1, ); }; };
 		5C077C9E22105C560081F3DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C077C9D22105C560081F3DD /* Assets.xcassets */; };
 		5C077CA122105C560081F3DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C077C9F22105C560081F3DD /* LaunchScreen.storyboard */; };
 		5C11918D225A8E420099138F /* MessageCellsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C11918C225A8E420099138F /* MessageCellsService.swift */; };
@@ -39,6 +39,10 @@
 		5C6BE14522383B4E00C7819D /* OperationDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14422383B4E00C7819D /* OperationDataService.swift */; };
 		5C6BE14722383C6500C7819D /* DataServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE14622383C6500C7819D /* DataServiceProtocol.swift */; };
 		5C6BE16D223996B900C7819D /* ThemeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6BE16C223996B900C7819D /* ThemeService.swift */; };
+		5C78AD66226BD0BE0030D1BE /* HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C78AD65226BD0BE0030D1BE /* HeaderLabel.swift */; };
+		5C78AD68226E02080030D1BE /* TigramWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C78AD67226E02080030D1BE /* TigramWindow.swift */; };
+		5C78AD6B226E02F90030D1BE /* EmblemsEmitterServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C78AD6A226E02F90030D1BE /* EmblemsEmitterServiceProtocol.swift */; };
+		5C78AD6D226E03320030D1BE /* EmblemsEmitterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C78AD6C226E03320030D1BE /* EmblemsEmitterService.swift */; };
 		5C7F32D4225BF2C8001749E1 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F32D3225BF2C8001749E1 /* PresentationAssembly.swift */; };
 		5C7F32D6225BF2D6001749E1 /* IPresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F32D5225BF2D6001749E1 /* IPresentationAssembly.swift */; };
 		5C7F32D9225BF42E001749E1 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F32D8225BF42E001749E1 /* ServicesAssembly.swift */; };
@@ -116,6 +120,10 @@
 		5C6BE14822384B6100C7819D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5C6BE14A22384B8100C7819D /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		5C6BE16C223996B900C7819D /* ThemeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeService.swift; sourceTree = "<group>"; };
+		5C78AD65226BD0BE0030D1BE /* HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderLabel.swift; sourceTree = "<group>"; };
+		5C78AD67226E02080030D1BE /* TigramWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TigramWindow.swift; sourceTree = "<group>"; };
+		5C78AD6A226E02F90030D1BE /* EmblemsEmitterServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmblemsEmitterServiceProtocol.swift; sourceTree = "<group>"; };
+		5C78AD6C226E03320030D1BE /* EmblemsEmitterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmblemsEmitterService.swift; sourceTree = "<group>"; };
 		5C7F32D3225BF2C8001749E1 /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		5C7F32D5225BF2D6001749E1 /* IPresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPresentationAssembly.swift; sourceTree = "<group>"; };
 		5C7F32D8225BF42E001749E1 /* ServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembly.swift; sourceTree = "<group>"; };
@@ -190,6 +198,7 @@
 				5CECAC372259440C00D8514B /* Supporting Files */,
 				5C077C9622105C550081F3DD /* AppDelegate.swift */,
 				5C7F32E1225D37CA001749E1 /* RootAssembly.swift */,
+				5C78AD67226E02080030D1BE /* TigramWindow.swift */,
 				5C077CA222105C560081F3DD /* Info.plist */,
 			);
 			path = Tigram;
@@ -260,6 +269,7 @@
 		5C11919C225A9FC40099138F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				5C78AD69226E02D40030D1BE /* EmblemsEmitter */,
 				5C7F331E226138C7001749E1 /* NetworkService */,
 				5C1191B0225BE1780099138F /* DataService */,
 				5C1191A2225AA05D0099138F /* MessageCellsService */,
@@ -330,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				5C3874E82222AFF50041E5F3 /* MessageTableViewCell.swift */,
+				5C78AD65226BD0BE0030D1BE /* HeaderLabel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -468,6 +479,15 @@
 				5CECAC38225944B100D8514B /* FRCDelegate.swift */,
 			);
 			path = FRCDelegate;
+			sourceTree = "<group>";
+		};
+		5C78AD69226E02D40030D1BE /* EmblemsEmitter */ = {
+			isa = PBXGroup;
+			children = (
+				5C78AD6A226E02F90030D1BE /* EmblemsEmitterServiceProtocol.swift */,
+				5C78AD6C226E03320030D1BE /* EmblemsEmitterService.swift */,
+			);
+			path = EmblemsEmitter;
 			sourceTree = "<group>";
 		};
 		5C7F32D2225BF2AD001749E1 /* Assembly */ = {
@@ -664,13 +684,16 @@
 		5C077C8B22105C550081F3DD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					1,
+				);
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Margarita Konnova";
 				TargetAttributes = {
 					5C077C9222105C550081F3DD = {
 						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 0;
@@ -785,6 +808,7 @@
 				5C1191BE225BE9E80099138F /* CoreDataManagerProtocol.swift in Sources */,
 				5C7F32E2225D37CA001749E1 /* RootAssembly.swift in Sources */,
 				5C1191AF225AA3630099138F /* UserServiceProtocol.swift in Sources */,
+				5C78AD66226BD0BE0030D1BE /* HeaderLabel.swift in Sources */,
 				5CD9B98622629F870070AD4E /* IRequest.swift in Sources */,
 				5CECAC2E2253F7A600D8514B /* User.swift in Sources */,
 				5CD9B97C22629E5F0070AD4E /* IllustrationParser.swift in Sources */,
@@ -797,6 +821,7 @@
 				5CA40DBA223ECB0700065200 /* MultipeerCommunicator.swift in Sources */,
 				5C1191A1225AA0580099138F /* MessageCellsServiceProtocol.swift in Sources */,
 				5C40D432224834630073E0FC /* CoreDataManager.swift in Sources */,
+				5C78AD68226E02080030D1BE /* TigramWindow.swift in Sources */,
 				5C077C9922105C550081F3DD /* ProfileViewController.swift in Sources */,
 				5C6BE14722383C6500C7819D /* DataServiceProtocol.swift in Sources */,
 				5C7F32DE225BF761001749E1 /* CoreAssembly.swift in Sources */,
@@ -820,6 +845,7 @@
 				5C6284782221B10200726D44 /* ChatWindowTableViewCell.swift in Sources */,
 				5CECAC322253F7C100D8514B /* ChatUser+CoreDataClass.swift in Sources */,
 				5C7F32D9225BF42E001749E1 /* ServicesAssembly.swift in Sources */,
+				5C78AD6B226E02F90030D1BE /* EmblemsEmitterServiceProtocol.swift in Sources */,
 				5CECAC2F2253F7A800D8514B /* UserService.swift in Sources */,
 				5C7F331822612C28001749E1 /* PhotoCollectionViewCell.swift in Sources */,
 				5C119190225A93980099138F /* KeyboardServiceProtocol.swift in Sources */,
@@ -839,6 +865,7 @@
 				5C6BE16D223996B900C7819D /* ThemeService.swift in Sources */,
 				5CECAC212252B39300D8514B /* Message+CoreDataProperties.swift in Sources */,
 				5C1191B2225BE1EF0099138F /* ThemeServiceProtocol.swift in Sources */,
+				5C78AD6D226E03320030D1BE /* EmblemsEmitterService.swift in Sources */,
 				5C119192225A939E0099138F /* KeyboardMessagesService.swift in Sources */,
 				5C40D436224838470073E0FC /* UserProfileCDService.swift in Sources */,
 				5CECAC332253F7C100D8514B /* ChatUser+CoreDataProperties.swift in Sources */,

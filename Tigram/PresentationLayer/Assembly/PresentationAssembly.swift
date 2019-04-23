@@ -38,7 +38,7 @@ class PresentationAssembly: IPresentationAssembly {
     func conversationViewController() -> ConversationViewController? {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = mainStoryboard.instantiateViewController(withIdentifier: "ConversationVC") as? ConversationViewController
-        viewController?.reinit(mcService: serviceAssembly.messageCellsService, keyboardService: serviceAssembly.keyboardMessagesService, coreDataManager: serviceAssembly.coreDataManager, frcDelegate: serviceAssembly.frcDelegateConversation)
+        viewController?.reinit(mcService: serviceAssembly.messageCellsService, keyboardService: serviceAssembly.keyboardMessagesService, coreDataManager: serviceAssembly.coreDataManager, frcDelegate: serviceAssembly.frcDelegateConversation, themeService: serviceAssembly.themeService)
         return viewController
     }
 
@@ -61,5 +61,9 @@ class PresentationAssembly: IPresentationAssembly {
         let viewController = mainStoryboard.instantiateViewController(withIdentifier: "LoadingVC") as? LoadingIllustrationsViewController
         viewController?.reinit(networkService: serviceAssembly.networkService)
         return viewController
+    }
+
+    func getServiceAssembly() -> IServicesAssembly {
+        return serviceAssembly
     }
 }

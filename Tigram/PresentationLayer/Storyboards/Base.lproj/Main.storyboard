@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0QB-VF-FWe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0QB-VF-FWe">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,14 +20,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="snD-pe-Zkb">
-                                <rect key="frame" x="0.0" y="116" width="600" height="484"/>
+                                <rect key="frame" x="0.0" y="111" width="320" height="457"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Chat Window" rowHeight="88" id="QVq-pq-ydy" customClass="ChatWindowTableViewCell" customModule="Tigram" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.5" width="600" height="88"/>
+                                        <rect key="frame" x="0.0" y="55.5" width="320" height="88"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QVq-pq-ydy" id="iGO-1L-haC">
-                                            <rect key="frame" x="0.0" y="0.0" width="567" height="87.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="87.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="adW-Fc-fpu">
@@ -446,7 +446,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sLn-Gc-h7D">
+                                                <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sLn-Gc-h7D">
                                                     <rect key="frame" x="158" y="8" width="146" height="28"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Income Message" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="12s-d1-Rdn">
@@ -487,6 +487,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="messageTextFieldEditingChanged:" destination="2Hn-Gq-h9U" eventType="editingChanged" id="Vkf-Gb-wbu"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GKv-xt-xbF">
                                 <rect key="frame" x="268" y="524" width="36" height="36"/>
@@ -494,7 +497,7 @@
                                     <constraint firstAttribute="width" secondItem="GKv-xt-xbF" secondAttribute="height" multiplier="1:1" id="ifs-2S-VHP"/>
                                     <constraint firstAttribute="height" constant="36" id="mGa-qo-7ST"/>
                                 </constraints>
-                                <state key="normal" title="Send" image="DarkTheme"/>
+                                <state key="normal" title="Send"/>
                                 <connections>
                                     <action selector="sendMessageAction:" destination="2Hn-Gq-h9U" eventType="touchUpInside" id="yHC-Uc-YiC"/>
                                 </connections>
@@ -533,11 +536,11 @@
         <image name="ChampagneTheme" width="1024" height="1024"/>
         <image name="Close" width="500" height="172"/>
         <image name="DarkTheme" width="1024" height="1024"/>
-        <image name="GoBackArrow" width="295" height="488"/>
-        <image name="GoToThemes" width="75" height="75"/>
+        <image name="GoBackArrow" width="590" height="976"/>
+        <image name="GoToThemes" width="50" height="50"/>
         <image name="LightTheme" width="1024" height="1024"/>
         <image name="PlaceholderUser" width="600" height="600"/>
-        <image name="ProfileIcon" width="75" height="75"/>
+        <image name="ProfileIcon" width="50" height="50"/>
     </resources>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

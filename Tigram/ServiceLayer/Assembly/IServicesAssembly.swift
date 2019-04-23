@@ -11,6 +11,7 @@ import UIKit
 import CoreData
 
 protocol IServicesAssembly {
+    var emblemsEmitterService: EmblemsEmitterServiceProtocol { get }
     var networkService: NetworkServiceProtocol { get }
     var dataService: DataServiceProtocol { get }
     var messageCellsService: MessageCellsServiceProtocol { get }

@@ -21,4 +21,6 @@ protocol IPresentationAssembly {
     func profileViewController() -> ProfileViewController?
     // Screen where user can find illustration from internet
     func loadingIllustrationsViewController() -> LoadingIllustrationsViewController?
+    // Get access for service assembly
+    func getServiceAssembly() -> IServicesAssembly
 }

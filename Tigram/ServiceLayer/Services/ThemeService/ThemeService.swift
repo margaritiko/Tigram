@@ -12,7 +12,8 @@ import UIKit
 public class ThemeService: ThemeServiceProtocol {
     // MARK: Fields
     let light = UIColor.white
-    let dark = UIColor.init(red: 83 / 256.0, green: 103 / 256.0, blue: 120 / 256.0, alpha: 1.0)
+    let blueForWhiteTheme = UIColor(red: 58 / 256.0, green: 123 / 256.0, blue: 240 / 256.0, alpha: 0.8)
+    let dark = UIColor.init(red: 83 / 256.0, green: 103 / 256.0, blue: 120 / 256.0, alpha: 0.8)
     let champagne = UIColor.init(red: 244 / 256.0, green: 217 / 256.0, blue: 73 / 256.0, alpha: 1.0)
 
     // MARK: Other functions
@@ -43,5 +44,23 @@ public class ThemeService: ThemeServiceProtocol {
         default:
             return light
         }
+    }
+
+    func getCurrentColor() -> UIColor {
+        let themeName = UserDefaults.standard.string(forKey: "Theme")
+        switch themeName {
+        case "light":
+            return blueForWhiteTheme
+        case "dark":
+            return dark
+        case "champagne":
+            return champagne
+        default:
+            return blueForWhiteTheme
+        }
+    }
+
+    func getDefaultColor() -> UIColor {
+        return UIColor(red: 0.46, green: 0.46, blue: 0.46, alpha: 1.0)
     }
 }

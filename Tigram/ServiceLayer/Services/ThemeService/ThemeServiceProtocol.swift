@@ -15,4 +15,6 @@ protocol ThemeServiceProtocol {
     var champagne: UIColor { get }
     func setTheme(themeName: String, navigationController: UINavigationController?)
     func getColorForName(_ name: String) -> UIColor
+    func getCurrentColor() -> UIColor
+    func getDefaultColor() -> UIColor
 }

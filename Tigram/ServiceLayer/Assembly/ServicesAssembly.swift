@@ -17,6 +17,8 @@ class ServicesAssembly: IServicesAssembly {
         self.coreAssembly = coreAssembly
     }
 
+    lazy var emblemsEmitterService: EmblemsEmitterServiceProtocol = EmblemsEmitterService()
+
     lazy var networkService: NetworkServiceProtocol = NetworkService(requestSender: coreAssembly.requestSender)
 
     lazy var dataService: DataServiceProtocol = GCDDataService()

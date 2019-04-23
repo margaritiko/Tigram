@@ -23,7 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: Application lifecycle
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        self.window = UIWindow(frame: UIScreen.main.bounds)
+        // Custom window for detecting touches everywhere
+        self.window = TigramWindow(frame: UIScreen.main.bounds, emblemsEmitterService: rootAssembly.presentationAssembly.getServiceAssembly().emblemsEmitterService)
         let controller = rootAssembly.presentationAssembly.navigationController()
         window?.rootViewController = controller
         window?.makeKeyAndVisible()
